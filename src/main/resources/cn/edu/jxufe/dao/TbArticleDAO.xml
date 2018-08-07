@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxufe.dao.TbArticleDAO">
+  <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbArticle">
+    <id column="articleID" jdbcType="INTEGER" property="articleid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="readcount" jdbcType="INTEGER" property="readcount" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+    <result column="content" jdbcType="LONGVARBINARY" property="content" />
+    <result column="picurl" jdbcType="LONGVARBINARY" property="picurl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    articleID, title, readcount, createtime, updatetime
+  </sql>
+  <sql id="Blob_Column_List">
+    content, picurl
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_article
+    where articleID = #{articleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_article
+    where articleID = #{articleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+    insert into tb_article (articleID, title, readcount, 
+      createtime, updatetime, content, 
+      picurl)
+    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{readcount,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}, 
+      #{picurl,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+    insert into tb_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleid != null">
+        articleID,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="readcount != null">
+        readcount,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="picurl != null">
+        picurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleid != null">
+        #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="readcount != null">
+        #{readcount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+    update tb_article
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="readcount != null">
+        readcount = #{readcount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where articleID = #{articleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+    update tb_article
+    set title = #{title,jdbcType=VARCHAR},
+      readcount = #{readcount,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARBINARY},
+      picurl = #{picurl,jdbcType=LONGVARBINARY}
+    where articleID = #{articleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbArticle">
+    update tb_article
+    set title = #{title,jdbcType=VARCHAR},
+      readcount = #{readcount,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where articleID = #{articleid,jdbcType=INTEGER}
+  </update>
+</mapper>

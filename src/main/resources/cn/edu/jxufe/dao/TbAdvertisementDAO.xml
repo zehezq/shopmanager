@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxufe.dao.TbAdvertisementDAO">
+  <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbAdvertisement">
+    <id column="adno" jdbcType="INTEGER" property="adno" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="picurl" jdbcType="VARCHAR" property="picurl" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adno, `index`, `status`, createtime, picurl, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_advertisement
+    where adno = #{adno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_advertisement
+    where adno = #{adno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
+    insert into tb_advertisement (adno, `index`, `status`, 
+      createtime, picurl, url
+      )
+    values (#{adno,jdbcType=INTEGER}, #{index,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{picurl,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
+    insert into tb_advertisement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adno != null">
+        adno,
+      </if>
+      <if test="index != null">
+        `index`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="picurl != null">
+        picurl,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adno != null">
+        #{adno,jdbcType=INTEGER},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
+    update tb_advertisement
+    <set>
+      <if test="index != null">
+        `index` = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adno = #{adno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
+    update tb_advertisement
+    set `index` = #{index,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where adno = #{adno,jdbcType=INTEGER}
+  </update>
+</mapper>

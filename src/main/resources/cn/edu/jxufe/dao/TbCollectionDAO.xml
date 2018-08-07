@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxufe.dao.TbCollectionDAO">
+  <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbCollection">
+    <id column="collID" jdbcType="INTEGER" property="collid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="goodID" jdbcType="INTEGER" property="goodid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `collID`, userID, goodID, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_collection
+    where `collID` = #{collid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_collection
+    where `collID` = #{collid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbCollection">
+    insert into tb_collection (`collID`, userID, goodID, 
+      updatetime)
+    values (#{collid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{goodid,jdbcType=INTEGER}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbCollection">
+    insert into tb_collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collid != null">
+        `collID`,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="goodid != null">
+        goodID,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collid != null">
+        #{collid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="goodid != null">
+        #{goodid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbCollection">
+    update tb_collection
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="goodid != null">
+        goodID = #{goodid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where `collID` = #{collid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbCollection">
+    update tb_collection
+    set userID = #{userid,jdbcType=INTEGER},
+      goodID = #{goodid,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where `collID` = #{collid,jdbcType=INTEGER}
+  </update>
+</mapper>

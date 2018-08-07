@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxufe.dao.TbOrderDAO">
+  <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbOrder">
+    <id column="orderID" jdbcType="VARCHAR" property="orderid" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="ordertime" jdbcType="TIMESTAMP" property="ordertime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderID, id, userID, price, `status`, ordertime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order
+    where orderID = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_order
+    where orderID = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbOrder">
+    insert into tb_order (orderID, id, userID, 
+      price, `status`, ordertime
+      )
+    values (#{orderid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{price,jdbcType=REAL}, #{status,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbOrder">
+    insert into tb_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderID,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="ordertime != null">
+        ordertime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ordertime != null">
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbOrder">
+    update tb_order
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ordertime != null">
+        ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where orderID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbOrder">
+    update tb_order
+    set id = #{id,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
+      `status` = #{status,jdbcType=INTEGER},
+      ordertime = #{ordertime,jdbcType=TIMESTAMP}
+    where orderID = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

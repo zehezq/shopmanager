@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxufe.dao.TbGoodsDAO">
+  <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbGoods">
+    <id column="goodID" jdbcType="INTEGER" property="goodid" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="picurl" jdbcType="VARCHAR" property="picurl" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="oldprice" jdbcType="REAL" property="oldprice" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="praisenum" jdbcType="INTEGER" property="praisenum" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goodID, code, userID, caption, picurl, price, oldprice, stock, `count`, `status`, 
+    description, praisenum, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_goods
+    where goodID = #{goodid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_goods
+    where goodID = #{goodid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbGoods">
+    insert into tb_goods (goodID, code, userID, 
+      caption, picurl, price, 
+      oldprice, stock, `count`, 
+      `status`, description, praisenum, 
+      createtime, updatetime)
+    values (#{goodid,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{caption,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{oldprice,jdbcType=REAL}, #{stock,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{praisenum,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbGoods">
+    insert into tb_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodid != null">
+        goodID,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="caption != null">
+        caption,
+      </if>
+      <if test="picurl != null">
+        picurl,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="oldprice != null">
+        oldprice,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="count != null">
+        `count`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="praisenum != null">
+        praisenum,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodid != null">
+        #{goodid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="caption != null">
+        #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="oldprice != null">
+        #{oldprice,jdbcType=REAL},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="praisenum != null">
+        #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbGoods">
+    update tb_goods
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="caption != null">
+        caption = #{caption,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="oldprice != null">
+        oldprice = #{oldprice,jdbcType=REAL},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        `count` = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="praisenum != null">
+        praisenum = #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goodID = #{goodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbGoods">
+    update tb_goods
+    set code = #{code,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER},
+      caption = #{caption,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      oldprice = #{oldprice,jdbcType=REAL},
+      stock = #{stock,jdbcType=INTEGER},
+      `count` = #{count,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      praisenum = #{praisenum,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where goodID = #{goodid,jdbcType=INTEGER}
+  </update>
+  <select id="findAllGoods" resultMap="BaseResultMap">
+    SELECT * from tb_goods;
+  </select>
+</mapper>
