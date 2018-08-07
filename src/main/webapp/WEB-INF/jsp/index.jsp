@@ -12,12 +12,11 @@
       //alert("Hello World"); //输出方法，浏览器弹出一个输出的对话框
       console.log("后台输出的"); //f12 console中
     })
-
   </script>
 </head>
 <body>
 <div class="easyui-layout" style="width:100%;height:640px;">
-  <div region="north" split="true" title="" style="height:50px;">
+  <div region="north" split="true" title="" style="height:30px;">
     <h2>电商管理项目</h2>
   </div>
   <div region="west" split="true" title="操作区" style="width:150px;">
@@ -25,16 +24,13 @@
       <li>
         <span>销售管理平台</span>
         <ul>
-          <li>
-            <span>会员管理</span>
-            <ul>
-              <li><span>文章管理</span></li>
-              <li><span>评论管理</span></li>
-              <li><span>收藏管理</span></li>
-            </ul>
-          </li>
+          <li><span>会员管理</span></li>
+          <li><span>文章管理</span></li>
+          <li><span>评论管理</span></li>
+          <li><span>订单管理</span></li>
           <li><span>商品管理</span></li>
-          <li><span>收藏管理</span></li>
+          <li><span>广告管理</span></li>
+          <li><span>类别管理</span></li>
         </ul>
       </li>
     </ul>
