@@ -31,10 +31,10 @@
           <li><span>商品管理</span></li>
           <li><span>广告管理</span></li>
           <li><span>类别管理</span></li>
+          <li><span>系统设置</span></li>
         </ul>
       </li>
     </ul>
   </div>
-</div>
-</body>
-</html>
+
+
