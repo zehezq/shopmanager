@@ -16,11 +16,7 @@
 </head>
 <body>
 <div class="easyui-layout" style="width:100%;height:640px;">
-<<<<<<< Updated upstream:src/main/webapp/WEB-INF/jsp/common/head.jsp
   <div region="north" split="true" title="" style="height:70px;">
-=======
-  <div region="north" split="true" title="" style="height:30px;">
->>>>>>> Stashed changes:src/main/webapp/WEB-INF/jsp/index.jsp
     <h2>电商管理项目</h2>
   </div>
   <div region="west" split="true" title="操作区" style="width:150px;">
@@ -28,7 +24,6 @@
       <li>
         <span>销售管理平台</span>
         <ul>
-<<<<<<< Updated upstream:src/main/webapp/WEB-INF/jsp/common/head.jsp
           <li><span>会员管理</span></li>
           <li><span>文章管理</span></li>
           <li><span>评论管理</span></li>
@@ -37,23 +32,6 @@
           <li><span>广告管理</span></li>
           <li><span>类别管理</span></li>
           <li><span>系统设置</span></li>
-=======
-          <li>
-            <span>会员管理</span>
-            <ul>
-              <li><span>文章管理</span></li>
-              <li><span>评论管理</span></li>
-              <li><span>订单管理</span></li>
-            </ul>
-          </li>
-          <li>
-            <span>商品管理</span>
-            <ul>
-              <li><span>广告管理</span></li>
-            </ul>
-          </li>
-          <li><span>类别管理</span></li>
->>>>>>> Stashed changes:src/main/webapp/WEB-INF/jsp/index.jsp
         </ul>
       </li>
     </ul>
