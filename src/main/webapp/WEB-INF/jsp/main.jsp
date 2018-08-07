@@ -10,7 +10,7 @@
     //开始编写JavaScript代码
     $(function(){
       //alert("Hello World"); //输出方法，浏览器弹出一个输出的对话框
-      //console.log("后台输出的"); //f12 console中
+      console.log("后台输出的"); //f12 console中
     })
   </script>
 </head>
@@ -24,17 +24,19 @@
       <li>
         <span>销售管理平台</span>
         <ul>
-          <li><span><a href="tomember">会员管理</a></span></li>
-          <li><span><a href="toarticle">文章管理</a></span></li>
-          <li><span><a href="tocomment">评论管理</a></span></li>
-          <li><span><a href="toorder">订单管理</a></span></li>
-          <li><span><a href="goods">商品管理</a></span></li>
-          <li><span><a href="advertisement">广告管理</a></span></li>
-          <li><span><a href="category">类别管理</a></span></li>
-          <li><span><a href="system">系统设置</a></span></li>
+          <li><span>会员管理</span></li>
+          <li><span>文章管理</span></li>
+          <li><span>评论管理</span></li>
+          <li><span>订单管理</span></li>
+          <li><span>商品管理</span></li>
+          <li><span>广告管理</span></li>
+          <li><span>类别管理</span></li>
         </ul>
       </li>
     </ul>
   </div>
-
-
+  <div region="center" split="true" style="width:150px;"></div>
+  <div region="south" split="true" style="width:100%;">zzq&lsq</div>
+</div>
+</body>
+</html>

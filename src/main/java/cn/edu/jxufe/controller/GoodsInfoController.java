@@ -19,6 +19,13 @@ public class GoodsInfoController {
     public Object testFindAllGoods(){
         return tbGoodsServer.findAllGoods();
     }
+
+    @RequestMapping("goods")
+    public String toGoods(){
+        System.out.println("商品管理页面");
+        return "goods";
+    }
+
 }
 /*
 zouziqian
