@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TbAdminDAO extends MyBatisBaseDao<TbAdmin, String> {
+    TbAdmin selectBypassword(TbAdmin tbAdmin);
 }

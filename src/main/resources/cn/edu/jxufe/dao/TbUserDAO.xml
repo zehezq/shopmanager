@@ -103,4 +103,8 @@
       createtime = #{createtime,jdbcType=TIMESTAMP}
     where userID = #{userid,jdbcType=INTEGER}
   </update>
+
+  <select id="findAllUser" resultMap="BaseResultMap">
+    select * from tb_user
+  </select>
 </mapper>

@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Created by Administrator on 2018/8/7.
+ * Created by Administrator on 2018/8/8.
  */
 @Component
-public class TbGoodsServerImpl implements TbGoodsServer {
+public class TbGoodsServerImpl implements TbGoodsServer{
     @Autowired
     private TbGoodsDAO tbGoodsDAO;
-
     @Override
     public List<TbGoods> findAllGoods() {
         return tbGoodsDAO.findAllGoods();

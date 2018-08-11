@@ -28,7 +28,7 @@
     });
   })
 </script>
-<div id="content" region="center" split="true" style="padding:5px;">
+<div id="content" region="center" split="true" style="padding:3px;">
   <table id="category">
 
   </table>

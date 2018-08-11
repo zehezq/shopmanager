@@ -12,7 +12,6 @@ public class TbArticleWithBLOBs extends TbArticle implements Serializable {
      * 文章内容
      */
     private byte[] content;
-
     /**
      * 文章图片地址
      */
