@@ -73,7 +73,7 @@ public class CategoryController {
         return "categoryedit";
     }
 
-    @RequestMapping("addcategory")
+    /*@RequestMapping("addcategory")
     @ResponseBody
     public Object addCategory(@RequestParam("id")int id,@RequestParam("caption")String caption,@RequestParam("status")int status,@RequestParam("createtime")String createtime){
         TbCategory category = new TbCategory();
@@ -84,15 +84,15 @@ public class CategoryController {
         categoryService.insertCategory(category);
         System.out.println("添加商品类别");
         return "add";
-    }
+    }*/
 
-    /*@RequestMapping("addcategory")
+    @RequestMapping("addcategory")
     @ResponseBody
     public Object addCategory(TbCategory category){
         categoryService.insertCategory(category);
         System.out.println("添加商品类别");
         return "add";
-    }*/
+    }
 
 
 }

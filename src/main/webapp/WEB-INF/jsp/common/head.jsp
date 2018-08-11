@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
   <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
   <script>
     //开始编写JavaScript代码
     $(function(){
@@ -28,10 +29,10 @@
           <li><span><a href="toarticle">文章管理</a></span></li>
           <li><span><a href="tocomment">评论管理</a></span></li>
           <li><span><a href="toorder">订单管理</a></span></li>
-          <li><span><a href="togoods">商品管理</a></span></li>
-          <li><span><a href="advertise">广告管理</a></span></li>
-          <li><span><a href="tocategory">类别管理</a></span></li>
-          <li><span><a href="tosystem">系统设置</a></span></li>
+          <li><span><a href="goods">商品管理</a></span></li>
+          <li><span><a href="advertisement">广告管理</a></span></li>
+          <li><span><a href="category">类别管理</a></span></li>
+          <li><span><a href="system">系统设置</a></span></li>
         </ul>
       </li>
     </ul>

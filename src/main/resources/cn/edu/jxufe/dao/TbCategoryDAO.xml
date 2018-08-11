@@ -23,19 +23,19 @@
     where code = #{code,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.edu.jxufe.entity.TbCategory">
-    insert into tb_category (code, id, `status`, 
-      createtime, updatetime, caption
+    insert into tb_category ( id, `status`,
+      createtime,  caption
       )
-    values (#{code,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=VARCHAR}, #{updatetime,jdbcType=VARCHAR}, #{caption,jdbcType=VARCHAR}
+    values (/*#{code,jdbcType=INTEGER},*/ #{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{createtime,jdbcType=VARCHAR},/* #{updatetime,jdbcType=VARCHAR},*/ #{caption,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbCategory">
     insert into tb_category
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="code != null">
+      <!--<if test="code != null">
         code,
-      </if>
+      </if>-->
       <if test="id != null">
         id,
       </if>
