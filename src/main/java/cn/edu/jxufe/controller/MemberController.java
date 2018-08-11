@@ -89,7 +89,7 @@ public class MemberController {
 
     @RequestMapping("deletedata")
     @ResponseBody
-    public Object deletedata(int id,ModelMap map){
+    public Object deletedata(int id){
         TbUser tbUser=new TbUser();
         tbUser.setUserid(id);
         if(tbUser.getUserid()!=0){
