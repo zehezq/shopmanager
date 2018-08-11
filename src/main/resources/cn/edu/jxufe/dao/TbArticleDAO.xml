@@ -129,4 +129,7 @@
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
+  <select id="findAllArticle" resultMap="BaseResultMap">
+    SELECT * from tb_article
+  </select>
 </mapper>

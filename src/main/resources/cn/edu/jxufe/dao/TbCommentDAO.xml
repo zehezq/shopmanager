@@ -90,4 +90,7 @@
       commenttime = #{commenttime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findAllComment" resultMap="BaseResultMap">
+    SELECT * from tb_comment
+  </select>
 </mapper>

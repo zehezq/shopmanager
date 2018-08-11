@@ -75,6 +75,7 @@ public class TbArticle implements Serializable {
         this.updatetime = updatetime;
     }
 
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -121,4 +122,5 @@ public class TbArticle implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

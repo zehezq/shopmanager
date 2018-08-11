@@ -103,4 +103,7 @@
       ordertime = #{ordertime,jdbcType=TIMESTAMP}
     where orderID = #{orderid,jdbcType=VARCHAR}
   </update>
+  <select id="findAllOrder" resultMap="BaseResultMap">
+    SELECT * from tb_order
+  </select>
 </mapper>
