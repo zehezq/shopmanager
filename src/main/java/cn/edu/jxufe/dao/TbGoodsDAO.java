@@ -14,4 +14,6 @@ public interface TbGoodsDAO extends MyBatisBaseDao<TbGoods, Integer> {
      *
      */
     List<TbGoods> findAllGoods();
+
+    TbGoods selectByPrimaryKey(int id);
 }

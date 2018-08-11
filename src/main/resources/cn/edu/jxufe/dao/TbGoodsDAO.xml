@@ -197,6 +197,6 @@
     where goodID = #{goodid,jdbcType=INTEGER}
   </update>
   <select id="findAllGoods" resultMap="BaseResultMap">
-    SELECT * from tb_goods;
+    SELECT * from tb_goods
   </select>
 </mapper>

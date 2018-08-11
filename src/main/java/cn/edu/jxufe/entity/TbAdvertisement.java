@@ -20,7 +20,17 @@ public class TbAdvertisement implements Serializable {
 
     private String url;
 
+    private String title;
+
     private static final long serialVersionUID = 1L;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getAdno() {
         return adno;

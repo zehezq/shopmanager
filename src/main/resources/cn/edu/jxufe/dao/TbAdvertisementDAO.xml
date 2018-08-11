@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbAdvertisement">
     <id column="adno" jdbcType="INTEGER" property="adno" />
     <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="picurl" jdbcType="VARCHAR" property="picurl" />
     <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    adno, `index`, `status`, createtime, picurl, url
+    adno, `index`,title, `status`, createtime, picurl, url
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,7 +24,7 @@
     where adno = #{adno,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
-    insert into tb_advertisement (adno, `index`, `status`, 
+    insert into tb_advertisement (adno, `index`, `status`,title,
       createtime, picurl, url
       )
     values (#{adno,jdbcType=INTEGER}, #{index,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
@@ -38,6 +39,9 @@
       </if>
       <if test="index != null">
         `index`,
+      </if>
+      <if test="title != null">
+        title,
       </if>
       <if test="status != null">
         `status`,
@@ -79,6 +83,9 @@
       <if test="index != null">
         `index` = #{index,jdbcType=INTEGER},
       </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
       </if>
@@ -97,10 +104,14 @@
   <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbAdvertisement">
     update tb_advertisement
     set `index` = #{index,jdbcType=INTEGER},
+    title=#{title,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       picurl = #{picurl,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR}
     where adno = #{adno,jdbcType=INTEGER}
   </update>
+  <select id="findAllAds" resultMap="BaseResultMap">
+    SELECT * from tb_advertisement
+  </select>
 </mapper>

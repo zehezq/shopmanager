@@ -103,4 +103,15 @@
       caption = #{caption,jdbcType=VARCHAR}
     where code = #{code,jdbcType=INTEGER}
   </update>
+  <select id="findAllCategory" resultMap="BaseResultMap">
+    SELECT * from tb_category
+  </select>
+  <insert id="insertCate" parameterType="cn.edu.jxufe.entity.TbCategory">
+    insert into tb_category ( id, `status`,
+     caption
+    )
+    values ( #{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+    #{caption,jdbcType=VARCHAR}
+    )
+  </insert>
 </mapper>
