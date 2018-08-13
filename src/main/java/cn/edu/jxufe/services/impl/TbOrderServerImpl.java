@@ -41,6 +41,21 @@ public class TbOrderServerImpl implements TbOrderServer {
     public TbOrder selectByPrimaryKey(String id) {
         return tbOrderDAO.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteByOrderId(String id) {
+        return tbOrderDAO.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insertOrder(TbOrder tbOrder) {
+        return tbOrderDAO.insert(tbOrder);
+    }
+
+    @Override
+    public int updateOrder(TbOrder tbOrder) {
+        return tbOrderDAO.updateByPrimaryKeySelective(tbOrder);
+    }
 }
 /*
 zouziqian

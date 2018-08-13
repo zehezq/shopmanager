@@ -39,6 +39,22 @@ public class TbCommentServerImpl implements TbCommentServer{
     public TbComment selectByPrimaryKey(int id) {
         return tbCommentDAO.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteByTbCommentId(int id) {
+        return tbCommentDAO.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insertTbComment(TbComment tbComment) {
+        return tbCommentDAO.insert(tbComment);
+    }
+
+    @Override
+    public int updateTbComment(TbComment tbComment) {
+        return tbCommentDAO.updateByPrimaryKeySelective(tbComment);
+    }
+
 }
 /*
 zouziqian

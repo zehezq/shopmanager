@@ -64,7 +64,13 @@
             width:600,
             height:400,
             title:"订单编辑",
-            modal:true
+            modal:true,
+            collapsible:false,
+            minimizable:false,
+            maximizable:false,
+            onClose:function(){
+                $("#ord").datagrid("reload");
+            }
         })
         $("#contentbody").attr("src","orderbyid?id="+id)
     }

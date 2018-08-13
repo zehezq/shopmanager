@@ -17,6 +17,15 @@ public interface TbOrderServer {
     public PageInfo<TbOrder> findAllOrder(int page,int rows);
 
     public TbOrder selectByPrimaryKey(String id);
+
+    //删除通过id
+    public int deleteByOrderId(String id);
+
+    //增加
+    public int insertOrder(TbOrder tbOrder);
+
+    //更新
+    public int updateOrder(TbOrder tbOrder);
 }
 /*
 zouziqian

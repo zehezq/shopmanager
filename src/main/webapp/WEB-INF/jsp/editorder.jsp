@@ -34,43 +34,45 @@
 <body>
 <fieldset class="title">
     <legend>订单管理</legend>
-    <table width="544"  align="center" cellpadding="3" cellspacing="3">
+    <table method="post" width="544"  align="center" cellpadding="3" cellspacing="3">
         <tr>
             <td width="87" align="right">订单编号:</td>
-            <td width="421" align="right"><input type="text" name="Input" value="${tbOrder.orderid}" /></td>
+            <td width="421" align="right"><input type="text" id="orderid" value="${tbOrder.orderid}" /></td>
         </tr>
         <tr>
             <td align="right">用户编号:</td>
-            <td align="right"><input type="text" name="Input2" value="${tbOrder.userid}" /></td>
+            <td align="right"><input type="text" id="userid" value="${tbOrder.userid}" /></td>
         </tr>
         <tr>
             <td align="right">订单价格:</td>
-            <td align="right"><input type="text" name="Input3" value="${tbOrder.price}" /></td>
+            <td align="right"><input type="text" id="price" value="${tbOrder.price}" /></td>
         </tr>
         <tr>
             <td align="right">订单状态:</td>
             <c:choose>
                 <c:when test="${tbOrder.status==0}">
-                    <td align="right"><input type="radio" name="status"  />
+                    <td align="right"><input type="radio" name="status" value="1" />
                         已支付 |
-                        <input checked type="radio" name="status" />
+                        <input checked type="radio" name="status" value="0" />
                         未支付</td>
                 </c:when>
                 <c:otherwise>
-                    <td align="right" width="20"><input type="radio" name="status" checked />
+                    <td align="right" width="20"><input type="radio" name="status" checked value="0" />
                         已支付 |
-                        <input  type="radio" name="status" />
+                        <input  type="radio" name="status" value="0" />
                         未支付</td>
                 </c:otherwise>
             </c:choose>
         </tr>
         <tr>
             <td align="right">创建时间:</td>
-            <td align="right"><input type="text" name="Input6" value="${tbOrder.ordertime}" /></td>
+            <td align="right"><input type="text" id="ordertime" value="${tbOrder.ordertime}" /></td>
         </tr>
         <tr>
             <td height="50">&nbsp;</td>
-            <td align="right" valign="bottom"><a  value="提交" class="easyui-linkbutton">增加</a></td>
+            <td align="right" valign="bottom">
+                <a  value="提交" class="easyui-linkbutton" onclick="saveedit()">编辑</a>
+            </td>
         </tr>
     </table>
 </fieldset>
@@ -94,6 +96,13 @@
         reader.onload = function(e){
             showImg.getElementsByTagName("img")[0].src=this.result ;
         }
+    }
+
+    function saveedit(){
+        var data={orderid:$("#orderid").val(),userid:$("#userid").val(),price:$("#price").val(),status:$("input:checked").val(),ordertime:$("#ordertime").val()}
+        $.post("updateorder",data,function(d){
+            alert(d)
+        })
     }
 </script>
 </body>

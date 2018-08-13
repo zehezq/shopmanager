@@ -55,7 +55,7 @@
     set `password` = #{password,jdbcType=VARCHAR}
     where account = #{account,jdbcType=VARCHAR}
   </update>
-  <select id="selectBypassword" parameterType="cn.edu.jxufe.entity.TbAdmin" resultMap="BaseResultMap">
+  <select id="selectBypassword" parameterType="cn.edu.jxufe.entity.TbAdmin" resultType="cn.edu.jxufe.entity.TbAdmin">
     select * from tb_admin where account = #{account} and password=#{password}
   </select>
 </mapper>

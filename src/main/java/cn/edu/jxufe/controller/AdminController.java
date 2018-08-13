@@ -8,6 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Administrator on 2018/8/9.
  */
@@ -17,12 +19,11 @@ public class AdminController {
     private TbAdminServer tbAdminServer;
 
     @RequestMapping("loginbyid")
-    public String toMemberbyid(TbAdmin tbAdmin,ModelMap map){
+    public String toMemberbyid(TbAdmin tbAdmin,HttpServletRequest request){
         System.out.println("会员编辑页面");
         TbAdmin admin=tbAdminServer.selectBypassword(tbAdmin);
         if(admin!=null){
-            map.put("account",admin.getAccount());
-            map.put("password",admin.getPassword());
+            request.getSession().setAttribute("admin",admin);
             return "member";
         }
         return "error";

@@ -31,52 +31,56 @@
         *{ margin:0px; padding:0px;}
         -->
     </style>
+
+    <script>
+
+    </script>
 </head>
 <body>
 <fieldset class="title">
-    <legend>文章管理</legend>
+    <legend>会员管理</legend>
     <table width="544"  align="center" cellpadding="3" cellspacing="3">
         <tr>
-            <td width="87" align="right">文章编号:</td>
-            <td width="421" align="right"><input id="articleid" type="text" value="${tbArticle.articleid}" /></td>
+            <td width="87" align="right" >用户编号:</td>
+            <td width="421" align="right">
+                <input id="userid" type="text" value="${tbUser.userid}" /></td>
         </tr>
         <tr>
-            <td align="right">文章标题:</td>
-            <td align="right"><input type="text" id="title" value="${tbArticle.title}" /></td>
-        </tr>
-        <tr>
-            <td align="right" valign="top">文章内容:</td>
+            <td align="right">用户名字:</td>
             <td align="right">
-                <form action="uploaddire" id="uploaddire"  method="post" enctype="multipart/form-data">
+                <input type="text" id="username" value="${tbUser.username}" /></td>
+        </tr>
+        <tr>
+            <td align="right">手机号码:</td>
+            <td align="right">
+                <input type="text" id="phone" value="${tbUser.phone}" /></td>
+        </tr>
+        <tr>
+            <td align="right" valign="top">用户头像:</td>
+            <td align="right">
+                <form action="uploadimage" id="uploadimage"  method="post" enctype="multipart/form-data">
                     <label id="file_pic">
-                    <input type="text" id="content" value="${tbArticle.content}" style="height: 100px;" />
+                        <input type="file" name="fs" id="fs" style="display: none;" />
+                        <img src="${tbUser.userpicture}" width="400" height="150" >
                     </label>
                 </form>
             </td>
+
         </tr>
         <tr>
-            <td align="right">图片地址:</td>
-            <td align="right"><input type="text" id="picurl" value="${tbArticle.picurl}" /></td>
-        </tr>
-        <tr>
-            <td width="87" align="right">阅读量:</td>
-            <td width="421" align="right"><input type="text" id="readcount" value="${tbArticle.readcount}" /></td>
-        </tr>
-        <tr>
-            <td align="right">创建时间:</td>
-            <td align="right"><input type="text" id="createtime" value="${tbArticle.createtime}" /></td>
-        </tr>
-        <tr>
-            <td align="right">修改时间:</td>
-            <td align="right"><input type="text" id="updatetime" value="${tbArticle.updatetime}" /></td>
+            <td align="right">创建时间</td>
+            <td align="right">
+                <input type="text" id="createtime" name="" value="${tbUser.createtime}" /></td>
         </tr>
         <tr>
             <td height="50">&nbsp;</td>
-            <td align="right" valign="bottom"><a  value="提交" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
+            <td align="right" valign="bottom">
+                <a id="edit" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
         </tr>
     </table>
 </fieldset>
 <script>
+
     var showImg = document.querySelector("#file_pic");
     var getImg = document.querySelector("input[type='file']");
     if(typeof FileReader==='undefined'){
@@ -94,27 +98,28 @@
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e){
-            showImg.getElementsByTagName("img")[0].src=this.result ;
+            showImg.getElementsByTagName("img")[0].src=this.result;
         }
     }
 
     function saveedit(){
         if($("#fs").val()==""){
-            var data={articleid:$("#articleid").val(),title:$("#title").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),createtime:$("#createtime").val(),updatetime:$("#updatetime").val()}
-            $.post("updatearticle",data,function(d){
+            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            $.post("saveupdatedata",data,function(d){
                 alert(d)
             })
         }else{
-            $("#uploaddire").ajaxSubmit({
+            $("#uploadimage").ajaxSubmit({
                 success:function(url){
-                    var data={articleid:$("#articleid").val(),title:$("#title").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),createtime:$("#createtime").val(),updatetime:$("#updatetime").val(),content:url}
-                    $.post("updatearticle",data,function(d){
+                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val(),userpicture:url}
+                    $.post("saveupdatedata",data,function(d){
                         alert(d)
                     })
                 }
             })
         }
     }
+
 </script>
 </body>
 

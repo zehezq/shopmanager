@@ -1,6 +1,8 @@
 package cn.edu.jxufe.controller;
 
+import cn.edu.jxufe.entity.TbComment;
 import cn.edu.jxufe.entity.TbUser;
+import cn.edu.jxufe.services.TbCommentServer;
 import cn.edu.jxufe.services.TbUserServer;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +61,6 @@ public class MemberController {
     @RequestMapping("uploadimage")
     @ResponseBody
     public Object upLoadImage(@RequestParam("fs") MultipartFile file,HttpServletRequest request){//与html中表单的name匹配
-        System.out.println("准备上传");
-        System.out.println("输出上传的文件名："+file.getOriginalFilename());
         //获取服务器的upload文件夹绝对路径
         String path=request.getSession().getServletContext().getRealPath("upload/");
         System.out.println("站点的实际文件路径"+path);
@@ -78,29 +78,33 @@ public class MemberController {
 
     @RequestMapping("saveupdatedata")
     @ResponseBody
-    public Object saveupdatedata(TbUser tbUser ){
+    public Object saveupdatedata(TbUser tbUser){
 
         if(tbUser.getUserid()!=0){
             tbUserServer.updateTbuser(tbUser);
             return "update";
         }else
-        return "fail";
+            return "error";
+    }
+
+    @RequestMapping("adddata")
+    @ResponseBody
+    public Object adddata(TbUser tbUser){
+        tbUserServer.insertTbuser(tbUser);
+            return "add";
     }
 
     @RequestMapping("deletedata")
     @ResponseBody
-    public Object deletedata(int id){
+    public Object deletedata(int userid){
         TbUser tbUser=new TbUser();
-        tbUser.setUserid(id);
+        tbUser.setUserid(userid);
         if(tbUser.getUserid()!=0){
-            tbUserServer.deleteByUserId(id);
+            tbUserServer.deleteByUserId(userid);
             return "delete";
         }else
             return "fail";
-        /*{
-            tbUserServer.insertTbuser(tbUser);
-            return "add";
-        }*/
+
     }
 
     /*@RequestMapping("savedata")
@@ -117,6 +121,10 @@ public class MemberController {
         return "success";
     }*/
 
+    /*{
+            tbUserServer.insertTbuser(tbUser);
+            return "add";
+        }*/
 }
 /*
 zouziqian

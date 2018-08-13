@@ -9,9 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/8/7.
@@ -49,6 +53,17 @@ public class CommentController {
         TbComment tbComment=tbCommentServer.selectByPrimaryKey(id);
         map.put("tbComment",tbComment);
         return "editcomment";
+    }
+
+    @RequestMapping("updatecomment")
+    @ResponseBody
+    public Object updatecomment(TbComment tbComment){
+
+        if(tbComment.getId()!=0){
+            tbCommentServer.updateTbComment(tbComment);
+            return "update";
+        }else
+            return "fail";
     }
 }
 /*

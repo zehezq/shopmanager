@@ -111,7 +111,7 @@
         }else{
             $("#uploadimage").ajaxSubmit({
                 success:function(url){
-                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val(),userpicture:url}
+                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
                     $.post("saveupdatedata",data,function(d){
                         alert(d)
                     })

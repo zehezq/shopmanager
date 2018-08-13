@@ -50,6 +50,17 @@ public class OrderController {
         map.put("tbOrder",tbOrder);
         return "editorder";
     }
+
+    @RequestMapping("updateorder")
+    @ResponseBody
+    public Object updateorder(TbOrder tbOrder){
+
+        if(!tbOrder.getOrderid().equals("")){
+            tbOrderServer.updateOrder(tbOrder);
+            return "update";
+        }else
+            return "fail";
+    }
 }
 /*
 zouziqian

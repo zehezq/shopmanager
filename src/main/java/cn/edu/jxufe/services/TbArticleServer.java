@@ -15,6 +15,15 @@ public interface TbArticleServer {
     public PageInfo<TbArticle> findAllArticle(int page,int rows);
 
     public TbArticle selectByPrimaryKey(int id);
+
+    //删除通过id
+    public int deleteByTbArticleId(int id);
+
+    //增加
+    public int insertTbArticle(TbArticle tbArticle);
+
+    //更新
+    public int updateTbArticle(TbArticle tbArticle);
 }
 /*
 zouziqian

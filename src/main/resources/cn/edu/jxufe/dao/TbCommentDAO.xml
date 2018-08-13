@@ -21,6 +21,10 @@
     delete from tb_comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    delete from tb_comment
+    where userID = #{userid,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="cn.edu.jxufe.entity.TbComment">
     insert into tb_comment (id, userID, goodID, 
       content, commenttime)

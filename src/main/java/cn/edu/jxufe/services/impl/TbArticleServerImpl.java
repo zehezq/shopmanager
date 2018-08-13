@@ -38,6 +38,21 @@ public class TbArticleServerImpl implements TbArticleServer{
     public TbArticle selectByPrimaryKey(int id) {
         return tbArticleDAO.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteByTbArticleId(int id) {
+        return tbArticleDAO.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insertTbArticle(TbArticle tbArticle) {
+        return tbArticleDAO.insert(tbArticle);
+    }
+
+    @Override
+    public int updateTbArticle(TbArticle tbArticle) {
+        return tbArticleDAO.updateByPrimaryKeySelective(tbArticle);
+    }
 }
 /*
 zouziqian

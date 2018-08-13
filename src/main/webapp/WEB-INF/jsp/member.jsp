@@ -28,17 +28,18 @@
             toolbar:[{
             iconCls: 'icon-add',
             text:"增加",
-            handler:function(id)
+            handler:function()
             {//window.location.href="page_addmember"
-                alert("添加")
+                addWindow();
             }
         },'-',{
             iconCls: 'icon-cancel',
             text:"删除",
-            handler: function(row)
+            id:"test",
+            handler: function()
             {
                 //alert('删除按钮')
-                remove(row);
+                remove();
             }
         },'-',{
                 text: '用户编号<input id="itemid1" style="line-height:14px;border:1px solid #ccc"/>'
@@ -80,25 +81,84 @@
         $("#contentbody").attr("src","memberbyid?id="+id)
     }
 
-    /*function remove(rowIndex){  //删除操作
-        $.messager.confirm('确认','确认删除?',function(row){
-            if(row){
-                alert(rowIndex);
-                var selectedRow = $('#mem').datagrid('getSelected');  //获取选中行
+    function addWindow() {
+        $("#addmember").css("display", "block");
+        $("#addmember").dialog({
+            width: 600,
+            height: 400,
+            modal: true,
+            title: "添加会员信息",
+            collapsible:false,
+            minimizable:false,
+            maximizable:false,
+            buttons: [{
+                id: 'btnAdd',
+                text: '添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    addmems();
+                    $('#mem').datagrid("reload");
+                    //关闭对话框，刷新表
+                    $("#addmember").dialog("close");
+                }
+            }, {
+                id: 'btnCancelAdd',
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $("#addmember").dialog("close");
+                }
+            }]
+        });
+    }
 
-                $.ajax({
-                    url:"deletedata",
-                    //加了个type，作用是以后不管什么删除，都可以转到这个ashx中处理
-                    success:function(){
-                        $('#mem').datagrid("deleteRow", row)
-                        alert('删除成功');
-                    }
-                });
-                $("#mem").datagrid("reload");
-            }
-        })
+    function addmems(){
+        alert("点击了提交按钮")
+        if($("#fs").val()==""){
+            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            $.post("adddata",data,function(d){
+                alert(d)
+            })
+        }else{
+            $("#uploadimage").ajaxSubmit({
+                success:function(url){
+                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
+                    $.post("adddata",data,function(d){
+                        alert(d)
+                    })
+                }
+            })
+        }
+    }
+
+    function remove() {
+        var row = $('#mem').datagrid('getSelected');
+        if (row) {
+            var rowIndex = $('#mem').datagrid('getRowIndex', row);
+            $('#mem').datagrid('deleteRow', rowIndex);
+            alert("删除成功")
+        }
+    }
+
+   /* function remove() {
+        var row = $('#mem').datagrid('getSelected');
+        if (row) {
+            $.messager.confirm('confirm', 'Are you sure you want to delete this user?', function (r) {
+                if (r) {
+                    $.post('deletedata', {userid:row.userid}, function (result) {
+                        if (result.success) {
+                            $('#mem').datagrid('reload');    // reload the user data
+                        } else {
+                            $.messager.show({   // show error message
+                                title: 'error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }*/
-
 
 </script>
 <div id="editmember" style="overflow: hidden">
@@ -106,6 +166,43 @@
 </div>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
     <table id="mem"></table>
+</div>
+
+<div id="addmember">
+    <table width="544"  align="center" cellpadding="3" cellspacing="3">
+        <tr>
+            <td width="87" align="right" >用户编号:</td>
+            <td width="421" align="left">
+                <input id="userid" type="text" /></td>
+        </tr>
+        <tr>
+            <td align="right">用户名字:</td>
+            <td align="left">
+                <input type="text" id="username" /></td>
+        </tr>
+        <tr>
+            <td align="right">手机号码:</td>
+            <td align="left">
+                <input type="text" id="phone" /></td>
+        </tr>
+        <tr>
+            <td align="right" valign="top">用户头像:</td>
+            <td align="left">
+                <form action="uploadimage" id="uploadimage"  method="post" enctype="multipart/form-data">
+                    <label id="file_pic">
+                        <input type="file" name="fs" id="fs" style="display: none;" />
+                        <img src="" width="400" height="150" >
+                    </label>
+                </form>
+            </td>
+
+        </tr>
+        <tr>
+            <td align="right">创建时间</td>
+            <td align="left">
+                <input type="text" id="createtime" name="" /></td>
+        </tr>
+    </table>
 </div>
 
 <jsp:include page="common/foot.jsp"></jsp:include>

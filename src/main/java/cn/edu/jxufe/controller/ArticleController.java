@@ -9,9 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/8/7.
@@ -48,6 +52,37 @@ public class ArticleController {
         TbArticle tbArticle=tbArticleServer.selectByPrimaryKey(id);
         map.put("tbArticle",tbArticle);
         return "editarticle";
+    }
+
+    @RequestMapping("uploaddire")
+    @ResponseBody
+    public Object upLoadImage(@RequestParam("fs") MultipartFile file,HttpServletRequest request){//与html中表单的name匹配
+        System.out.println("准备上传");
+        System.out.println("输出上传的文件名："+file.getOriginalFilename());
+        //获取服务器的upload文件夹绝对路径
+        String path=request.getSession().getServletContext().getRealPath("upload/");
+        System.out.println("站点的实际文件路径"+path);
+        String fileName= UUID.randomUUID().toString()+file.getOriginalFilename();
+        try{
+            FileOutputStream fout=new FileOutputStream(path+ fileName);
+            fout.write(file.getBytes());
+            fout.close();
+            return fileName;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping("updatearticle")
+    @ResponseBody
+    public Object updatearticle(TbArticle tbArticle){
+
+        if(tbArticle.getArticleid()!=0){
+            tbArticleServer.updateTbArticle(tbArticle);
+            return "update";
+        }else
+            return "fail";
     }
 }
 /*

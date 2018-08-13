@@ -14,4 +14,5 @@ public interface TbCommentDAO extends MyBatisBaseDao<TbComment, Integer> {
 
     //查询通过id
     TbComment selectByPrimaryKey(int id);
+
 }

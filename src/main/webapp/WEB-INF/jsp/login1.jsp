@@ -5,11 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>电商管理系统</title>
     <link href="../../content/css/page/login.css" rel="stylesheet" type="text/css" >
+    <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
 </head>
 
 <body>
 <div class="second_body">
-    <form>
+    <form action="loginbyid" method="post">
         <div class="logo"></div>
         <div class="title-zh">电商管理系统</div>
         <div class="message"></div>
@@ -28,12 +29,20 @@
             </tr>
             <tr>
                 <td colspan="3" style="text-align:center">
-                    <input type="submit" value="登录" class="login_button" />
+                    <input type="submit" value="登录" class="login_button" onclick="click()"/>
                     <input type="button" value="重置" class="reset_botton"  />
                 </td>
             </tr>
         </table>
     </form>
 </div>
+<script type="text/javascript">
+    function click(){
+        var data={account:$("#userCode").val(),password:$("#password")}
+        $.post("loginbyid",data,function(d){
+            alert(d)
+        })
+    }
+</script>
 </body>
 </html>

@@ -15,6 +15,16 @@ public interface TbCommentServer {
     public PageInfo<TbComment> findAllComment(int page,int rows);
 
     public TbComment selectByPrimaryKey(int id);
+
+    //删除通过id
+    public int deleteByTbCommentId(int id);
+
+    //增加
+    public int insertTbComment(TbComment tbComment);
+
+    //更新
+    public int updateTbComment(TbComment tbComment);
+
 }
 /*
 zouziqian

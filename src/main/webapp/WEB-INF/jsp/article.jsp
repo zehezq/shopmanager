@@ -60,7 +60,13 @@
             width:600,
             height:400,
             title:"编辑",
-            modal:true
+            modal:true,
+            collapsible:false,
+            minimizable:false,
+            maximizable:false,
+            onClose:function(){
+                $("#art").datagrid("reload");
+            }
         })
         $("#contentbody").attr("src","articlebyid?id="+id)
     }
