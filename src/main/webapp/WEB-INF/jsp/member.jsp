@@ -28,15 +28,18 @@
             toolbar:[{
             iconCls: 'icon-add',
             text:"增加",
-            handler:function()
+            handler:function(id)
             {//window.location.href="page_addmember"
-                alert('删除按钮')
+                alert("添加")
             }
         },'-',{
             iconCls: 'icon-cancel',
             text:"删除",
-            handler: function()
-            {alert('删除按钮')}
+            handler: function(row)
+            {
+                //alert('删除按钮')
+                remove(row);
+            }
         },'-',{
                 text: '用户编号<input id="itemid1" style="line-height:14px;border:1px solid #ccc"/>'
             },{
@@ -76,6 +79,26 @@
         })
         $("#contentbody").attr("src","memberbyid?id="+id)
     }
+
+    /*function remove(rowIndex){  //删除操作
+        $.messager.confirm('确认','确认删除?',function(row){
+            if(row){
+                alert(rowIndex);
+                var selectedRow = $('#mem').datagrid('getSelected');  //获取选中行
+
+                $.ajax({
+                    url:"deletedata",
+                    //加了个type，作用是以后不管什么删除，都可以转到这个ashx中处理
+                    success:function(){
+                        $('#mem').datagrid("deleteRow", row)
+                        alert('删除成功');
+                    }
+                });
+                $("#mem").datagrid("reload");
+            }
+        })
+    }*/
+
 
 </script>
 <div id="editmember" style="overflow: hidden">

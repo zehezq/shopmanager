@@ -84,10 +84,23 @@ public class MemberController {
             tbUserServer.updateTbuser(tbUser);
             return "update";
         }else
-        {
+        return "fail";
+    }
+
+    @RequestMapping("deletedata")
+    @ResponseBody
+    public Object deletedata(int id){
+        TbUser tbUser=new TbUser();
+        tbUser.setUserid(id);
+        if(tbUser.getUserid()!=0){
+            tbUserServer.deleteByUserId(id);
+            return "delete";
+        }else
+            return "fail";
+        /*{
             tbUserServer.insertTbuser(tbUser);
             return "add";
-        }
+        }*/
     }
 
     /*@RequestMapping("savedata")
