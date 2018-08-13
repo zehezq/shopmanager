@@ -63,6 +63,9 @@
       <if test="index != null">
         #{index,jdbcType=INTEGER},
       </if>
+      <if test="title != null">
+        #{title,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>

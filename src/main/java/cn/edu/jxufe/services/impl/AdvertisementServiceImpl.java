@@ -43,7 +43,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public int update(TbAdvertisement advertisement) {
-        return tbAdvertisementDAO.updateByPrimaryKey(advertisement);
+        return tbAdvertisementDAO.updateByPrimaryKeySelective(advertisement);
     }
 
     @Override

@@ -9,7 +9,16 @@
 <jsp:include page="common/head.jsp"></jsp:include>
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
+  var showImg,getImg;
   $(function(){
+    showImg = document.querySelector("#file_pic");
+    getImg = document.querySelector("input[type='file']");
+    if(typeof FileReader==='undefined'){
+      showImg.innerHTML = "抱歉，你的浏览器不支持!";
+      getImg.setAttribute('disabled','disabled');
+    }else{
+      getImg.addEventListener('change',readFile,false);
+    }
     $('#adv').datagrid({
       //表格的数据来源
       url:'advertisementdata',
@@ -106,7 +115,7 @@
           $('#category').datagrid("reload");
 
           //关闭对话框，刷新表
-          $("#addDiv").dialog("close");
+          //$("#addDiv").dialog("close");
         }
       }, {
         id: 'btnCancelAdd',
@@ -126,7 +135,6 @@
         index: $("#index").val(),
         title: $("#title").val(),
         url: $("#url").val(),
-        createtime:$("#createtime"),
         status: $("input:checked").val()
       }
       $.post("addads",data,function(d){
@@ -140,9 +148,8 @@
             index: $("#index").val(),
             title: $("#title").val(),
             url: $("#url").val(),
-            createtime:$("#createtime"),
             picurl: url,
-            status: $("input:checked").val()
+           status: $("input:checked").val()
           }
           $.post("addads", data, function (d) {
             alert(d);
@@ -151,7 +158,18 @@
       });
     }
   }
-
+  function readFile() {
+    var file = this.files[0];
+    if (!/image\/\w+/.test(file.type)) {
+      alert("请上传图片！");
+      return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      showImg.getElementsByTagName("img")[0].src = this.result;
+    }
+  }
 
 </script>
 <div id="content" region="center" split="true" style="padding:5px;">
@@ -169,19 +187,13 @@
       <td><input id="index" name="" /></td>
     </tr>
     <tr>
-      <td>广告标题：</td>
-      <td><input id="title" name="price" /></td>
-    </tr>
+    <td>广告标题：</td>
+    <td><input id="title" name="title" /></td>
+  </tr>
     <tr>
       <td>广告链接：</td>
       <td>
-        <input id="url" name="oldprice" />
-      </td>
-    </tr>
-    <tr>
-      <td>广告创建时间：</td>
-      <td>
-        <input id="createtime" name="stock"/>
+        <input id="url" name="url" />
       </td>
     </tr>
     <tr>
@@ -196,20 +208,12 @@
       </td>
     </tr>
     <tr>
-      <td>广告状态:</td>
+      <td>广告状态：</td>
       <c:choose>
-        <%--<c:when test="${adv.status==1}">--%>
         <td align="right"><input type="radio" name="status" value="1" />
           启用 |
           <input checked type="radio" name="status" value="0"/>
           禁用</td>
-        <%-- </c:when>--%>
-        <%--<c:otherwise>
-          <td align="right" width="20"><input type="radio" name="status" checked value="0"/>
-            启用 |
-            <input  type="radio" name="status" value="1"/>
-            禁用</td>
-        </c:otherwise>--%>
       </c:choose>
     </tr>
   </table>
