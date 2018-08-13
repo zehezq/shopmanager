@@ -48,7 +48,7 @@
         {
           field: 'edit', title: '编辑详情', width: 100, align: 'center', formatter:
                 function (v, r, i) {
-                  return "<a href='javascript:showWindow("+ r.id+")'>编辑详情</a>";
+                  return "<a href='javascript:showWindow("+ r.code+")'>编辑详情</a>";
                 }
         }
       ]]
@@ -62,7 +62,7 @@
 
   })
 
-  function showWindow(id){
+  function showWindow(code){
     $("#editCategory").window({
       width:600,
       height:400,
@@ -75,7 +75,7 @@
         $("#category").datagrid("reload");
       }
     })
-    $("#contentbody").attr("src","categorybyid?id="+id)
+    $("#contentbody").attr("src","categorybyid?id="+code)
   }
 
   //显示弹出添加的对话框
@@ -95,11 +95,9 @@
         text: '添加',
         iconCls: 'icon-add',
         handler: function () {
-
           addCate();
           //initTable();
           $('#category').datagrid("reload");
-
           //关闭对话框，刷新表
           $("#addDiv").dialog("close");
         }

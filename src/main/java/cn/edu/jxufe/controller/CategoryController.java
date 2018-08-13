@@ -50,41 +50,12 @@ public class CategoryController {
         }
     }
 
-    /*@RequestMapping("/categorydata")
-    @ResponseBody
-    public Object insertCategory(@RequestParam("index")int id,@RequestParam("caption")String caption,@RequestParam("status")int status,@RequestParam("updatetime")String updatetime){
-       TbCategory category = new TbCategory();
-        category.setId(id);
-        category.setCaption(caption);
-        category.setStatus(status);
-        category.setUpdatetime(updatetime);
-        int m = categoryService.insertCategory(category);
-        if(m == 1){
-            return "ok";
-        }else
-            return "failed";
-
-    }*/
-
     @RequestMapping("categorybyid")
     public String toAdvertisementByid(int id,ModelMap map){
         TbCategory category = categoryService.findOne(id);
         map.put("category",category);
         return "categoryedit";
     }
-
-    /*@RequestMapping("addcategory")
-    @ResponseBody
-    public Object addCategory(@RequestParam("id")int id,@RequestParam("caption")String caption,@RequestParam("status")int status,@RequestParam("createtime")String createtime){
-        TbCategory category = new TbCategory();
-        category.setId(id);
-        category.setCaption(caption);
-        category.setStatus(status);
-        category.setUpdatetime(createtime);
-        categoryService.insertCategory(category);
-        System.out.println("添加商品类别");
-        return "add";
-    }*/
 
     @RequestMapping("addcategory")
     @ResponseBody

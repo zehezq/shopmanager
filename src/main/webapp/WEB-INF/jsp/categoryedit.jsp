@@ -53,6 +53,10 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td align="right"><input id="createtime" type="text" name="createtime" value="${category.createtime}" /></td>
   </tr>
   <tr>
+    <td align="right">类别修改时间:</td>
+    <td align="right"><input id="updatetime" type="text" name="updatetime" value="${category.updatetime}" /></td>
+  </tr>
+  <tr>
     <td align="right">类别状态:</td>
     <c:choose>
       <c:when test="${category.status==1}">
@@ -103,11 +107,13 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
       id: $("#id").val(),
       caption: $("#caption").val(),
       createtime: $("#createtime").val(),
+      updatetime: $("#updatetime").val(),
       status: $("input:checked").val()
     };
     $.post("updatecategory",data,function(d){
-      alert(d);
+      alert("修改成功！");
     });
+    alert("点击了提交")
   }
 </script>
 </body>

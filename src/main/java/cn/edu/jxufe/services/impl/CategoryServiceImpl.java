@@ -46,6 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public int updateCategory(TbCategory category) {
-        return tbCategoryDAO.updateByPrimaryKeySelective(category);
+        return tbCategoryDAO.updateByPrimaryKey(category);
     }
 }
