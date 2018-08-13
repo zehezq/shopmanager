@@ -2,8 +2,17 @@
 <jsp:include page="common/head.jsp"></jsp:include>
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
+    var showImg,getImg;
     $(function(){
-        //
+        showImg = document.querySelector("#file_pic");
+        getImg = document.querySelector("input[type='file']");
+        if(typeof FileReader==='undefined'){
+            showImg.innerHTML = "抱歉，你的浏览器不支持!";
+            getImg.setAttribute('disabled','disabled');
+        }else{
+            getImg.addEventListener('change',readFile,false);
+        }
+
         $("#mem").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
@@ -84,13 +93,14 @@
     function addWindow() {
         $("#addmember").css("display", "block");
         $("#addmember").dialog({
-            width: 600,
-            height: 400,
+            width: 360,
+            height: 380,
             modal: true,
             title: "添加会员信息",
-            collapsible:false,
-            minimizable:false,
-            maximizable:false,
+            collapsible: true,
+            minimizable: true,
+            maximizable: true,
+            resizable: true,
             buttons: [{
                 id: 'btnAdd',
                 text: '添加',
@@ -98,8 +108,6 @@
                 handler: function () {
                     addmems();
                     $('#mem').datagrid("reload");
-                    //关闭对话框，刷新表
-                    $("#addmember").dialog("close");
                 }
             }, {
                 id: 'btnCancelAdd',
@@ -115,14 +123,14 @@
     function addmems(){
         alert("点击了提交按钮")
         if($("#fs").val()==""){
-            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            var data={username:$("#username").val(),phone:$("#phone").val()}
             $.post("adddata",data,function(d){
                 alert(d)
             })
         }else{
             $("#uploadimage").ajaxSubmit({
                 success:function(url){
-                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
+                    var data={username:$("#username").val(),phone:$("#phone").val(),userpicture:url}
                     $.post("adddata",data,function(d){
                         alert(d)
                     })
@@ -131,16 +139,29 @@
         }
     }
 
-    function remove() {
+    function readFile(){
+     var file = this.files[0];
+     if(!/image\/\w+/.test(file.type)){
+     alert("请上传图片！");
+     return false;
+     }
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = function(e){
+     showImg.getElementsByTagName("img")[0].src=this.result;
+     }
+     }
+
+    /*function remove() {
         var row = $('#mem').datagrid('getSelected');
         if (row) {
             var rowIndex = $('#mem').datagrid('getRowIndex', row);
             $('#mem').datagrid('deleteRow', rowIndex);
             alert("删除成功")
         }
-    }
+    }*/
 
-   /* function remove() {
+    /*function remove() {
         var row = $('#mem').datagrid('getSelected');
         if (row) {
             $.messager.confirm('confirm', 'Are you sure you want to delete this user?', function (r) {
@@ -169,21 +190,16 @@
 </div>
 
 <div id="addmember">
-    <table width="544"  align="center" cellpadding="3" cellspacing="3">
-        <tr>
-            <td width="87" align="right" >用户编号:</td>
-            <td width="421" align="left">
-                <input id="userid" type="text" /></td>
-        </tr>
+    <table align="center" cellpadding="3" cellspacing="3">
         <tr>
             <td align="right">用户名字:</td>
             <td align="left">
-                <input type="text" id="username" /></td>
+                <input id="username" name="username" /></td>
         </tr>
         <tr>
             <td align="right">手机号码:</td>
             <td align="left">
-                <input type="text" id="phone" /></td>
+                <input id="phone" name="phone" /></td>
         </tr>
         <tr>
             <td align="right" valign="top">用户头像:</td>
@@ -191,16 +207,10 @@
                 <form action="uploadimage" id="uploadimage"  method="post" enctype="multipart/form-data">
                     <label id="file_pic">
                         <input type="file" name="fs" id="fs" style="display: none;" />
-                        <img src="" width="400" height="150" >
+                        <img src="" width="173" height="150" >
                     </label>
                 </form>
             </td>
-
-        </tr>
-        <tr>
-            <td align="right">创建时间</td>
-            <td align="left">
-                <input type="text" id="createtime" name="" /></td>
         </tr>
     </table>
 </div>

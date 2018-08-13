@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<script type="javascript"></script>
+<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
-        var i=10;
         $("#com").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
@@ -24,7 +23,7 @@
                 iconCls: 'icon-add',
                 text:"增加",
                 handler: function()
-                {alert('增加窗口')}
+                {showComs()}
             },'-',{
                 iconCls: 'icon-cancel',
                 text:"删除",
@@ -67,11 +66,71 @@
         $("#contentbody").attr("src","commentbyid?id="+id)
     }
 
+    function showComs() {
+        $("#addcom").css("display", "block");
+        $("#addcom").dialog({
+            width: 350,
+            height: 220,
+            modal: true,
+            title: "添加评论信息",
+            collapsible: true,
+            minimizable: true,
+            maximizable: true,
+            resizable: true,
+            buttons: [{
+                id: 'btnAdd',
+                text: '添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    addcomment();
+                    //initTable();
+                    $('#com').datagrid("reload");
+                }
+            }, {
+                id: 'btnCancelAdd',
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $("#addcom").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function addcomment(){
+        alert("点击了提交按钮")
+        var data={userid:$("#userid").val(),goodid:$("#goodid").val(),content:$("#contents").val(),commenttime:$("#commenttime").val()}
+        $.post("addcomments",data,function(d){
+            alert(d)
+        })
+    }
+
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
     <table id="com"></table>
     <div id="editcomment" style="overflow:hidden;">
         <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0"></iframe>
     </div>
+</div>
+
+<div id="addcom">
+    <table align="center" cellpadding="3" cellspacing="3">
+        <tr>
+            <td align="right">用户编号:</td>
+            <td align="left"><input id="userid" name="userid" /></td>
+        </tr>
+        <tr>
+            <td align="right">商品编号:</td>
+            <td align="left"><input id="goodid" name="goodid" /></td>
+        </tr>
+        <tr>
+            <td align="right" valign="top">评论内容:</td>
+            <td align="left"><input id="contents" name="contents" /></td>
+        </tr>
+        <tr>
+            <td align="right">发布时间:</td>
+            <td align="left"><input id="commenttime" name="commenttime"/></td>
+        </tr>
+    </table>
 </div>
 <jsp:include page="common/foot.jsp"></jsp:include>

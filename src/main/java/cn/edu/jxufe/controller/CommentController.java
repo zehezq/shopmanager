@@ -65,6 +65,13 @@ public class CommentController {
         }else
             return "fail";
     }
+
+    @RequestMapping("addcomments")
+    @ResponseBody
+    public Object addcomments(TbComment tbComment){
+        tbCommentServer.insertTbComment(tbComment);
+        return "add";
+    }
 }
 /*
 zouziqian

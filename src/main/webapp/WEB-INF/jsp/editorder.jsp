@@ -5,6 +5,7 @@
     <title>电商管理平台</title>
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
     <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
     <style type="text/css">
@@ -57,9 +58,9 @@
                         未支付</td>
                 </c:when>
                 <c:otherwise>
-                    <td align="right" width="20"><input type="radio" name="status" checked value="0" />
+                    <td align="right" width="20"><input type="radio" name="status" checked value="0"/>
                         已支付 |
-                        <input  type="radio" name="status" value="0" />
+                        <input  type="radio" name="status" value="0"/>
                         未支付</td>
                 </c:otherwise>
             </c:choose>

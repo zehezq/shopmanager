@@ -47,7 +47,7 @@ public class TbCommentServerImpl implements TbCommentServer{
 
     @Override
     public int insertTbComment(TbComment tbComment) {
-        return tbCommentDAO.insert(tbComment);
+        return tbCommentDAO.insertSelective(tbComment);
     }
 
     @Override

@@ -61,6 +61,13 @@ public class OrderController {
         }else
             return "fail";
     }
+
+    @RequestMapping("addorders")
+    @ResponseBody
+    public Object addorders(TbOrder tbOrder){
+        tbOrderServer.insertOrder(tbOrder);
+        return "add";
+    }
 }
 /*
 zouziqian
