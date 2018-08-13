@@ -131,28 +131,12 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
 
   function edit() {
     alert("点击了提交按钮1");
-    if ($("#fs").val() == "") {
-      var data = {
-        code: $("#code").val(),
-        caption: $("#caption").val(),
-        price: $("#price").val(),
-        oldprice: $("#oldprice").val(),
-        stock: $("#stock").val(),
-        description: $("#description").val(),
-        praisenum: $("#praisenum").val(),
-        createtime: $("#createtime").val(),
-        updatetime: $("#updatetime").val(),
-        status: $("input:checked").val()
-      }
-      $.post("updategoods", data, function (d) {
-        alert(d);
-      });
-      alert("点击了提交按钮2");
-    } else {
+    if ($("#fs").val() != "") {
       $("#uploadgoodspic").ajaxSubmit({
         success: function (url) {
           //alert("服务器响应的数据是"+data);
           var data = {
+            goodid:$("#goodid").val(),
             code: $("#code").val(),
             caption: $("#caption").val(),
             price: $("#price").val(),
@@ -171,6 +155,24 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
           alert("点击了提交按钮3");
         }
       });
+    } else {
+      var data = {
+        goodid:$("#goodid").val(),
+        code: $("#code").val(),
+        caption: $("#caption").val(),
+        price: $("#price").val(),
+        oldprice: $("#oldprice").val(),
+        stock: $("#stock").val(),
+        description: $("#description").val(),
+        praisenum: $("#praisenum").val(),
+        createtime: $("#createtime").val(),
+        updatetime: $("#updatetime").val(),
+        status: $("input:checked").val()
+      }
+      $.post("updategoods", data, function (d) {
+        alert(d);
+      });
+      alert("点击了提交按钮2");
     }
   }
 </script>

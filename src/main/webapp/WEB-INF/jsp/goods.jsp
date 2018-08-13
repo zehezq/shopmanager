@@ -102,7 +102,7 @@
         text: '添加',
         iconCls: 'icon-add',
         handler: function () {
-          addCate();
+          addGoods();
           //initTable();
           $('#goods').datagrid("reload");
           //关闭对话框，刷新表
@@ -119,7 +119,7 @@
     });
   }
 
-  function addCate(){
+  function addGoods(){
     if ($("#fs").val() == "") {
       var data = {
         code: $("#code").val(),
@@ -214,12 +214,6 @@
       </td>
     </tr>
     <tr>
-      <td>商品状态：</td>
-      <td>
-        <input id="status" name="status"/>
-      </td>
-    </tr>
-    <tr>
       <td>商品描述：</td>
       <td>
         <input id="description" name="description"/>
@@ -253,6 +247,23 @@
           </label>
         </form>
       </td>
+    </tr>
+    <tr>
+      <td>商品状态：</td>
+      <c:choose>
+        <%--<c:when test="${adv.status==1}">--%>
+        <td align="right"><input type="radio" name="status" value="1" />
+          在售 |
+          <input checked type="radio" name="status" value="0"/>
+          下架</td>
+        <%-- </c:when>--%>
+        <%--<c:otherwise>
+          <td align="right" width="20"><input type="radio" name="status" checked value="0"/>
+            启用 |
+            <input  type="radio" name="status" value="1"/>
+            禁用</td>
+        </c:otherwise>--%>
+      </c:choose>
     </tr>
   </table>
 </div>

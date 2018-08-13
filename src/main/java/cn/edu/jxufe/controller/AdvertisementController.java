@@ -55,34 +55,14 @@ public class AdvertisementController {
 
     @RequestMapping("updateadv")
     @ResponseBody
-    public Object updateadv(TbAdvertisement adv/*@RequestParam("index")int index,@RequestParam("title")String title,@RequestParam("url")String url*/){
-        /*TbAdvertisement adv = new TbAdvertisement();
-        adv.setIndex(index);
-        adv.setTitle(title);
-        adv.setUrl(url);
-        adv.setStatus(status);
-        adv.setPicurl(picurl);*/
+    public Object updateadv(TbAdvertisement adv){
         advertisementService.update(adv);
         System.out.println("修改广告");
-        //adv.setCreatetime(cretetime);
         return "update";
     }
 
-    /*@RequestMapping("uploadpic")
-    @ResponseBody
-    public Object uploadAdImage(@RequestParam("fs")MultipartFile f,HttpServletRequest req){
-        String path = req.getSession().getServletContext().getRealPath("upload/");
-        String fileName = UUID.randomUUID().toString()+f.getOriginalFilename();
-        try{
-            FileOutputStream fou = new FileOutputStream(path+fileName);
-            fou.write(f.getBytes());
-            fou.close();
-            return fileName;
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }*/
+
+
 
     @RequestMapping("uploadpic")
     @ResponseBody
@@ -103,8 +83,8 @@ public class AdvertisementController {
 
     @RequestMapping("addads")
     @ResponseBody
-    public Object addCategory(TbAdvertisement category){
-        advertisementService.insert(category);
+    public Object addCategory(TbAdvertisement adv){
+        advertisementService.insert(adv);
         System.out.println("添加广告");
         return "add";
     }

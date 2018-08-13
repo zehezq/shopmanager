@@ -25,41 +25,6 @@
     });
 
 
-    $("#btnpwd").click(function(){ShowChangePwdDlg();} );
-
-
-    //显示修改密码窗口
-    function ShowChangePwdDlg() {
-        $("#div_")
-      //$("#div_pwd").css("display", "block");
-      $("#div_pwd").dialog({
-        width: 400,
-        height: 300,
-        modal: true,
-        title: "修改密码",
-        collapsible: true,
-        minimizable: true,
-        maximizable: true,
-        resizable: true,
-        buttons: [{
-          id: 'btnConfirm',
-          text: '确认',
-          iconCls: 'icon-ok',
-          handler: function () {
-            //让表单提交
-            $("#addDiv form").submit();
-            $("#div_pwd").dialog("close");
-          }
-        }, {
-          id: 'btnCancelAdd',
-          text: '取消',
-          iconCls: 'icon-cancel',
-          handler: function () {
-            $("#div_pwd").dialog("close");
-          }
-        }]
-      });
-    }
 //修改密码保存
     function AdminCPwdSave() {
       $('#admincha_form').form('submit', {
@@ -89,43 +54,33 @@
     }
   })
 </script>
-<div id="content" region="center" split="true" style="padding:5px;">
-  <table id="system"></table>
-  <div>
-    <table>
-      <tr>
-        <td>管理员编号</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>管理员名称</td>
-        <td></td>
-      </tr>
-    </table>
 
-  </div>
-  <button id="btnpwd">修改密码</button>
+<div data-options="region:'center',title:'系统设置'" style="padding:5px;">
+  <div id="content" region="center" split="true" style="padding:5px;">
+    <table id="system"></table>
+    <div>
+      <table>
+        <tr>
+          <td>管理员编号</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>管理员名称</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <a  value="提交" class="easyui-linkbutton" onclick="ShowChangePwdDlg()">修改密码</a>
+    </div>
 
-  <div id="uppwd">
-    <table>
-      <tr>
-        <td>旧密码：</td>
-        <td><input id="pwd" name="password"/></td>
-      </tr>
-      <tr>
-        <td>新密码：</td>
-        <td><input id="password" name="password" validType="length[4,32]" class="easyui-validatebox" required="true" type="password" value=""/></td>
-      </tr>
-      <tr>
-        <td>确认密码：</td>
-        <td><input type="password" name="repassword" id="repassword" required="true" class="easyui-validatebox"  validType="equalTo['#password']" invalidMessage="两次输入密码不匹配"/></td>
-      </tr>
-    </table>
+
   </div>
 </div>
 
+<%--
 <!--创建修改密码窗口-->
-<div id="div_pwd" class="easyui-window" title="修改密码" style="width: 400px;height: 250px;" data-options="collapsible:false,minimizable:false,maximizable:false,closed:true,modal:true">
+<div id="div_pwd"&lt;%&ndash; title="修改密码" style="width: 400px;height: 250px;" data-options="collapsible:false,minimizable:false,maximizable:false,closed:true,modal:true"&ndash;%&gt;>
   <table>
     <tr>
       <td>原有密码:</td>
@@ -153,5 +108,62 @@
     </tr>
   </table>
 </div>
+--%>
+
+<div id="changepwd">
+  <table>
+    <tr>
+      <td>旧密码：</td>
+      <td><input id="pwd" name="password"/></td>
+    </tr>
+    <tr>
+      <td>新密码：</td>
+      <td><input id="password" name="password" validType="length[4,32]" class="easyui-validatebox" required="true" type="password" value=""/></td>
+    </tr>
+    <tr>
+      <td>确认密码：</td>
+      <td><input type="password" name="repassword" id="repassword" required="true" class="easyui-validatebox"  validType="equalTo['#password']" invalidMessage="两次输入密码不匹配"/></td>
+    </tr>
+  </table>
+</div>
 
 <jsp:include page="common/foot.jsp"></jsp:include>
+<script>
+  //显示修改密码窗口
+  function ShowChangePwdDlg(){
+    alert("修改密码");
+    $("#changepwd").css("display", "block");
+    alert("修改密码2");
+    $("#changepwd").dialog({
+      width: 400,
+      height: 300,
+      modal: true,
+      title: "修改密码",
+      collapsible: true,
+      minimizable: true,
+      maximizable: true,
+      resizable: true,
+      buttons: [{
+        id: 'btnConfirm',
+        text: '确认',
+        iconCls: 'icon-ok',
+        handler: function () {
+          //让表单提交
+          $("#addDiv form").submit();
+          $("#div_pwd").dialog("close");
+        }
+      }, {
+        id: 'btnCancelAdd',
+        text: '取消',
+        iconCls: 'icon-cancel',
+        handler: function () {
+          $("#div_pwd").dialog("close");
+        }
+      }]
+    });
+  }
+
+  function confirmpwd(){
+
+  }
+</script>
