@@ -140,9 +140,9 @@
       <if test="code != null">
         code = #{code,jdbcType=INTEGER},
       </if>
-      <if test="userid != null">
+      <!--<if test="userid != null">
         userID = #{userid,jdbcType=INTEGER},
-      </if>
+      </if>-->
       <if test="caption != null">
         caption = #{caption,jdbcType=VARCHAR},
       </if>
@@ -158,9 +158,9 @@
       <if test="stock != null">
         stock = #{stock,jdbcType=INTEGER},
       </if>
-      <if test="count != null">
+      <!--<if test="count != null">
         `count` = #{count,jdbcType=INTEGER},
-      </if>
+      </if>-->
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
       </if>
@@ -182,13 +182,13 @@
   <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbGoods">
     update tb_goods
     set code = #{code,jdbcType=INTEGER},
-      userID = #{userid,jdbcType=INTEGER},
+      /*userID = #{userid,jdbcType=INTEGER},*/
       caption = #{caption,jdbcType=VARCHAR},
       picurl = #{picurl,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},
       oldprice = #{oldprice,jdbcType=REAL},
       stock = #{stock,jdbcType=INTEGER},
-      `count` = #{count,jdbcType=INTEGER},
+      /*`count` = #{count,jdbcType=INTEGER},*/
       `status` = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       praisenum = #{praisenum,jdbcType=INTEGER},

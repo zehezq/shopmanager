@@ -15,5 +15,9 @@ public interface GoodsInfoService {
     PageInfo<TbGoods> findAll(int page, int rows);
 
     TbGoods findOne(int id);
+
+    int updateGoods(TbGoods goods);
+
+    int insertGoods(TbGoods goods);
 }
 

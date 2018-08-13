@@ -17,5 +17,7 @@ public interface CategoryService {
 
     int insertCategory(TbCategory category);
 
+    int updateCategory(TbCategory category);
+
 
 }

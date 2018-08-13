@@ -9,8 +9,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/8/7.
@@ -50,9 +54,45 @@ public class GoodsInfoController {
 
     @RequestMapping("goodsbyid")
     public String toAdvertisementByid(int id,ModelMap map){
-        TbGoods g = goodsInfoService.findOne(id);
-        map.put("g",g);
+        TbGoods goods = goodsInfoService.findOne(id);
+        map.put("goods",goods);
         return "goodsedit";
     }
+
+    @RequestMapping("uploadgoodspic")
+    @ResponseBody
+    public Object uploadgoodspic(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
+        //获取服务器的upload文件夹绝对路径
+        String path=req.getSession().getServletContext().getRealPath("upload/");
+        String fileName= UUID.randomUUID().toString()+f.getOriginalFilename();
+        try {
+            FileOutputStream fou = new FileOutputStream(path +fileName);
+            fou.write(f.getBytes());
+            fou.close();
+            return "upload/"+fileName;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping("updategoods")
+    @ResponseBody
+    public Object updategoods(TbGoods goods){
+        goodsInfoService.updateGoods(goods);
+        System.out.println("修改商品");
+        return "update";
+    }
+
+    @RequestMapping("insertgoods")
+    @ResponseBody
+    public Object insertgoods(TbGoods goods){
+        goodsInfoService.insertGoods(goods);
+        System.out.println("添加商品");
+        return "insert";
+    }
+
+
+
 }
 

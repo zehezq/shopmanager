@@ -33,9 +33,9 @@
   <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbCategory">
     insert into tb_category
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <!--<if test="code != null">
+      <if test="code != null">
         code,
-      </if>-->
+      </if>
       <if test="id != null">
         id,
       </if>

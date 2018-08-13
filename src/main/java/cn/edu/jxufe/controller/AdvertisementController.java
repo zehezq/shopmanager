@@ -101,4 +101,12 @@ public class AdvertisementController {
         }
     }
 
+    @RequestMapping("addads")
+    @ResponseBody
+    public Object addCategory(TbAdvertisement category){
+        advertisementService.insert(category);
+        System.out.println("添加广告");
+        return "add";
+    }
+
 }

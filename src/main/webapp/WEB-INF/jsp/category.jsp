@@ -59,14 +59,21 @@
       afterPageText: '页    共 {pages} 页',
       displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
+
   })
 
   function showWindow(id){
     $("#editCategory").window({
-      width:500,
+      width:600,
       height:400,
       title:"编辑商品类别",
-      modal:true
+      modal:true,
+      collapsible:false,
+      minimizable:false,
+      maximizable:false,
+      onClose:function(){
+        $("#category").datagrid("reload");
+      }
     })
     $("#contentbody").attr("src","categorybyid?id="+id)
   }
@@ -88,10 +95,11 @@
         text: '添加',
         iconCls: 'icon-add',
         handler: function () {
-          alert("添加商品类别1");
+
           addCate();
           //initTable();
           $('#category').datagrid("reload");
+
           //关闭对话框，刷新表
           $("#addDiv").dialog("close");
         }
@@ -106,17 +114,32 @@
     });
   }
 
-  /*//添加成功之后执行的代码
-  function afterAdd(data) {
-    if (data == "ok") {
-      //关闭对话框，刷新表
-      $("#addDiv").dialog("close");
-      //initTable();
-      $('#category').datagrid("reload");
-    } else {
-      $.messager.alert("提示消息", data);
-    }
-  }*/
+  function addCate(){
+
+    var data={id:$("#id").val(),caption:$("#caption").val(),status:$("#status").val(),createtime:$("#cretetime").val()};
+    $.post("addcategory",data,function(){
+      alert("提交成功");
+    })
+  }
+
+  function myformatter(date){
+     var y = date.getFullYear();
+     var m = date.getMonth()+1;
+     var d = date.getDate();
+     return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+     }
+   function myparser(s){
+     if (!s) return new Date();
+     var ss = (s.split('-'));
+     var y = parseInt(ss[0],10);
+     var m = parseInt(ss[1],10);
+     var d = parseInt(ss[2],10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+       return new Date(y,m-1,d);
+       }else{
+       return new Date();
+       }
+     }
 
   //删除用户数据
   function doDelete() {
@@ -139,7 +162,7 @@
         strIds = strIds.substr(0, strIds.length - 1);
         //alert(strIds);
         $.post("/Administrator/DelBy", {ids: strIds}, function (data) {
-          if (data == "ok") {
+            if (data == "ok") {
             //刷新表格，去掉选中状态的 那些行。
             $('#category').datagrid("reload");
             $('#category').datagrid("clearSelections");
@@ -151,54 +174,44 @@
     });
   }
 
-function addCate(){
-      alert("添加商品类别");
-      var data={id:$("#id").val(),caption:$("#caption").val(),status:$("#status").val(),createtime:$("#createtime").val()};
-      $.post("addcategory",data,function(){
-        alert("提交成功");
-      })
-  alert("添加商品类别3");
 
-
-}
 
 </script>
 
 <div id="content" region="center" split="true" style="padding:5px;">
   <table id="category"></table>
+
+
+<div id="editCategory">
+  <iframe id="contentbody" src="" width="600" height="400" scrolling="no" frameborder="0"></iframe>
+</div>
 </div>
 
-
 <div id="addDiv">
-  <%--<form id="add" action="addcategory" method="post" enctype="multipart/form-data">--%>
   <table>
     <tr>
       <td>排位：</td>
-      <td><input id="index" name="" id="id"/></td>
+      <td><input id="id" name="" /></td>
     </tr>
     <tr>
       <td>类别名称：</td>
-      <td><input id="cap" name="caption" id="caption"/></td>
+      <td><input id="caption" name="caption" /></td>
     </tr>
     <tr>
       <td>状态：</td>
       <td>
-        <input id="sta" name="status" id="status"/>
+        <input id="status" name="status" />
       </td>
     </tr>
     <tr>
       <td>创建时间：</td>
       <td>
-        <input id="uptime" name="updatetime" id="createtime"/>
+        <input id="cretetime" name="createtime" />
+        <%--class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"--%>
       </td>
     </tr>
   </table>
-  <%--</form>--%>
 </div>
 
-
-<div id="editCategory">
-  <iframe id="contentbody" src="" width="500" height="400" scrolling="no" frameborder="0"></iframe>
-</div>
 
 <jsp:include page="common/foot.jsp"></jsp:include>

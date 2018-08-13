@@ -16,4 +16,6 @@ public interface AdvertisementService {
     TbAdvertisement findOne(int id);
 
     int update(TbAdvertisement advertisement);
+
+    int insert(TbAdvertisement advertisement);
 }

@@ -127,7 +127,7 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
       }
       $.post("updateadv",data,function(d){
         alert(d)
-      })
+      });
     }else {
       $("#uploadpic").ajaxSubmit({
         success: function (url) {

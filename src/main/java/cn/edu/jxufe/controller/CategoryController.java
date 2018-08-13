@@ -68,8 +68,8 @@ public class CategoryController {
 
     @RequestMapping("categorybyid")
     public String toAdvertisementByid(int id,ModelMap map){
-        TbCategory cate = categoryService.findOne(id);
-        map.put("cate",cate);
+        TbCategory category = categoryService.findOne(id);
+        map.put("category",category);
         return "categoryedit";
     }
 
@@ -92,6 +92,14 @@ public class CategoryController {
         categoryService.insertCategory(category);
         System.out.println("添加商品类别");
         return "add";
+    }
+
+    @RequestMapping("updatecategory")
+    @ResponseBody
+    public Object updatecategory(TbCategory category){
+        categoryService.updateCategory(category);
+        System.out.println("修改商品类别");
+        return "update";
     }
 
 

@@ -7,14 +7,15 @@
   <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
   <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
   <style type="text/css">
 <!--
 .title {
 	border:1px solid #95b8e7;
 	font-family:微软雅黑;
 	font-size:12px;
-	width:600px;
-	height:400px;
+	width:550px;
+	height:450px;
 	margin-top: 0px;
 	margin-right: auto;
 	margin-bottom: 0px;
@@ -36,67 +37,73 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
 <legend>商品管理</legend>
 <table width="544"  align="center" cellpadding="3" cellspacing="3">
   <tr>
+    <td width="87" align="right">商品编号:</td>
+    <td width="421" align="right"><input id="goodid" type="text" name="goodid" value="${goods.goodid}" /></td>
+  </tr>
+  <tr>
     <td width="87" align="right">商品名称:</td>
-    <td width="421" align="right"><input type="text" name="Input" value="${g.caption}" /></td>
+    <td width="421" align="right"><input id="caption" type="text" name="caption" value="${goods.caption}" /></td>
   </tr>
   <tr>
     <td align="right">商品售价:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.price}" /></td>
+    <td align="right"><input id="price" type="text" name="price" value="${goods.price}" /></td>
   </tr>
   <tr>
     <td align="right">商品旧价:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.oldprice}" /></td>
+    <td align="right"><input id="oldprice" type="text" name="oldprice" value="${goods.oldprice}" /></td>
   </tr>
   <tr>
     <td align="right">商品库存:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.stock}" /></td>
+    <td align="right"><input id="stock" type="text" name="stock" value="${goods.stock}" /></td>
   </tr>
   <tr>
     <td align="right">商品描述:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.description}" /></td>
+    <td align="right"><input id="description" type="text" name="description" value="${goods.description}" /></td>
   </tr>
   <tr>
     <td align="right">商品点赞数:</td>
-    <td align="right"><input type="text" name="Input2" value="${d.praisenum}" /></td>
+    <td align="right"><input id="praisenum" type="text" name="praisenum" value="${goods.praisenum}" /></td>
   </tr>
   <tr>
     <td align="right">商品创建时间:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.createtime}" /></td>
+    <td align="right"><input id="createtime" type="text" name="createtime" value="${goods.createtime}" /></td>
   </tr>
   <tr>
     <td align="right">商品更新时间:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.updatetime}" /></td>
+    <td align="right"><input id="updatetime" type="text" name="updatetime" value="${goods.updatetime}" /></td>
   </tr>
   <tr>
     <td align="right" valign="top">商品图片:</td>
     <td align="right">
+      <form id="uploadgoodspic" action="uploadgoodspic" method="post" enctype="multipart/form-data">
       <label id="file_pic">
-        <input type="file" name="1" style="display: none;" />
-        <img src="${g.picurl}" width="400" height="150" >
+        <input type="file" id="fs" name="fs" style="display: none;" />
+        <img src="${goods.picurl}" width="400" height="150" >
       </label>
+      </form>
     </td>
 
   </tr>
   <tr>
-    <td align="right">广告状态:</td>
+    <td align="right">商品状态:</td>
     <c:choose>
-      <c:when test="${adv.status==0}">
+      <c:when test="${goods.status==1}">
         <td align="right"><input type="radio" name="status"  />
-          启用 |
+          在售 |
           <input checked type="radio" name="status" />
-          禁用</td>
+          下架</td>
       </c:when>
       <c:otherwise>
         <td align="right" width="20"><input type="radio" name="status" checked />
-          启用 |
+          在售 |
           <input  type="radio" name="status" />
-          禁用</td>
+          下架</td>
       </c:otherwise>
     </c:choose>
   </tr>
   <tr>
     <td height="50">&nbsp;</td>
-    <td align="right" valign="bottom"><a  value="提交" class="easyui-linkbutton">增加</a></td>
+    <td align="right" valign="bottom"><a  onclick="edit()" value="提交" class="easyui-linkbutton">提交</a></td>
   </tr>
 </table>
 </fieldset>
@@ -119,6 +126,51 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     reader.readAsDataURL(file);
     reader.onload = function(e){
       showImg.getElementsByTagName("img")[0].src=this.result ;
+    }
+  }
+
+  function edit() {
+    alert("点击了提交按钮1");
+    if ($("#fs").val() == "") {
+      var data = {
+        code: $("#code").val(),
+        caption: $("#caption").val(),
+        price: $("#price").val(),
+        oldprice: $("#oldprice").val(),
+        stock: $("#stock").val(),
+        description: $("#description").val(),
+        praisenum: $("#praisenum").val(),
+        createtime: $("#createtime").val(),
+        updatetime: $("#updatetime").val(),
+        status: $("input:checked").val()
+      }
+      $.post("updategoods", data, function (d) {
+        alert(d);
+      });
+      alert("点击了提交按钮2");
+    } else {
+      $("#uploadgoodspic").ajaxSubmit({
+        success: function (url) {
+          //alert("服务器响应的数据是"+data);
+          var data = {
+            code: $("#code").val(),
+            caption: $("#caption").val(),
+            price: $("#price").val(),
+            oldprice: $("#oldprice").val(),
+            stock: $("#stock").val(),
+            description: $("#description").val(),
+            praisenum: $("#praisenum").val(),
+            createtime: $("#createtime").val(),
+            updatetime: $("#updatetime").val(),
+            status: $("input:checked").val(),
+            picurl:url
+          }
+          $.post("updategoods", data, function (d) {
+            alert(d);
+          });
+          alert("点击了提交按钮3");
+        }
+      });
     }
   }
 </script>

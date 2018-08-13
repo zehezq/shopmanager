@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
   <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
   <style type="text/css">
 <!--
 .title {
@@ -33,54 +34,28 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
 </head>
 <body>
 <fieldset class="title">
-<legend>商品管理</legend>
+<legend>商品类别管理</legend>
 <table width="544"  align="center" cellpadding="3" cellspacing="3">
   <tr>
-    <td width="87" align="right">商品名称:</td>
-    <td width="421" align="right"><input type="text" name="Input" value="${g.caption}" /></td>
+    <td width="87" align="right">类别编号:</td>
+    <td width="421" align="right"><input id="code" type="text" name="code" value="${category.code}" /></td>
   </tr>
   <tr>
-    <td align="right">商品售价:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.price}" /></td>
+    <td width="87" align="right">类别序号:</td>
+    <td width="421" align="right"><input id="id" type="text" name="id" value="${category.id}" /></td>
   </tr>
   <tr>
-    <td align="right">商品旧价:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.oldprice}" /></td>
+    <td width="87" align="right">类别名称:</td>
+    <td width="421" align="right"><input id="caption" type="text" name="caption" value="${category.caption}" /></td>
   </tr>
   <tr>
-    <td align="right">商品库存:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.stock}" /></td>
+    <td align="right">类别创建时间:</td>
+    <td align="right"><input id="createtime" type="text" name="createtime" value="${category.createtime}" /></td>
   </tr>
   <tr>
-    <td align="right">商品描述:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.description}" /></td>
-  </tr>
-  <tr>
-    <td align="right">商品点赞数:</td>
-    <td align="right"><input type="text" name="Input2" value="${d.praisenum}" /></td>
-  </tr>
-  <tr>
-    <td align="right">商品创建时间:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.createtime}" /></td>
-  </tr>
-  <tr>
-    <td align="right">商品更新时间:</td>
-    <td align="right"><input type="text" name="Input2" value="${g.updatetime}" /></td>
-  </tr>
-  <tr>
-    <td align="right" valign="top">商品图片:</td>
-    <td align="right">
-      <label id="file_pic">
-        <input type="file" name="1" style="display: none;" />
-        <img src="${g.picurl}" width="400" height="150" >
-      </label>
-    </td>
-
-  </tr>
-  <tr>
-    <td align="right">广告状态:</td>
+    <td align="right">类别状态:</td>
     <c:choose>
-      <c:when test="${adv.status==0}">
+      <c:when test="${category.status==1}">
         <td align="right"><input type="radio" name="status"  />
           启用 |
           <input checked type="radio" name="status" />
@@ -96,7 +71,7 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
   </tr>
   <tr>
     <td height="50">&nbsp;</td>
-    <td align="right" valign="bottom"><a  value="提交" class="easyui-linkbutton">增加</a></td>
+    <td align="right" valign="bottom"><a  onclick="edit()" value="提交" class="easyui-linkbutton">提交</a></td>
   </tr>
 </table>
 </fieldset>
@@ -120,6 +95,19 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     reader.onload = function(e){
       showImg.getElementsByTagName("img")[0].src=this.result ;
     }
+  }
+
+  function edit(){
+    var data = {
+      code:$("#code").val(),
+      id: $("#id").val(),
+      caption: $("#caption").val(),
+      createtime: $("#createtime").val(),
+      status: $("input:checked").val()
+    };
+    $.post("updatecategory",data,function(d){
+      alert(d);
+    });
   }
 </script>
 </body>

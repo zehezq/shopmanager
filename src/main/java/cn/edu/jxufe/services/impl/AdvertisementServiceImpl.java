@@ -45,4 +45,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public int update(TbAdvertisement advertisement) {
         return tbAdvertisementDAO.updateByPrimaryKey(advertisement);
     }
+
+    @Override
+    public int insert(TbAdvertisement advertisement) {
+        return tbAdvertisementDAO.insertSelective(advertisement);
+    }
 }

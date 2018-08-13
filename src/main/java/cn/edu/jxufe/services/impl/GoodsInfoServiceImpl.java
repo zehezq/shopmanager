@@ -40,5 +40,15 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public TbGoods findOne(int id) {
         return tbGoodsDAO.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int updateGoods(TbGoods goods) {
+        return tbGoodsDAO.updateByPrimaryKey(goods);
+    }
+
+    @Override
+    public int insertGoods(TbGoods goods) {
+        return tbGoodsDAO.insertSelective(goods);
+    }
 }
 
