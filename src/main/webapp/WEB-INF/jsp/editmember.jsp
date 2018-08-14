@@ -58,7 +58,7 @@
         <tr>
             <td align="right" valign="top">用户头像:</td>
             <td align="right">
-                <form action="uploadimage" id="uploadimage"  method="post" enctype="multipart/form-data">
+                <form action="uploaduserpic" id="uploaduserpic"  method="post" enctype="multipart/form-data">
                 <label id="file_pic">
                     <input type="file" name="fs" id="fs" style="display: none;" />
                     <img src="${tbUser.userpicture}" width="400" height="150" >
@@ -104,14 +104,14 @@
 
     function saveedit(){
         if($("#fs").val()==""){
-            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            var data={userId:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
             $.post("saveupdatedata",data,function(d){
                 alert(d)
             })
         }else{
-            $("#uploadimage").ajaxSubmit({
+            $("#uploaduserpic").ajaxSubmit({
                 success:function(url){
-                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
+                    var data={userId:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
                     $.post("saveupdatedata",data,function(d){
                         alert(d)
                     })

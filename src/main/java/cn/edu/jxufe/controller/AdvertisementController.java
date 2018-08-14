@@ -89,4 +89,14 @@ public class AdvertisementController {
         return "add";
     }
 
+    @RequestMapping("deleteadv")
+    @ResponseBody
+    public Object deleteadv(Integer adno) {
+        int m = advertisementService.deleteAds(adno);
+        if(m > 0)
+            return "ok";
+        else
+            return "fail";
+    }
+
 }

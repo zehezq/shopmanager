@@ -31,10 +31,10 @@
       },'-',{
         iconCls: 'icon-remove',
         text:'删除',
-        handler: function(){alert('删除按钮')}
+        handler: function(){doDelete();}
 
       }],
-      singleSelect:true,
+      //singleSelect:true,
       columns:[[
         {field:'adno',title:'广告编号',width:100,align:'center',checkbox:"true"},
         {field:'index',title:'排位',width:100,align:'center'},
@@ -158,6 +158,38 @@
       });
     }
   }
+
+  //删除用户数据
+  function doDelete() {
+    //把你选中的 数据查询出来。
+    var selectRows = $('#adv').datagrid("getSelections");
+    if (selectRows.length < 1) {
+      $.messager.alert("提示消息", "请选中要删的数据!");
+      return;
+    }
+
+    //真删除数据
+    //提醒用户是否是真的删除数据
+    $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
+      if (r) {
+        var id;
+        for (var i = 0; i < selectRows.length; i++) {
+          id = selectRows[i].adno;
+          $.post("deleteadv", {adno:id}, function (data) {
+            if (data == "ok") {
+              //刷新表格，去掉选中状态的 那些行。
+              $('#adv').datagrid("reload");
+              $('#adv').datagrid("clearSelections");
+            } else {
+              $.messager.alert("删除失败~~", data);
+            }
+          });
+        }
+      }
+    });
+  }
+
+
   function readFile() {
     var file = this.files[0];
     if (!/image\/\w+/.test(file.type)) {

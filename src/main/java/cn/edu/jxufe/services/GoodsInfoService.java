@@ -19,5 +19,7 @@ public interface GoodsInfoService {
     int updateGoods(TbGoods goods);
 
     int insertGoods(TbGoods goods);
+
+    int deleteGoods(int goodid);
 }
 

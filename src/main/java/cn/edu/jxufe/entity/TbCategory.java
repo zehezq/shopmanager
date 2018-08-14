@@ -1,6 +1,7 @@
 package cn.edu.jxufe.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * tb_category
@@ -25,12 +26,12 @@ public class TbCategory implements Serializable {
     /**
      * 创建时间
      */
-    private String createtime;
+    private Date createtime;
 
     /**
      * 修改时间
      */
-    private String updatetime;
+    private Date updatetime;
 
     private String caption;
 
@@ -60,19 +61,19 @@ public class TbCategory implements Serializable {
         this.status = status;
     }
 
-    public String getCreatetime() {
+    public Date getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(String createtime) {
+    public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
 
-    public String getUpdatetime() {
+    public Date getUpdatetime() {
         return updatetime;
     }
 
-    public void setUpdatetime(String updatetime) {
+    public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
     }
 

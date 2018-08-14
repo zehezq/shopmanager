@@ -53,10 +53,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td align="right">连接地址:</td>
     <td align="right"><input id="url" type="text" name="Input2" value="${adv.url}" /></td>
   </tr>
-  <%--<tr>
-    <td align="right">创建时间:</td>
-    <td align="right"><input type="text" name="Input2" value="${adv.cretetime}" /></td>
-  </tr>--%>
   <tr>
     <td align="right" valign="top">广告图片:</td>
     <td align="right">
@@ -79,9 +75,9 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
           禁用</td>
       </c:when>
       <c:otherwise>
-        <td align="right" width="20"><input type="radio" name="status" checked value="0"/>
+        <td align="right" width="20"><input type="radio" name="status" checked value="1"/>
           启用 |
-          <input  type="radio" name="status" value="1"/>
+          <input  type="radio" name="status" value="0"/>
           禁用</td>
       </c:otherwise>
     </c:choose>
@@ -116,7 +112,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
   }
 
   function edit(){
-    alert("点击了提交按钮")
     if($("#fs").val()==""){
       var data = {
         adno:$("#adno").val(),

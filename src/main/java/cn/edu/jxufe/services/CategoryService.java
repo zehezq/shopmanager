@@ -19,5 +19,7 @@ public interface CategoryService {
 
     int updateCategory(TbCategory category);
 
+    int deleteCategory(Integer code);
+
 
 }

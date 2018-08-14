@@ -6,12 +6,14 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.UUID;
@@ -78,10 +80,10 @@ public class GoodsInfoController {
 
     @RequestMapping("updategoods")
     @ResponseBody
-    public Object updategoods(TbGoods goods){
+    public Object updategoods(TbGoods goods,BindingResult result){
         goodsInfoService.updateGoods(goods);
         System.out.println("修改商品");
-        return "update";
+        return "修改成功";
     }
 
     @RequestMapping("insertgoods")
@@ -92,6 +94,15 @@ public class GoodsInfoController {
         return "insert";
     }
 
+    @RequestMapping("deletegoods")
+    @ResponseBody
+    public Object deletegoods(Integer goodid) {
+        int m = goodsInfoService.deleteGoods(goodid);
+        if(m > 0)
+            return "ok";
+        else
+            return "fail";
+    }
 
 
 }

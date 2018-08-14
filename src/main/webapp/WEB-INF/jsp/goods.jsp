@@ -8,7 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
 <script>
+  var showImg,getImg;
   $(function(){
+     showImg = document.querySelector("#file_pic");
+     getImg = document.querySelector("input[type='file']");
+    if(typeof FileReader==='undefined'){
+      showImg.innerHTML = "抱歉，你的浏览器不支持!";
+      getImg.setAttribute('disabled','disabled');
+    }else{
+      getImg.addEventListener('change',readFile,false);
+    }
+
+
+
     $('#goods').datagrid({
       //表格的数据来源
       url:'goodsdata',
@@ -21,10 +33,10 @@
       },'-',{
         iconCls: 'icon-remove',
         text:'删除',
-        handler: function(){alert('删除按钮')}
+        handler: function(){doDelete();}
 
       }],
-      singleSelect:true,
+      //singleSelect:true,
       columns:[[
         {field:'goodid',title:'商品编号',width:100,align:'center',checkbox:"true"},
         {field:'code',title:'类别编号',width:100,align:'center'},
@@ -106,7 +118,7 @@
           //initTable();
           $('#goods').datagrid("reload");
           //关闭对话框，刷新表
-          $("#addDiv").dialog("close");
+     //     $("#addDiv").dialog("close");
         }
       }, {
         id: 'btnCancelAdd',
@@ -129,9 +141,7 @@
         stock: $("#stock").val(),
         description: $("#description").val(),
         praisenum: $("#praisenum").val(),
-        createtime: $("#createtime").val(),
-        updatetime: $("#updatetime").val(),
-        status: $("status").val()
+        status: $("input:checked").val()
       }
       $.post("insertgoods", data, function (d) {
         alert(d);
@@ -148,9 +158,7 @@
             stock: $("#stock").val(),
             description: $("#description").val(),
             praisenum: $("#praisenum").val(),
-            createtime: $("#createtime").val(),
-            updatetime: $("#updatetime").val(),
-            status: $("status").val(),
+            status: $("input:checked").val(),
             picurl:url
           }
           $.post("insertgoods", data, function (d) {
@@ -161,14 +169,38 @@
     }
   }
 
-  var showImg = document.querySelector("#file_pic");
-  var getImg = document.querySelector("input[type='file']");
-  if(typeof FileReader==='undefined'){
-    showImg.innerHTML = "抱歉，你的浏览器不支持!";
-    getImg.setAttribute('disabled','disabled');
-  }else{
-    getImg.addEventListener('change',readFile,false);
+  //删除用户数据
+  function doDelete() {
+    //把你选中的 数据查询出来。
+    var selectRows = $('#goods').datagrid("getSelections");
+    if (selectRows.length < 1) {
+      $.messager.alert("提示消息", "请选中要删的数据!");
+      return;
+    }
+
+    //真删除数据
+    //提醒用户是否是真的删除数据
+    $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
+      if (r) {
+        var id;
+        for (var i = 0; i < selectRows.length; i++) {
+          id = selectRows[i].goodid;
+          $.post("deletegoods", {goodid:id}, function (data) {
+            if (data == "ok") {
+              //刷新表格，去掉选中状态的 那些行。
+              alert("删除成功");
+              $('#goods').datagrid("reload");
+              $('#goods').datagrid("clearSelections");
+            } else {
+              $.messager.alert("删除失败~~", data);
+            }
+          });
+        }
+      }
+    });
   }
+
+
   function readFile() {
     var file = this.files[0];
     if (!/image\/\w+/.test(file.type)) {
@@ -196,6 +228,10 @@
     <tr>
       <td>商品名称：</td>
       <td><input id="caption" name="" /></td>
+    </tr>
+    <tr>
+      <td>商品类别：</td>
+      <td><input id="code" name="code" /></td>
     </tr>
     <tr>
       <td>商品售价：</td>
@@ -226,18 +262,6 @@
       </td>
     </tr>
     <tr>
-      <td>创建时间：</td>
-      <td>
-        <input id="cretetime" name="createtime"/>
-      </td>
-    </tr>
-    <tr>
-      <td>修改时间：</td>
-      <td>
-        <input id="updatetime" name="updatetime"/>
-      </td>
-    </tr>
-    <tr>
       <td  valign="top">商品图片:</td>
       <td align="right">
         <form id="uploadgoodspic" action="uploadgoodspic" method="post" enctype="multipart/form-data">
@@ -251,18 +275,10 @@
     <tr>
       <td>商品状态：</td>
       <c:choose>
-        <%--<c:when test="${adv.status==1}">--%>
         <td align="right"><input type="radio" name="status" value="1" />
           在售 |
           <input checked type="radio" name="status" value="0"/>
           下架</td>
-        <%-- </c:when>--%>
-        <%--<c:otherwise>
-          <td align="right" width="20"><input type="radio" name="status" checked value="0"/>
-            启用 |
-            <input  type="radio" name="status" value="1"/>
-            禁用</td>
-        </c:otherwise>--%>
       </c:choose>
     </tr>
   </table>
