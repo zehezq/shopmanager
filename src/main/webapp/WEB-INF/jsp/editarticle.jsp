@@ -49,7 +49,7 @@
             <td align="right">
                 <form action="uploaddire" id="uploaddire"  method="post" enctype="multipart/form-data">
                     <label id="file_pic">
-                    <input type="text" id="content" value="${tbArticle.content}" style="height: 100px;" />
+                    <input type="file" name="fs" id="fs" style="height: 100px;" value="${tbArticle.content}" />
                     </label>
                 </form>
             </td>

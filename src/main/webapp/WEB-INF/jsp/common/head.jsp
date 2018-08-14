@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>电商管理系统</title>
+  <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
   <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
   <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>

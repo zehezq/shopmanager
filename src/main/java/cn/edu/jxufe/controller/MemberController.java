@@ -69,7 +69,7 @@ public class MemberController {
             FileOutputStream fout=new FileOutputStream(path+ fileName);
             fout.write(file.getBytes());
             fout.close();
-            return fileName;
+            return "upload/"+fileName;
         }catch (Exception ex){
             ex.printStackTrace();
             return null;

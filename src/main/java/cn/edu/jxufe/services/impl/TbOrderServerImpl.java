@@ -49,7 +49,7 @@ public class TbOrderServerImpl implements TbOrderServer {
 
     @Override
     public int insertOrder(TbOrder tbOrder) {
-        return tbOrderDAO.insert(tbOrder);
+        return tbOrderDAO.insertSelective(tbOrder);
     }
 
     @Override

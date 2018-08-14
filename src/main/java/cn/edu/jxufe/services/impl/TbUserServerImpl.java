@@ -46,7 +46,7 @@ public class TbUserServerImpl implements TbUserServer {
 
     @Override
     public int insertTbuser(TbUser tbUser) {
-        return tbUserDAO.insert(tbUser);
+        return tbUserDAO.insertSelective(tbUser);
     }
 
     @Override

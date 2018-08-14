@@ -3,11 +3,12 @@
 <html>
 <head>
     <title>电商管理平台</title>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-    <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
     <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/js/ajaxform.js"></script>
     <style type="text/css">
         <!--
         .title {
@@ -31,10 +32,6 @@
         *{ margin:0px; padding:0px;}
         -->
     </style>
-
-    <script>
-
-    </script>
 </head>
 <body>
 <fieldset class="title">
@@ -75,12 +72,11 @@
         <tr>
             <td height="50">&nbsp;</td>
             <td align="right" valign="bottom">
-                <a id="edit" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
+                <a class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
         </tr>
     </table>
 </fieldset>
 <script>
-
     var showImg = document.querySelector("#file_pic");
     var getImg = document.querySelector("input[type='file']");
     if(typeof FileReader==='undefined'){
@@ -88,18 +84,6 @@
         getImg.setAttribute('disabled','disabled');
     }else{
         getImg.addEventListener('change',readFile,false);
-    }
-    function readFile(){
-        var file = this.files[0];
-        if(!/image\/\w+/.test(file.type)){
-            alert("请上传图片！");
-            return false;
-        }
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e){
-            showImg.getElementsByTagName("img")[0].src=this.result;
-        }
     }
 
     function saveedit(){
@@ -117,6 +101,19 @@
                     })
                 }
             })
+        }
+    }
+
+    function readFile(){
+        var file = this.files[0];
+        if(!/image\/\w+/.test(file.type)){
+            alert("请上传图片！");
+            return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            showImg.getElementsByTagName("img")[0].src=this.result;
         }
     }
 

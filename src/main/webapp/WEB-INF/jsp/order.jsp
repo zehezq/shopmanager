@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<script type="javascript"></script>
+<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
         $("#ord").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
-                {field:'orderid',title:'订单编号',width:70,align:'center'},
+                {field:'id',title:'订单编号',width:70,align:'center'},
                 {field:'userid',title:'用户编号',width:70,align:'center'},
                 {field:'price',title:'订单价格',width:70,align:'center'},
                 {field:'status',title:'订单状态',width:70,align:'center',formatter: function(value,row,index){
@@ -18,7 +18,7 @@
                 }},
                 {field:'ordertime',title:'创建时间',width:100,align:'center',formatter: function(value,row,index){
                     var d=new Date(value);
-                    return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+ d.getDate()+"- "+ d.getHours()+":" +d.getMinutes()+":"+ d.getSeconds();
+                    return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+ d.getDate()+"-"+ d.getHours()+":" +d.getMinutes()+":"+ d.getSeconds();
                 }},
                 {field:'edit',title:'编辑',width:70,align:'center',formatter: function(value,row,index){
                     return "<a href='javascript:showWindow("+row.orderid+")'>编辑详情</a>";
@@ -32,7 +32,7 @@
                 iconCls: 'icon-add',
                 text:"增加",
                 handler: function()
-                {alert('增加窗口')}
+                {showords()}
             },'-',{
                 iconCls: 'icon-cancel',
                 text:"删除",
@@ -63,7 +63,7 @@
         $("#editorder").window({
             width:600,
             height:400,
-            title:"订单编辑",
+            title:"编辑",
             modal:true,
             collapsible:false,
             minimizable:false,
@@ -75,11 +75,73 @@
         $("#contentbody").attr("src","orderbyid?id="+id)
     }
 
+    function showords() {
+        $("#addord").css("display", "block");
+        $("#addord").dialog({
+            width: 300,
+            height: 170,
+            modal: true,
+            title: "添加订单",
+            collapsible: true,
+            minimizable: true,
+            maximizable: true,
+            resizable: true,
+            buttons: [{
+                id: 'btnAdd',
+                text: '添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    addorder();
+                    //initTable();
+                    $('#ord').datagrid("reload");
+                }
+            }, {
+                id: 'btnCancelAdd',
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $("#addcom").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function addorder(){
+        alert("点击了提交按钮")
+        var data={userid:$("#userid").val(),price:$("#price").val(),status:$("input:checked").val()}
+        $.post("addorders",data,function(d){
+            alert(d)
+        })
+    }
+
 </script>
-<div id="content" region="center" split="true" title="" style="padding:3px;">
+
+<div id="content" region="center" split="true" style="padding:3px;">
     <table id="ord"></table>
-    <div id="editorder" style="overflow:hidden;">
+    <div id="editorder" style="overflow: hidden;">
         <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0"></iframe>
     </div>
+</div>
+
+<div id="addord">
+<table align="center" cellpadding="3" cellspacing="3">
+    <tr>
+        <td align="right">用户编号:</td>
+        <td align="left"><input id="userid" name="userid" /></td>
+    </tr>
+    <tr>
+        <td align="right">订单价格:</td>
+        <td align="left"><input id="price" name="price" /></td>
+    </tr>
+    <tr>
+        <td align="right">订单状态:</td>
+        <c:choose>
+                <td align="left"><input type="radio" name="status" value="1" />
+                    已支付 |
+                    <input checked type="radio" name="status" value="0" />
+                    未支付</td>
+        </c:choose>
+    </tr>
+</table>
 </div>
 <jsp:include page="common/foot.jsp"></jsp:include>

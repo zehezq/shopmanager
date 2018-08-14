@@ -46,7 +46,7 @@ public class TbArticleServerImpl implements TbArticleServer{
 
     @Override
     public int insertTbArticle(TbArticle tbArticle) {
-        return tbArticleDAO.insert(tbArticle);
+        return tbArticleDAO.insertSelective(tbArticle);
     }
 
     @Override
