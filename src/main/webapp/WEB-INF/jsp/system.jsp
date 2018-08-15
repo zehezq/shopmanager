@@ -131,9 +131,7 @@
 <script>
   //显示修改密码窗口
   function ShowChangePwdDlg(){
-    alert("修改密码");
     $("#changepwd").css("display", "block");
-    alert("修改密码2");
     $("#changepwd").dialog({
       width: 400,
       height: 300,
@@ -164,6 +162,21 @@
   }
 
   function confirmpwd(){
-
+    var data = {
+      account: $("#account").val(),
+      password: $("#pwd").val()
+    }
+    $.post("confirmpwd", data, function (data) {
+      if(data == "ok"){
+        var data2 = {
+          account: $("#account").val(),
+          password: $("#password").val()
+        }
+        $.post("updatepwd", data, function (data){
+          alert(data);
+        })
+      }else
+          alert("原密码输入错误");
+    });
   }
 </script>

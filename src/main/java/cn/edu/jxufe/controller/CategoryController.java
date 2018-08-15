@@ -24,12 +24,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping("testCategory")
-    @ResponseBody
-    public Object testFindAllGoods() {
-        return 0;
-    }
-
     @RequestMapping("category")
     public String toCategory() {
         System.out.println("类别管理页面");
@@ -38,7 +32,7 @@ public class CategoryController {
 
     @RequestMapping("categorydata")
     @ResponseBody
-    public Object advertisementdata(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows) {
+    public Object categorydata(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows) {
         try {
             PageInfo<TbCategory> data = categoryService.findAll(page, rows);
             HashMap map = new HashMap();
@@ -95,4 +89,34 @@ public class CategoryController {
         else
             return "fail";
     }
+
+    @RequestMapping("categoryallcaption")
+      @ResponseBody
+      public String categoryallcaption(int code){
+        return categoryService.findByid(code);
+    }
+
+    @RequestMapping("categoryall")
+    @ResponseBody
+    public Object categoryall(){
+        return categoryService.findAll();
+    }
+
+    @RequestMapping("categorypartdata")
+    @ResponseBody
+    public Object categorypartdata(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows,TbCategory category) {
+        try {
+            PageInfo<TbCategory> data = categoryService.findByCodeOrCaption(page, rows,category);
+            HashMap map = new HashMap();
+            map.put("total", data.getTotal());
+            map.put("rows", data.getList());
+            return map;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "{errmsg:" + ex.getMessage() + "}";
+        }
+    }
+
+
+
 }

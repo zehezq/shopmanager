@@ -19,7 +19,12 @@
       getImg.addEventListener('change',readFile,false);
     }
 
-
+    /*$('#code').combobox({
+      url:'categoryall',
+      valueField:'code',
+      textField:'caption'
+    });*/
+    var a = $('#code').combobox('getValue');
 
     $('#goods').datagrid({
       //表格的数据来源
@@ -39,9 +44,17 @@
       //singleSelect:true,
       columns:[[
         {field:'goodid',title:'商品编号',width:100,align:'center',checkbox:"true"},
-        {field:'code',title:'类别编号',width:100,align:'center'},
+        {field:'code',title:'商品类别',width:100,align:'center',formatter: function(value,row,index){
+          var data;
+          $.post("categoryallcaption", {code:value}, function (d) {
+            alert(d)
+            return d;
+          });
+        }},
         {field:'caption',title:'商品名称',width:100,align:'center'},
-        {field:'picurl',title:'商品图片',width:100,align:'center'},
+        {field:'picurl',title:'商品图片',width:100,align:'center',formatter: function(value,row,index){
+          return "<img src="+value+" height=20px />";
+        }},
         {field:'price',title:'售价',width:70,align:'center'},
         {field:'oldprice',title:'旧价',width:70,align:'center'},
         {field:'stock',title:'库存',width:70,align:'center'},
@@ -80,6 +93,7 @@
     });
   })
 
+  //编辑
   function showWindow(id){
     $("#editGoods").window({
       width:600,
@@ -134,7 +148,7 @@
   function addGoods(){
     if ($("#fs").val() == "") {
       var data = {
-        code: $("#code").val(),
+        code: $("#code").combobox("getValue"),
         caption: $("#caption").val(),
         price: $("#price").val(),
         oldprice: $("#oldprice").val(),
@@ -231,7 +245,11 @@
     </tr>
     <tr>
       <td>商品类别：</td>
-      <td><input id="code" name="code" /></td>
+      <td>
+        <%--<input id="code" name="code" />--%>
+        <input id="code" class="easyui-combobox" name="code"
+               data-options="valueField:'code',textField:'caption',url:'categoryall'" value="">
+      </td>
     </tr>
     <tr>
       <td>商品售价：</td>
@@ -286,3 +304,4 @@
 
 
 <jsp:include page="common/foot.jsp"></jsp:include>
+

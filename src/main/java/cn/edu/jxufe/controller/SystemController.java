@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SystemController {
     @RequestMapping("system")
     public String toAdvertisement(){
-        System.out.println("广告管理页面");
         return "system";
     }
 }

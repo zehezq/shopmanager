@@ -21,5 +21,9 @@ public interface CategoryService {
 
     int deleteCategory(Integer code);
 
+    PageInfo<TbCategory> findByCodeOrCaption(int page,int rows,TbCategory category);
+
+    String findByid(int code);
+
 
 }

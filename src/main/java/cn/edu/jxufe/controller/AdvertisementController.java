@@ -2,6 +2,7 @@ package cn.edu.jxufe.controller;
 
 import cn.edu.jxufe.entity.TbAdvertisement;
 import cn.edu.jxufe.services.AdvertisementService;
+import com.aliyun.oss.OSSClient;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
@@ -67,6 +70,26 @@ public class AdvertisementController {
     @RequestMapping("uploadpic")
     @ResponseBody
     public Object uploadAdImage(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
+        System.out.println("上传的文件名是"+f.getOriginalFilename());
+        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+        String accessKeyId = "LTAId0YVD63NHpVR";
+        String accessKeySecret = "EVqEUGIqDqxcdomjYMohS2SlCFeG36";
+        String buckName = "cnshop";
+        OSSClient ossClient = new OSSClient(endpoint,accessKeyId,accessKeySecret);
+        try {
+            InputStream inputStream = f.getInputStream();
+            ossClient.putObject(buckName,f.getOriginalFilename(),inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            ossClient.shutdown();
+        }
+        return endpoint.replace("http://","http://"+buckName+".")+"/"+f.getOriginalFilename();
+    }
+
+    /*@RequestMapping("uploadpic")
+    @ResponseBody
+    public Object uploadAdImage(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
         //获取服务器的upload文件夹绝对路径
         String path=req.getSession().getServletContext().getRealPath("upload/");
         String fileName=UUID.randomUUID().toString()+f.getOriginalFilename();
@@ -79,7 +102,7 @@ public class AdvertisementController {
             ex.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     @RequestMapping("addads")
     @ResponseBody

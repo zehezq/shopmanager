@@ -53,4 +53,19 @@ public class CategoryServiceImpl implements CategoryService {
     public int deleteCategory(Integer code) {
         return tbCategoryDAO.deleteByPrimaryKey(code);
     }
+
+    @Override
+    public PageInfo<TbCategory> findByCodeOrCaption(int page, int rows,TbCategory category) {
+        PageHelper.startPage(page, rows);
+        List<TbCategory> data = tbCategoryDAO.findByCodeOrCaption(category);
+        //封装了整个分页任务的需求，包括分页所需要的总页数，总行数，当前行
+        PageInfo<TbCategory> pagevo = new PageInfo<TbCategory>(data);
+        return pagevo;
+    }
+
+    @Override
+    public String findByid(int code) {
+        return tbCategoryDAO.findAllByid(code);
+    }
+
 }
