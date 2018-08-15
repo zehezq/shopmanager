@@ -64,14 +64,14 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td align="right">商品点赞数:</td>
     <td align="right"><input id="praisenum" type="text" name="praisenum" value="${goods.praisenum}" /></td>
   </tr>
-  <tr>
+  <%--<tr>
     <td align="right">商品创建时间:</td>
     <td align="right"><input id="createtime" type="text" name="createtime" value="${goods.createtime}" /></td>
   </tr>
   <tr>
     <td align="right">商品更新时间:</td>
     <td align="right"><input id="updatetime" type="text" name="updatetime" value="${goods.updatetime}" /></td>
-  </tr>
+  </tr>--%>
   <tr>
     <td align="right" valign="top">商品图片:</td>
     <td align="right">
@@ -88,15 +88,15 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td align="right">商品状态:</td>
     <c:choose>
       <c:when test="${goods.status==1}">
-        <td align="right"><input type="radio" name="status"  />
+        <td align="right"><input type="radio" name="status"  value="1"  />
           在售 |
-          <input checked type="radio" name="status" />
+          <input checked type="radio" name="status"  value="0" />
           下架</td>
       </c:when>
       <c:otherwise>
-        <td align="right" width="20"><input type="radio" name="status" checked />
+        <td align="right" width="20"><input type="radio" name="status" checked  value="1" />
           在售 |
-          <input  type="radio" name="status" />
+          <input  type="radio" name="status"  value="0" />
           下架</td>
       </c:otherwise>
     </c:choose>
@@ -144,8 +144,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
             stock: $("#stock").val(),
             description: $("#description").val(),
             praisenum: $("#praisenum").val(),
-            createtime: $("#createtime").val(),
-            updatetime: $("#updatetime").val(),
             status: $("input:checked").val(),
             picurl:url
           }
@@ -165,8 +163,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
         stock: $("#stock").val(),
         description: $("#description").val(),
         praisenum: $("#praisenum").val(),
-        createtime: $("#createtime").val(),
-        updatetime: $("#updatetime").val(),
         status: $("input:checked").val()
       }
       $.post("updategoods", data, function (d) {

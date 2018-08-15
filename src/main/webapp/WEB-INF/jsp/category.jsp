@@ -113,31 +113,12 @@
   }
 
   function addCate(){
-
-    var data={id:$("#id").val(),caption:$("#caption").val(),status:$("#status").val(),createtime:$("#cretetime").val()};
+    var data={id:$("#id").val(),caption:$("#caption").val(),status:$("#input:checked").val()};
     $.post("addcategory",data,function(){
       alert("提交成功");
     })
   }
 
-  function myformatter(date){
-     var y = date.getFullYear();
-     var m = date.getMonth()+1;
-     var d = date.getDate();
-     return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
-     }
-   function myparser(s){
-     if (!s) return new Date();
-     var ss = (s.split('-'));
-     var y = parseInt(ss[0],10);
-     var m = parseInt(ss[1],10);
-     var d = parseInt(ss[2],10);
-    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
-       return new Date(y,m-1,d);
-       }else{
-       return new Date();
-       }
-     }
 
   //删除用户数据
   function doDelete() {
@@ -152,14 +133,33 @@
     //提醒用户是否是真的删除数据
     $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
       if (r) {
-        //真删除了  1,3,4
-        var strIds = "";
+        var id;
         for (var i = 0; i < selectRows.length; i++) {
-          strIds += selectRows[i].ID + ",";
+          id = selectRows[i].code;
+          $.post("deletecate", {code:id}, function (data) {
+            if (data == "ok") {
+              //刷新表格，去掉选中状态的 那些行。
+              alert("删除成功");
+              $('#category').datagrid("reload");
+              $('#category').datagrid("clearSelections");
+            } else {
+              $.messager.alert("删除失败~~", data);
+            }
+          });
         }
-        strIds = strIds.substr(0, strIds.length - 1);
-        //alert(strIds);
-        $.post("/Administrator/DelBy", {ids: strIds}, function (data) {
+       /*
+        $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
+        if (r) {
+        //真删除了  1,3,4
+        //var codes = [];
+        var id;
+        for (var i = 0; i < selectRows.length; i++) {
+        id = selectRows[i].code;
+        codes.push(id);
+        }
+       var pa = $.param(codes, true);
+        $.post("deletecateogry", pa, function (data) {
+          alert("删除");
             if (data == "ok") {
             //刷新表格，去掉选中状态的 那些行。
             $('#category').datagrid("reload");
@@ -167,7 +167,7 @@
           } else {
             $.messager.alert("删除失败~~", data);
           }
-        });
+        });*/
       }
     });
   }
@@ -196,17 +196,13 @@
       <td><input id="caption" name="caption" /></td>
     </tr>
     <tr>
-      <td>状态：</td>
-      <td>
-        <input id="status" name="status" />
-      </td>
-    </tr>
-    <tr>
-      <td>创建时间：</td>
-      <td>
-        <input id="cretetime" name="createtime" />
-        <%--class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"--%>
-      </td>
+      <td>类别状态：</td>
+      <c:choose>
+        <td align="right"><input type="radio" name="status" value="1" />
+          启用 |
+          <input checked type="radio" name="status" value="0"/>
+          禁用</td>
+      </c:choose>
     </tr>
   </table>
 </div>

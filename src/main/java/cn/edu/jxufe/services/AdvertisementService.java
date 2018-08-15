@@ -18,4 +18,6 @@ public interface AdvertisementService {
     int update(TbAdvertisement advertisement);
 
     int insert(TbAdvertisement advertisement);
+
+    int deleteAds(int adno);
 }

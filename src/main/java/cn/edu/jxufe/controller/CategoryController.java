@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,41 +26,41 @@ public class CategoryController {
 
     @RequestMapping("testCategory")
     @ResponseBody
-    public Object testFindAllGoods(){
+    public Object testFindAllGoods() {
         return 0;
     }
 
     @RequestMapping("category")
-    public String toCategory(){
+    public String toCategory() {
         System.out.println("类别管理页面");
         return "category";
     }
 
     @RequestMapping("categorydata")
     @ResponseBody
-    public Object advertisementdata(@RequestParam(name = "page",defaultValue = "1")int page,@RequestParam(name = "rows",defaultValue = "10") int rows){
-        try{
+    public Object advertisementdata(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows) {
+        try {
             PageInfo<TbCategory> data = categoryService.findAll(page, rows);
             HashMap map = new HashMap();
-            map.put("total",data.getTotal());
-            map.put("rows",data.getList());
+            map.put("total", data.getTotal());
+            map.put("rows", data.getList());
             return map;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-            return "{errmsg:"+ex.getMessage()+"}";
+            return "{errmsg:" + ex.getMessage() + "}";
         }
     }
 
     @RequestMapping("categorybyid")
-    public String toAdvertisementByid(int id,ModelMap map){
+    public String toAdvertisementByid(int id, ModelMap map) {
         TbCategory category = categoryService.findOne(id);
-        map.put("category",category);
+        map.put("category", category);
         return "categoryedit";
     }
 
     @RequestMapping("addcategory")
     @ResponseBody
-    public Object addCategory(TbCategory category){
+    public Object addCategory(TbCategory category) {
         categoryService.insertCategory(category);
         System.out.println("添加商品类别");
         return "add";
@@ -67,11 +68,31 @@ public class CategoryController {
 
     @RequestMapping("updatecategory")
     @ResponseBody
-    public Object updatecategory(TbCategory category){
+    public Object updatecategory(TbCategory category, BindingResult result) {
         categoryService.updateCategory(category);
         System.out.println("修改商品类别");
         return "update";
     }
 
+    @RequestMapping("deletecateogry")
+    @ResponseBody
+    public Object deletecateogry(Integer[] code) {
+        //TbCategory tbCategory = new TbCategory();
+        for (int i = 0; i < code.length; i++) {
+            //tbCategory.setCode(code[i]);
+            //if (tbCategory.getCode() != 0) {
+                categoryService.deleteCategory(code[i]);
+        }
+        return "ok";
+    }
 
+    @RequestMapping("deletecate")
+    @ResponseBody
+    public Object deletecate(Integer code) {
+        int m = categoryService.deleteCategory(code);
+        if(m > 0)
+            return "ok";
+        else
+            return "fail";
+    }
 }

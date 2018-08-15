@@ -49,26 +49,18 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td width="421" align="right"><input id="caption" type="text" name="caption" value="${category.caption}" /></td>
   </tr>
   <tr>
-    <td align="right">类别创建时间:</td>
-    <td align="right"><input id="createtime" type="text" name="createtime" value="${category.createtime}" /></td>
-  </tr>
-  <tr>
-    <td align="right">类别修改时间:</td>
-    <td align="right"><input id="updatetime" type="text" name="updatetime" value="${category.updatetime}" /></td>
-  </tr>
-  <tr>
     <td align="right">类别状态:</td>
     <c:choose>
       <c:when test="${category.status==1}">
-        <td align="right"><input type="radio" name="status" value="1"  />
+        <td align="right"><input type="radio" name="status"  value="1" />
           启用 |
-          <input checked type="radio" name="status" value="0" />
+          <input checked type="radio" name="status"  value="0" />
           禁用</td>
       </c:when>
       <c:otherwise>
-        <td align="right" width="20"><input type="radio" name="status" checked value="0" />
+        <td align="right" width="20"><input type="radio" name="status" checked  value="1" />
           启用 |
-          <input  type="radio" name="status" value="0" />
+          <input  type="radio" name="status"  value="0" />
           禁用</td>
       </c:otherwise>
     </c:choose>
@@ -80,34 +72,11 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
 </table>
 </fieldset>
 <script>
-  var showImg = document.querySelector("#file_pic");
-  var getImg = document.querySelector("input[type='file']");
-  if(typeof FileReader==='undefined'){
-    showImg.innerHTML = "抱歉，你的浏览器不支持!";
-    getImg.setAttribute('disabled','disabled');
-  }else{
-    getImg.addEventListener('change',readFile,false);
-  }
-  function readFile(){
-    var file = this.files[0];
-    if(!/image\/\w+/.test(file.type)){
-      alert("请上传图片！");
-      return false;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function(e){
-      showImg.getElementsByTagName("img")[0].src=this.result ;
-    }
-  }
-
   function edit(){
     var data = {
       code:$("#code").val(),
       id: $("#id").val(),
       caption: $("#caption").val(),
-      createtime: $("#createtime").val(),
-      updatetime: $("#updatetime").val(),
       status: $("input:checked").val()
     };
     $.post("updatecategory",data,function(d){
