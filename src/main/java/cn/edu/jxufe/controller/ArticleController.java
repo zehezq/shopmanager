@@ -54,26 +54,6 @@ public class ArticleController {
         return "editarticle";
     }
 
-   /* @RequestMapping("uploaddire")
-    @ResponseBody
-    public Object upLoadImage(@RequestParam("fs") MultipartFile file,HttpServletRequest request){//与html中表单的name匹配
-        System.out.println("准备上传");
-        System.out.println("输出上传的文件名："+file.getOriginalFilename());
-        //获取服务器的upload文件夹绝对路径
-        String path=request.getSession().getServletContext().getRealPath("upload/");
-        System.out.println("站点的实际文件路径"+path);
-        String fileName= UUID.randomUUID().toString()+file.getOriginalFilename();
-        try{
-            FileOutputStream fout=new FileOutputStream(path+ fileName);
-            fout.write(file.getBytes());
-            fout.close();
-            return "upload/"+fileName;
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }*/
-
     @RequestMapping("updatearticle")
     @ResponseBody
     public Object updatearticle(TbArticle tbArticle){
@@ -86,6 +66,16 @@ public class ArticleController {
     public Object addarticle(TbArticle tbArticle){
         tbArticleServer.insertTbArticle(tbArticle);
         return "add";
+    }
+
+    @RequestMapping("deletearticle")
+    @ResponseBody
+    public Object deletearticle(Integer id){
+        int num=tbArticleServer.deleteByTbArticleId(id);
+        if(num>0){
+            return "success";
+        }
+        return "fail";
     }
 }
 /*

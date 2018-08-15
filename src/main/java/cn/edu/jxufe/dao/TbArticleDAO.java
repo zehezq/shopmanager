@@ -11,7 +11,4 @@ import java.util.List;
 @Repository
 public interface TbArticleDAO extends MyBatisBaseDao<TbArticle, Integer> {
     List<TbArticle> findAllArticle();
-
-    //查询通过id
-    TbArticle selectByPrimaryKey(int id);
 }

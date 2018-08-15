@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
+<%--<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>--%>
 <script>
     $(function(){
         $("#art").datagrid({
@@ -22,7 +22,6 @@
             ]],
             url:"articledata",
             title:"文章列表",
-            singleSelect:true,
             pagination:true,
             toolbar:[{
                 iconCls: 'icon-add',
@@ -33,7 +32,7 @@
                 iconCls: 'icon-cancel',
                 text:"删除",
                 handler: function()
-                {alert('删除按钮')}
+                {deleteArt();}
             },'-',{
                 text: '文章编号<input id="itemid" style="line-height:14px;border:1px solid #ccc"/>'
             },{
@@ -74,10 +73,10 @@
     function addWindow() {
         $("#addart").css("display", "block");
         $("#addart").dialog({
-            width: 360,
-            height: 350,
+            width: 340,
+            height: 355,
             modal: true,
-            title: "添加会员信息",
+            title: "添加文章信息",
             collapsible: true,
             minimizable: true,
             maximizable: true,
@@ -103,12 +102,43 @@
 
     function addarts(){
         alert("点击了提交按钮")
-        var data={articleid:$("#articleid").val(),title:$("#title").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),updatetime:$("#updatetime").val()}
+        var data={title:$("#title").val(),content:$("#contents").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val()}
         $.post("addarticle",data,function(d){
             alert(d)
         })
     }
 
+
+    //删除数据
+    function deleteArt() {
+        //把你选中的 数据查询出来。
+        var selectRows = $('#art').datagrid("getSelections");
+        if (selectRows.length < 1) {
+            $.messager.alert("提示消息", "请选中要删的数据!");
+            return;
+        }
+
+        //真删除数据
+        //提醒用户是否是真的删除数据
+        $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
+            if (r) {
+                var id;
+                for (var i = 0; i < selectRows.length; i++) {
+                    id = selectRows[i].articleid;
+                    $.post("deletearticle", {articleid:id}, function (data) {
+                        if (data = "success") {
+                            //刷新表格，去掉选中状态的 那些行。
+                            alert("删除成功");
+                            $('#art').datagrid("reload");
+                            $('#art').datagrid("clearSelections");
+                        } else {
+                            $.messager.alert("删除失败", data);
+                        }
+                    });
+                }
+            }
+        });
+    }
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
     <table id="art"></table>
@@ -123,16 +153,17 @@
             <td align="left"><input id="title" name="title" /></td>
         </tr>
         <tr>
+            <td align="right" valign="top">文章内容:</td>
+            <td align="right">
+                <input type="text" id="contents" name="contents" style="width: 172px; height: 170px"/></td>
+        </tr>
+        <tr>
             <td align="right">图片地址:</td>
             <td align="left"><input id="picurl" name="picurl" /></td>
         </tr>
         <tr>
             <td align="right">阅读量:</td>
             <td align="left"><input id="readcount" name="readcount" /></td>
-        </tr>
-        <tr>
-            <td align="right">修改时间:</td>
-            <td align="right"><input id="updatetime" name="updatetime" /></td>
         </tr>
     </table>
 </div>

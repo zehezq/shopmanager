@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>电商管理平台</title>
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
     <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
@@ -32,6 +31,8 @@
         *{ margin:0px; padding:0px;}
         -->
     </style>
+    <script>
+    </script>
 </head>
 <body>
 <fieldset class="title">
@@ -55,14 +56,13 @@
         <tr>
             <td align="right" valign="top">用户头像:</td>
             <td align="right">
-                <form action="uploaduserpic" id="uploaduserpic"  method="post" enctype="multipart/form-data">
-                <label id="file_pic">
-                    <input type="file" name="fs" id="fs" style="display: none;" />
-                    <img src="${tbUser.userpicture}" width="400" height="150" >
-                </label>
+                <form action="uploadimage" id="uploadimage"  method="post" enctype="multipart/form-data">
+                    <label id="file_pic">
+                        <input type="file" name="fs" id="fs" style="display: none;" />
+                        <img src="${tbUser.userpicture}" width="400" height="150" >
+                    </label>
                 </form>
             </td>
-
         </tr>
         <tr>
             <td align="right">创建时间</td>
@@ -72,7 +72,7 @@
         <tr>
             <td height="50">&nbsp;</td>
             <td align="right" valign="bottom">
-                <a class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
+                <a id="edit" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
         </tr>
     </table>
 </fieldset>
@@ -85,25 +85,6 @@
     }else{
         getImg.addEventListener('change',readFile,false);
     }
-
-    function saveedit(){
-        if($("#fs").val()==""){
-            var data={userId:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
-            $.post("saveupdatedata",data,function(d){
-                alert(d)
-            })
-        }else{
-            $("#uploaduserpic").ajaxSubmit({
-                success:function(url){
-                    var data={userId:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),userpicture:url,createtime:$("#createtime").val()}
-                    $.post("saveupdatedata",data,function(d){
-                        alert(d)
-                    })
-                }
-            })
-        }
-    }
-
     function readFile(){
         var file = this.files[0];
         if(!/image\/\w+/.test(file.type)){
@@ -116,8 +97,23 @@
             showImg.getElementsByTagName("img")[0].src=this.result;
         }
     }
-
+    function saveedit(){
+        if($("#fs").val()==""){
+            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            $.post("saveupdatedata",data,function(d){
+                alert(d)
+            })
+        }else{
+            $("#uploadimage").ajaxSubmit({
+                success:function(url){
+                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val(),userpicture:url}
+                    $.post("saveupdatedata",data,function(d){
+                        alert(d)
+                    })
+                }
+            })
+        }
+    }
 </script>
 </body>
-
 </html>

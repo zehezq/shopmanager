@@ -17,7 +17,7 @@ public interface TbArticleServer {
     public TbArticle selectByPrimaryKey(int id);
 
     //删除通过id
-    public int deleteByTbArticleId(int id);
+    public int deleteByTbArticleId(Integer id);
 
     //增加
     public int insertTbArticle(TbArticle tbArticle);

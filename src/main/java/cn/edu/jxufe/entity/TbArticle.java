@@ -19,6 +19,11 @@ public class TbArticle implements Serializable {
     private String title;
 
     /**
+     * 文章图片地址
+     */
+    private String picurl;
+
+    /**
      * 阅读量
      */
     private Integer readcount;
@@ -36,29 +41,9 @@ public class TbArticle implements Serializable {
     /**
      * 文章内容
      */
-    private byte[] content;
-    /**
-     * 文章图片地址
-     */
-    private byte[] picurl;
+    private String content;
 
     private static final long serialVersionUID = 1L;
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-    public byte[] getPicurl() {
-        return picurl;
-    }
-
-    public void setPicurl(byte[] picurl) {
-        this.picurl = picurl;
-    }
 
     public Integer getArticleid() {
         return articleid;
@@ -74,6 +59,14 @@ public class TbArticle implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
     }
 
     public Integer getReadcount() {
@@ -100,6 +93,13 @@ public class TbArticle implements Serializable {
         this.updatetime = updatetime;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     @Override
     public boolean equals(Object that) {
@@ -115,10 +115,10 @@ public class TbArticle implements Serializable {
         TbArticle other = (TbArticle) that;
         return (this.getArticleid() == null ? other.getArticleid() == null : this.getArticleid().equals(other.getArticleid()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
+            && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
             && (this.getReadcount() == null ? other.getReadcount() == null : this.getReadcount().equals(other.getReadcount()))
             && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
             && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()))
-            && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
@@ -128,10 +128,10 @@ public class TbArticle implements Serializable {
         int result = 1;
         result = prime * result + ((getArticleid() == null) ? 0 : getArticleid().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
         result = prime * result + ((getReadcount() == null) ? 0 : getReadcount().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
         result = prime * result + ((getUpdatetime() == null) ? 0 : getUpdatetime().hashCode());
-        result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }
@@ -144,14 +144,13 @@ public class TbArticle implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", articleid=").append(articleid);
         sb.append(", title=").append(title);
+        sb.append(", picurl=").append(picurl);
         sb.append(", readcount=").append(readcount);
         sb.append(", createtime=").append(createtime);
         sb.append(", updatetime=").append(updatetime);
         sb.append(", content=").append(content);
-        sb.append(", picurl=").append(picurl);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
-
 }

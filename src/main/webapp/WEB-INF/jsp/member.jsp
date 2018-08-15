@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <jsp:include page="common/head.jsp"></jsp:include>
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
@@ -50,17 +50,7 @@
                 //alert('删除按钮')
                 remove();
             }
-        },'-',{
-                text: '手机号码:<input class="easyui-linkbutton" id="phonetxt" style="line-height:14px;border:1px solid #ccc"/>'
-            },{
-                id: 'searchphone',
-                iconCls:'icon-search',
-                text: '搜索',
-                handler: function(){
-                    searchmem();
-                }
-            }]
-
+        }]
     });
         var p = $('#mem').datagrid('getPager');
         $(p).pagination({
@@ -91,8 +81,8 @@
     function addWindow() {
         $("#addmember").css("display", "block");
         $("#addmember").dialog({
-            width: 360,
-            height: 380,
+            width: 340,
+            height: 310,
             modal: true,
             title: "添加会员信息",
             collapsible: true,
@@ -105,7 +95,7 @@
                 iconCls: 'icon-add',
                 handler: function () {
                     addmems();
-                    $('#mem').datagrid("reload");
+                   $("#mem").datagrid("reload");
                 }
             }, {
                 id: 'btnCancelAdd',
@@ -136,7 +126,12 @@
             })
         }
     }
-
+    /*function doSearch(){
+        $('#mem').datagrid('load',{
+            username: $('#name').val(),
+            phone: $('#telphone').val()
+        });
+    }*/
     /*function searchmem(){
         $("#mem").empty();
         var items = $('#mem').datagrid('getRows');
@@ -179,41 +174,18 @@
      showImg.getElementsByTagName("img")[0].src=this.result;
      }
      }
-
-    /*function remove() {
-        var row = $('#mem').datagrid('getSelected');
-        if (row) {
-            var rowIndex = $('#mem').datagrid('getRowIndex', row);
-            $('#mem').datagrid('deleteRow', rowIndex);
-            alert("删除成功")
-        }
-    }*/
-
-    /*function remove() {
-        var row = $('#mem').datagrid('getSelected');
-        if (row) {
-            $.messager.confirm('confirm', 'Are you sure you want to delete this user?', function (r) {
-                if (r) {
-                    $.post('deletedata', {userid:row.userid}, function (result) {
-                        if (result.success) {
-                            $('#mem').datagrid('reload');    // reload the user data
-                        } else {
-                            $.messager.show({   // show error message
-                                title: 'error',
-                                msg: result.errorMsg
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    }*/
-
 </script>
 <div id="editmember" style="overflow: hidden">
     <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0" ></iframe>
 </div>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
+    <%--<div id="selectmem" style="padding:3px">
+        <span>用户名字:</span>
+        <input id="name" style="line-height:26px;border:1px solid #ccc">
+        <span>用户电话:</span>
+        <input id="telphone" style="line-height:26px;border:1px solid #ccc">
+        <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
+    </div>--%>
     <table id="mem"></table>
 </div>
 
