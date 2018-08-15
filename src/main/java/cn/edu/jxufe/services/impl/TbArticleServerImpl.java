@@ -40,7 +40,7 @@ public class TbArticleServerImpl implements TbArticleServer{
     }
 
     @Override
-    public int deleteByTbArticleId(int id) {
+    public int deleteByTbArticleId(Integer id) {
         return tbArticleDAO.deleteByPrimaryKey(id);
     }
 

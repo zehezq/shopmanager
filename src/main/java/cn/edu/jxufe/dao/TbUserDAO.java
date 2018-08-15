@@ -12,6 +12,8 @@ import java.util.List;
 public interface TbUserDAO extends MyBatisBaseDao<TbUser, Integer> {
     List<TbUser> findAllUser();
 
+    TbUser selectByphone(String phone);
+
     //查询通过id
     //TbUser selectByPrimaryKey(int id);
 

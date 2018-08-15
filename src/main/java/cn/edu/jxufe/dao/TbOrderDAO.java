@@ -9,9 +9,6 @@ import java.util.List;
  * TbOrderDAO继承基类
  */
 @Repository
-public interface TbOrderDAO extends MyBatisBaseDao<TbOrder, String> {
+public interface TbOrderDAO extends MyBatisBaseDao<TbOrder, Integer> {
     List<TbOrder> findAllOrder();
-
-    //查询通过id
-    TbOrder selectByPrimaryKey(String id);
 }

@@ -16,10 +16,10 @@ public interface TbOrderServer {
     //分页
     public PageInfo<TbOrder> findAllOrder(int page,int rows);
 
-    public TbOrder selectByPrimaryKey(String id);
+    public TbOrder selectByPrimaryKey(int id);
 
     //删除通过id
-    public int deleteByOrderId(String id);
+    public int deleteById(int id);
 
     //增加
     public int insertOrder(TbOrder tbOrder);

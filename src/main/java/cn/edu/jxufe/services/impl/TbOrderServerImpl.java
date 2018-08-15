@@ -38,14 +38,15 @@ public class TbOrderServerImpl implements TbOrderServer {
     }
 
     @Override
-    public TbOrder selectByPrimaryKey(String id) {
+    public TbOrder selectByPrimaryKey(int id) {
         return tbOrderDAO.selectByPrimaryKey(id);
     }
 
     @Override
-    public int deleteByOrderId(String id) {
+    public int deleteById(int id) {
         return tbOrderDAO.deleteByPrimaryKey(id);
     }
+
 
     @Override
     public int insertOrder(TbOrder tbOrder) {

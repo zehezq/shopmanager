@@ -21,7 +21,7 @@
                     return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+ d.getDate()+"-"+ d.getHours()+":" +d.getMinutes()+":"+ d.getSeconds();
                 }},
                 {field:'edit',title:'编辑',width:70,align:'center',formatter: function(value,row,index){
-                    return "<a href='javascript:showWindow("+row.orderid+")'>编辑详情</a>";
+                    return "<a href='javascript:showWindow("+row.id+")'>编辑详情</a>";
                 }}
             ]],
             url:"orderdata",

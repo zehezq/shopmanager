@@ -44,7 +44,7 @@ public class OrderController {
     }
 
     @RequestMapping("orderbyid")
-    public String toOrderbyid(String id,ModelMap map){
+    public String toOrderbyid(int id,ModelMap map){
         System.out.println("会员编辑页面");
         TbOrder tbOrder=tbOrderServer.selectByPrimaryKey(id);
         map.put("tbOrder",tbOrder);
@@ -54,12 +54,8 @@ public class OrderController {
     @RequestMapping("updateorder")
     @ResponseBody
     public Object updateorder(TbOrder tbOrder){
-
-        if(!tbOrder.getOrderid().equals("")){
             tbOrderServer.updateOrder(tbOrder);
             return "update";
-        }else
-            return "fail";
     }
 
     @RequestMapping("addorders")

@@ -4,19 +4,19 @@
   <resultMap id="BaseResultMap" type="cn.edu.jxufe.entity.TbArticle">
     <id column="articleID" jdbcType="INTEGER" property="articleid" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="picurl" jdbcType="VARCHAR" property="picurl" />
     <result column="readcount" jdbcType="INTEGER" property="readcount" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.edu.jxufe.entity.TbArticleWithBLOBs">
-    <result column="content" jdbcType="LONGVARBINARY" property="content" />
-    <result column="picurl" jdbcType="LONGVARBINARY" property="picurl" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.edu.jxufe.entity.TbArticle">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    articleID, title, readcount, createtime, updatetime
+    articleID, title, picurl, readcount, createtime, updatetime
   </sql>
   <sql id="Blob_Column_List">
-    content, picurl
+    content
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -30,15 +30,15 @@
     delete from tb_article
     where articleID = #{articleid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
-    insert into tb_article (articleID, title, readcount, 
-      createtime, updatetime, content, 
-      picurl)
-    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{readcount,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}, 
-      #{picurl,jdbcType=LONGVARBINARY})
+  <insert id="insert" parameterType="cn.edu.jxufe.entity.TbArticle">
+    insert into tb_article (articleID, title, picurl, 
+      readcount, createtime, updatetime, 
+      content)
+    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, 
+      #{readcount,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.edu.jxufe.entity.TbArticle">
     insert into tb_article
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleid != null">
@@ -46,6 +46,9 @@
       </if>
       <if test="title != null">
         title,
+      </if>
+      <if test="picurl != null">
+        picurl,
       </if>
       <if test="readcount != null">
         readcount,
@@ -59,9 +62,6 @@
       <if test="content != null">
         content,
       </if>
-      <if test="picurl != null">
-        picurl,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="articleid != null">
@@ -69,6 +69,9 @@
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=VARCHAR},
       </if>
       <if test="readcount != null">
         #{readcount,jdbcType=INTEGER},
@@ -80,18 +83,18 @@
         #{updatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
-        #{content,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="picurl != null">
-        #{picurl,jdbcType=LONGVARBINARY},
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxufe.entity.TbArticle">
     update tb_article
     <set>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=VARCHAR},
       </if>
       <if test="readcount != null">
         readcount = #{readcount,jdbcType=INTEGER},
@@ -103,33 +106,31 @@
         updatetime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
-        content = #{content,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="picurl != null">
-        picurl = #{picurl,jdbcType=LONGVARBINARY},
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.jxufe.entity.TbArticleWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.jxufe.entity.TbArticle">
     update tb_article
     set title = #{title,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
       readcount = #{readcount,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARBINARY},
-      picurl = #{picurl,jdbcType=LONGVARBINARY}
+      content = #{content,jdbcType=LONGVARCHAR}
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbArticle">
     update tb_article
     set title = #{title,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
       readcount = #{readcount,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
   <select id="findAllArticle" resultMap="BaseResultMap">
-    SELECT * from tb_article
+  SELECT * from tb_article
   </select>
 </mapper>

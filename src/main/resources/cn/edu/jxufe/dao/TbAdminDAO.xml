@@ -9,7 +9,7 @@
     account, `password`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_admin
     where account = #{account,jdbcType=VARCHAR}
@@ -55,7 +55,9 @@
     set `password` = #{password,jdbcType=VARCHAR}
     where account = #{account,jdbcType=VARCHAR}
   </update>
-  <select id="selectBypassword" parameterType="cn.edu.jxufe.entity.TbAdmin" resultType="cn.edu.jxufe.entity.TbAdmin">
-    select * from tb_admin where account = #{account} and password=#{password}
+  <select id="selectBypassword" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from tb_admin
   </select>
 </mapper>

@@ -46,13 +46,7 @@
         </tr>
         <tr>
             <td align="right" valign="top">文章内容:</td>
-            <td align="right">
-                <form action="uploaddire" id="uploaddire"  method="post" enctype="multipart/form-data">
-                    <label id="file_pic">
-                    <input type="file" name="fs" id="fs" style="height: 100px;" value="${tbArticle.content}" />
-                    </label>
-                </form>
-            </td>
+            <td align="right"><input type="text" id="content" value="${tbArticle.content}" style="width: 400px; height: 100px"/></td>
         </tr>
         <tr>
             <td align="right">图片地址:</td>
@@ -77,29 +71,12 @@
     </table>
 </fieldset>
 <script>
-    var showImg = document.querySelector("#file_pic");
-    var getImg = document.querySelector("input[type='file']");
-    if(typeof FileReader==='undefined'){
-        showImg.innerHTML = "抱歉，你的浏览器不支持!";
-        getImg.setAttribute('disabled','disabled');
-    }else{
-        getImg.addEventListener('change',readFile,false);
-    }
-    function readFile(){
-        var file = this.files[0];
-        if(!/image\/\w+/.test(file.type)){
-            alert("请上传图片！");
-            return false;
-        }
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e){
-            showImg.getElementsByTagName("img")[0].src=this.result ;
-        }
-    }
-
     function saveedit(){
-        if($("#fs").val()==""){
+        var data={articleid:$("#articleid").val(),title:$("#title").val(),content:$("#content").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),createtime:$("#createtime").val(),updatetime:$("#updatetime").val()}
+        $.post("updatearticle",data,function(d){
+            alert(d)
+        })
+        /*if($("#fs").val()==""){
             var data={articleid:$("#articleid").val(),title:$("#title").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),createtime:$("#createtime").val(),updatetime:$("#updatetime").val()}
             $.post("updatearticle",data,function(d){
                 alert(d)
@@ -113,7 +90,7 @@
                     })
                 }
             })
-        }
+        }*/
     }
 </script>
 </body>
