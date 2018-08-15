@@ -18,6 +18,12 @@
     from tb_user
     where userID = #{userid,jdbcType=INTEGER}
   </select>
+  <select id="selectByphone" parameterType="java.lang.Integer" resultType="cn.edu.jxufe.entity.TbUser">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_user
     where userID = #{userid,jdbcType=INTEGER}

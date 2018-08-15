@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<script type="javascript"></script>
+<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
         $("#art").datagrid({
@@ -28,7 +28,7 @@
                 iconCls: 'icon-add',
                 text:"增加",
                 handler: function()
-                {alert('增加窗口')}
+                {addWindow();}
             },'-',{
                 iconCls: 'icon-cancel',
                 text:"删除",
@@ -71,11 +71,69 @@
         $("#contentbody").attr("src","articlebyid?id="+id)
     }
 
+    function addWindow() {
+        $("#addart").css("display", "block");
+        $("#addart").dialog({
+            width: 360,
+            height: 350,
+            modal: true,
+            title: "添加会员信息",
+            collapsible: true,
+            minimizable: true,
+            maximizable: true,
+            resizable: true,
+            buttons: [{
+                id: 'btnAdd',
+                text: '添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    addarts();
+                    $('#art').datagrid("reload");
+                }
+            }, {
+                id: 'btnCancelAdd',
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $("#addart").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function addarts(){
+        alert("点击了提交按钮")
+        var data={articleid:$("#articleid").val(),title:$("#title").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),updatetime:$("#updatetime").val()}
+        $.post("addarticle",data,function(d){
+            alert(d)
+        })
+    }
+
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
     <table id="art"></table>
     <div id="editarticle" style="overflow:hidden;">
         <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0" ></iframe>
     </div>
+</div>
+<div id="addart">
+    <table align="center" cellpadding="3" cellspacing="3">
+        <tr>
+            <td align="right">文章标题:</td>
+            <td align="left"><input id="title" name="title" /></td>
+        </tr>
+        <tr>
+            <td align="right">图片地址:</td>
+            <td align="left"><input id="picurl" name="picurl" /></td>
+        </tr>
+        <tr>
+            <td align="right">阅读量:</td>
+            <td align="left"><input id="readcount" name="readcount" /></td>
+        </tr>
+        <tr>
+            <td align="right">修改时间:</td>
+            <td align="right"><input id="updatetime" name="updatetime" /></td>
+        </tr>
+    </table>
 </div>
 <jsp:include page="common/foot.jsp"></jsp:include>

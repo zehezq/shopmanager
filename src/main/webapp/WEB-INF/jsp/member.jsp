@@ -51,15 +51,13 @@
                 remove();
             }
         },'-',{
-                text: '用户编号<input id="itemid1" style="line-height:14px;border:1px solid #ccc"/>'
+                text: '手机号码:<input class="easyui-linkbutton" id="phonetxt" style="line-height:14px;border:1px solid #ccc"/>'
             },{
-                text: '用户名字<input id="itemid2" style="line-height:14px;border:1px solid #ccc"/>'
-            },{
-                id: 'btnAddPeopleSetId',
+                id: 'searchphone',
                 iconCls:'icon-search',
                 text: '搜索',
                 handler: function(){
-                    inputToobar();
+                    searchmem();
                 }
             }]
 
@@ -138,6 +136,36 @@
             })
         }
     }
+
+    /*function searchmem(){
+        $("#mem").empty();
+        var items = $('#mem').datagrid('getRows');
+        var searchvalue=$("#phonetxt").textbox('getValue');
+        for(var i=0;i<items.length;i++){
+            var row=$("#mem").datagrid('getData').rows[i];
+            $('#mem').datagrid('selectRow',i);
+            return;
+        }
+    }*/
+
+    /*function searchmem(){
+        var uphone=$("#phonetxt").textbox('getValue');
+        var newData=[];
+        var gridData=$("#mem").datagrid('getData');
+        for(var i=0;i<gridData.total;i++){
+            if(gridData.rows[i].number==uphone){
+                newData.push(gridData.rows[i]);
+            }
+        }
+        $('#mem').datagrid('loadData',newData);
+    }*/
+    /*$('#mem').datagrid('load',{
+        userid: $('#userid').val(),
+        username: $('#username').val(),
+        phone:$('#phone').val(),
+        userpicture:$('#userpicture').val(),
+        createtime:$('#createtime').val()
+    });*/
 
     function readFile(){
      var file = this.files[0];

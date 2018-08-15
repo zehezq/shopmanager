@@ -54,6 +54,11 @@ public class TbUserServerImpl implements TbUserServer {
         return tbUserDAO.updateByPrimaryKeySelective(tbUser);
     }
 
+    @Override
+    public TbUser selectByphone(String phone) {
+        return tbUserDAO.selectByphone(phone);
+    }
+
 }
 /*
 zouziqian

@@ -65,7 +65,7 @@
     </table>
 </fieldset>
 <script>
-    var showImg = document.querySelector("#file_pic");
+    /*var showImg = document.querySelector("#file_pic");
     var getImg = document.querySelector("input[type='file']");
     if(typeof FileReader==='undefined'){
         showImg.innerHTML = "抱歉，你的浏览器不支持!";
@@ -84,7 +84,7 @@
         reader.onload = function(e){
             showImg.getElementsByTagName("img")[0].src=this.result ;
         }
-    }
+    }*/
 
     function saveedit(){
         var data={id:$("#id").val(),userid:$("#userid").val(),goodid:$("#goodid").val(),commenttime:$("#commenttime").val(),content:$("#content").val()}

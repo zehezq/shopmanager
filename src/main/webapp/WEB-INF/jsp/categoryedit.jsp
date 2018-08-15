@@ -60,15 +60,15 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     <td align="right">类别状态:</td>
     <c:choose>
       <c:when test="${category.status==1}">
-        <td align="right"><input type="radio" name="status"  />
+        <td align="right"><input type="radio" name="status" value="1"  />
           启用 |
-          <input checked type="radio" name="status" />
+          <input checked type="radio" name="status" value="0" />
           禁用</td>
       </c:when>
       <c:otherwise>
-        <td align="right" width="20"><input type="radio" name="status" checked />
+        <td align="right" width="20"><input type="radio" name="status" checked value="0" />
           启用 |
-          <input  type="radio" name="status" />
+          <input  type="radio" name="status" value="0" />
           禁用</td>
       </c:otherwise>
     </c:choose>

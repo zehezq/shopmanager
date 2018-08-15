@@ -3,8 +3,12 @@ package cn.edu.jxufe.services.impl;
 import cn.edu.jxufe.dao.TbAdminDAO;
 import cn.edu.jxufe.entity.TbAdmin;
 import cn.edu.jxufe.services.TbAdminServer;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/8/9.
@@ -15,8 +19,8 @@ public class TbAdminServerImpl implements TbAdminServer{
     private TbAdminDAO tbAdminDAO;
 
     @Override
-    public TbAdmin selectBypassword(TbAdmin tbAdmin){
-        return tbAdminDAO.selectBypassword(tbAdmin);
+    public List<TbAdmin> selectBypassword(@Param("map") Map<String, String> map) {
+        return tbAdminDAO.selectBypassword(map);
     }
 }
 /*

@@ -38,7 +38,7 @@
     <table method="post" width="544"  align="center" cellpadding="3" cellspacing="3">
         <tr>
             <td width="87" align="right">订单编号:</td>
-            <td width="421" align="right"><input type="text" id="orderid" value="${tbOrder.orderid}" /></td>
+            <td width="421" align="right"><input type="text" id="id" value="${tbOrder.id}" /></td>
         </tr>
         <tr>
             <td align="right">用户编号:</td>
@@ -78,29 +78,8 @@
     </table>
 </fieldset>
 <script>
-    var showImg = document.querySelector("#file_pic");
-    var getImg = document.querySelector("input[type='file']");
-    if(typeof FileReader==='undefined'){
-        showImg.innerHTML = "抱歉，你的浏览器不支持!";
-        getImg.setAttribute('disabled','disabled');
-    }else{
-        getImg.addEventListener('change',readFile,false);
-    }
-    function readFile(){
-        var file = this.files[0];
-        if(!/image\/\w+/.test(file.type)){
-            alert("请上传图片！");
-            return false;
-        }
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e){
-            showImg.getElementsByTagName("img")[0].src=this.result ;
-        }
-    }
-
     function saveedit(){
-        var data={orderid:$("#orderid").val(),userid:$("#userid").val(),price:$("#price").val(),status:$("input:checked").val(),ordertime:$("#ordertime").val()}
+        var data={id:$("#id").val(),userid:$("#userid").val(),price:$("#price").val(),status:$("input:checked").val(),ordertime:$("#ordertime").val()}
         $.post("updateorder",data,function(d){
             alert(d)
         })

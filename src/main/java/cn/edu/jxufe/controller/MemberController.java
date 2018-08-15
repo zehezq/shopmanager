@@ -94,6 +94,14 @@ public class MemberController {
             return "add";
     }
 
+    @RequestMapping("memberbyphone")
+    public String memberbyphone(String phone,ModelMap map){
+        System.out.println("会员编辑页面");
+        TbUser tbUser=tbUserServer.selectByphone(phone);
+        map.put("tbUser",tbUser);
+        return "search";
+    }
+
     @RequestMapping("deletedata")
     @ResponseBody
     public Object deletedata(int userid){

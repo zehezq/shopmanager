@@ -24,6 +24,9 @@ public interface TbUserServer {
 
     //更新
     public int updateTbuser(TbUser tbUser);
+
+    //phone
+    public TbUser selectByphone(String phone);
 }
 /*
 zouziqian

@@ -54,7 +54,7 @@ public class ArticleController {
         return "editarticle";
     }
 
-    @RequestMapping("uploaddire")
+   /* @RequestMapping("uploaddire")
     @ResponseBody
     public Object upLoadImage(@RequestParam("fs") MultipartFile file,HttpServletRequest request){//与html中表单的name匹配
         System.out.println("准备上传");
@@ -67,22 +67,25 @@ public class ArticleController {
             FileOutputStream fout=new FileOutputStream(path+ fileName);
             fout.write(file.getBytes());
             fout.close();
-            return fileName;
+            return "upload/"+fileName;
         }catch (Exception ex){
             ex.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     @RequestMapping("updatearticle")
     @ResponseBody
     public Object updatearticle(TbArticle tbArticle){
-
-        if(tbArticle.getArticleid()!=0){
             tbArticleServer.updateTbArticle(tbArticle);
             return "update";
-        }else
-            return "fail";
+    }
+
+    @RequestMapping("addarticle")
+    @ResponseBody
+    public Object addarticle(TbArticle tbArticle){
+        tbArticleServer.insertTbArticle(tbArticle);
+        return "add";
     }
 }
 /*

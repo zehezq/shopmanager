@@ -8,27 +8,22 @@ import java.util.Date;
  * @author 
  */
 public class TbOrder implements Serializable {
-    private String orderid;
-
     private Integer id;
+
+    private String orderid;
 
     private Integer userid;
 
     private Float price;
 
+    /**
+     * 0表示未支付，1表示待发货，2表示已完成
+     */
     private Integer status;
 
     private Date ordertime;
 
     private static final long serialVersionUID = 1L;
-
-    public String getOrderid() {
-        return orderid;
-    }
-
-    public void setOrderid(String orderid) {
-        this.orderid = orderid;
-    }
 
     public Integer getId() {
         return id;
@@ -36,6 +31,14 @@ public class TbOrder implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(String orderid) {
+        this.orderid = orderid;
     }
 
     public Integer getUserid() {
@@ -82,8 +85,8 @@ public class TbOrder implements Serializable {
             return false;
         }
         TbOrder other = (TbOrder) that;
-        return (this.getOrderid() == null ? other.getOrderid() == null : this.getOrderid().equals(other.getOrderid()))
-            && (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getOrderid() == null ? other.getOrderid() == null : this.getOrderid().equals(other.getOrderid()))
             && (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
             && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
@@ -94,8 +97,8 @@ public class TbOrder implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getOrderid() == null) ? 0 : getOrderid().hashCode());
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getOrderid() == null) ? 0 : getOrderid().hashCode());
         result = prime * result + ((getUserid() == null) ? 0 : getUserid().hashCode());
         result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
@@ -109,8 +112,8 @@ public class TbOrder implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", orderid=").append(orderid);
         sb.append(", id=").append(id);
+        sb.append(", orderid=").append(orderid);
         sb.append(", userid=").append(userid);
         sb.append(", price=").append(price);
         sb.append(", status=").append(status);
