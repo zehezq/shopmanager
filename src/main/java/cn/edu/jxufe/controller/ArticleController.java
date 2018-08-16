@@ -71,8 +71,9 @@ public class ArticleController {
     @RequestMapping("deletearticle")
     @ResponseBody
     public Object deletearticle(Integer id){
+        System.out.println(id);
         int num=tbArticleServer.deleteByTbArticleId(id);
-        if(num>0){
+        if (num>0){
             return "success";
         }
         return "fail";

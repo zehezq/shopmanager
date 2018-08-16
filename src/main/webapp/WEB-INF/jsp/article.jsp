@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<%--<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>--%>
+<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
         $("#art").datagrid({
@@ -29,7 +29,7 @@
                 handler: function()
                 {addWindow();}
             },'-',{
-                iconCls: 'icon-cancel',
+                iconCls: 'icon-remove',
                 text:"删除",
                 handler: function()
                 {deleteArt();}
@@ -111,22 +111,21 @@
 
     //删除数据
     function deleteArt() {
-        //把你选中的 数据查询出来。
+        //把选中的数据查询出来。
         var selectRows = $('#art').datagrid("getSelections");
         if (selectRows.length < 1) {
             $.messager.alert("提示消息", "请选中要删的数据!");
             return;
         }
-
-        //真删除数据
         //提醒用户是否是真的删除数据
         $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
             if (r) {
                 var id;
                 for (var i = 0; i < selectRows.length; i++) {
                     id = selectRows[i].articleid;
-                    $.post("deletearticle", {articleid:id}, function (data) {
-                        if (data = "success") {
+                    alert(id);
+                    $.post("deletearticle", {id:id}, function (data) {
+                        if (data == "success") {
                             //刷新表格，去掉选中状态的 那些行。
                             alert("删除成功");
                             $('#art').datagrid("reload");
@@ -139,6 +138,7 @@
             }
         });
     }
+
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
     <table id="art"></table>

@@ -22,6 +22,26 @@ public class TbAdminServerImpl implements TbAdminServer{
     public List<TbAdmin> selectBypassword(@Param("map") Map<String, String> map) {
         return tbAdminDAO.selectBypassword(map);
     }
+
+    @Override
+    public List<TbAdmin> findAllAdmin() {
+        return tbAdminDAO.findAllAdmin();
+    }
+
+    @Override
+    public TbAdmin selectByap(TbAdmin tbAdmin) {
+        return tbAdminDAO.selectByap(tbAdmin);
+    }
+
+    @Override
+    public int insertTbadmin(TbAdmin tbAdmin) {
+        return tbAdminDAO.insertSelective(tbAdmin);
+    }
+
+    @Override
+    public TbAdmin selectByAccount(String account) {
+        return tbAdminDAO.selectByPrimaryKey(account);
+    }
 }
 /*
 zouziqian

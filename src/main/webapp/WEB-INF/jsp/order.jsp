@@ -34,10 +34,11 @@
                 handler: function()
                 {showords()}
             },'-',{
-                iconCls: 'icon-cancel',
+                iconCls: 'icon-remove',
                 text:"删除",
                 handler: function()
-                {alert('删除按钮')}
+                {//deleteorder();
+                alert("delete"); }
             },'-',{
                 text: '订单编号<input id="itemid" style="line-height:14px;border:1px solid #ccc"/>'
             },{
@@ -113,6 +114,35 @@
             alert(d)
         })
     }
+
+    /*//删除数据
+    function deleteorder() {
+        //把选中的数据查询出来。
+        var selectRows = $('#ord').datagrid("getSelections");
+        if (selectRows.length < 1) {
+            $.messager.alert("提示消息", "请选中要删的数据!");
+            return;
+        }
+        //提醒用户是否是真的删除数据
+        $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
+            if (r) {
+                var id;
+                for (var i = 0; i < selectRows.length; i++) {
+                    id = selectRows[i].id;
+                    $.post("deleteorders", {id:id}, function (data) {
+                        if (data = "success") {
+                            //刷新表格，去掉选中状态的 那些行。
+                            alert("删除成功");
+                            $('#ord').datagrid("reload");
+                            $('#ord').datagrid("clearSelections");
+                        } else {
+                            $.messager.alert("删除失败", data);
+                        }
+                    });
+                }
+            }
+        });
+    }*/
 
 </script>
 

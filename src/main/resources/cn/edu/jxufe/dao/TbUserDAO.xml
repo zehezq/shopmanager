@@ -113,4 +113,5 @@
   <select id="findAllUser" resultMap="BaseResultMap">
     select * from tb_user
   </select>
+  <select id="selectBy"
 </mapper>

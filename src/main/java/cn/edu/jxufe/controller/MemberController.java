@@ -106,33 +106,15 @@ public class MemberController {
     @ResponseBody
     public Object deletedata(int userid){
         TbUser tbUser=new TbUser();
-        tbUser.setUserid(userid);
-        if(tbUser.getUserid()!=0){
-            tbUserServer.deleteByUserId(userid);
-            return "delete";
+        int num=tbUserServer.deleteByUserId(userid);
+        if(num>0){
+            return "success";
         }else
             return "fail";
 
     }
 
-    /*@RequestMapping("savedata")
-    @ResponseBody
-    public Object savedata(@RequestParam("userid") int userid,@RequestParam("username") String username,@RequestParam("phone") String phone){//与html中表单的name匹配
-        System.out.println("准备存储到数据库");
-        System.out.println("userid"+userid);
-        Map map=new HashMap();
-        TbUser tbUser=new TbUser();
-        tbUser.setUserid(userid);
-        tbUser.setUsername(username);
-        tbUser.setPhone(phone);
-        tbUserServer.updateByPrimaryKey(tbUser);
-        return "success";
-    }*/
 
-    /*{
-            tbUserServer.insertTbuser(tbUser);
-            return "add";
-        }*/
 }
 /*
 zouziqian

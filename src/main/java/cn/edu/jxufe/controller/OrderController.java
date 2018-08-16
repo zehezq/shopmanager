@@ -64,6 +64,17 @@ public class OrderController {
         tbOrderServer.insertOrder(tbOrder);
         return "add";
     }
+
+    @RequestMapping("deleteorders")
+    @ResponseBody
+    public Object deleteorders(Integer id){
+        int num=tbOrderServer.deleteById(id);
+        if(num>0){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
 }
 /*
 zouziqian

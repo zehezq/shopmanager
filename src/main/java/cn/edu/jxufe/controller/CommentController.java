@@ -72,6 +72,17 @@ public class CommentController {
         tbCommentServer.insertTbComment(tbComment);
         return "add";
     }
+
+    @RequestMapping("deletecomments")
+    @ResponseBody
+    public Object deletecomments(Integer id){
+        int num=tbCommentServer.deleteByTbCommentId(id);
+        if(num>0){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
 }
 /*
 zouziqian

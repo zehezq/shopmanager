@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <jsp:include page="common/head.jsp"></jsp:include>
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
@@ -52,6 +52,7 @@
             }
         }]
     });
+
         var p = $('#mem').datagrid('getPager');
         $(p).pagination({
             pageSize: 10,//每页显示的记录条数，默认为10
@@ -61,6 +62,8 @@
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
         });
     })
+
+   /* function initiadatagrid();*/
 
     function showWindow(id){
         $("#editmember").window({
@@ -126,41 +129,7 @@
             })
         }
     }
-    /*function doSearch(){
-        $('#mem').datagrid('load',{
-            username: $('#name').val(),
-            phone: $('#telphone').val()
-        });
-    }*/
-    /*function searchmem(){
-        $("#mem").empty();
-        var items = $('#mem').datagrid('getRows');
-        var searchvalue=$("#phonetxt").textbox('getValue');
-        for(var i=0;i<items.length;i++){
-            var row=$("#mem").datagrid('getData').rows[i];
-            $('#mem').datagrid('selectRow',i);
-            return;
-        }
-    }*/
 
-    /*function searchmem(){
-        var uphone=$("#phonetxt").textbox('getValue');
-        var newData=[];
-        var gridData=$("#mem").datagrid('getData');
-        for(var i=0;i<gridData.total;i++){
-            if(gridData.rows[i].number==uphone){
-                newData.push(gridData.rows[i]);
-            }
-        }
-        $('#mem').datagrid('loadData',newData);
-    }*/
-    /*$('#mem').datagrid('load',{
-        userid: $('#userid').val(),
-        username: $('#username').val(),
-        phone:$('#phone').val(),
-        userpicture:$('#userpicture').val(),
-        createtime:$('#createtime').val()
-    });*/
 
     function readFile(){
      var file = this.files[0];
@@ -179,13 +148,13 @@
     <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0" ></iframe>
 </div>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
-    <%--<div id="selectmem" style="padding:3px">
+    <div id="selectmem" style="padding:3px">
         <span>用户名字:</span>
         <input id="name" style="line-height:26px;border:1px solid #ccc">
         <span>用户电话:</span>
         <input id="telphone" style="line-height:26px;border:1px solid #ccc">
         <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
-    </div>--%>
+    </div>
     <table id="mem"></table>
 </div>
 
