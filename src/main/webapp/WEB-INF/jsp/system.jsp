@@ -10,10 +10,6 @@
 <jsp:include page="common/head.jsp"></jsp:include>
 <script>
   $(function(){
-    $('#system').datagrid({
-      title:'系统设置'
-    }
-
     $.extend($.fn.validatebox.defaults.rules, {
       /*必须和某个字段相等*/
       equalTo: {
@@ -23,117 +19,59 @@
         message:'字段不匹配'
       }
     });
-
-
-//修改密码保存
-    function AdminCPwdSave() {
-      $('#admincha_form').form('submit', {
-        success: function (data) {
-
-          var rt = jQuery.parseJSON(data);
-          if (rt.Success) {
-            $.messager.alert("保存成功", rt.Msg, "", function () {
-              location.href = $("#btn_Logout").attr("href");
-              $("#cPwdDlg").dialog("destroy");
-
-            });
-          }
-          else {
-            var msg = "";
-            if (rt.MsgLsit != undefined) {
-              $.each(rt.MsgLsit, function (i, val) {
-                msg += "<li>" + i + ":" + val + "</li>";
-              });
-            }
-            if (msg != "") msg = rt.Msg + "<br /> <p> 原因如下：" + "<ul>" + msg + "</ul></p>";
-            else msg = rt.Msg;
-            $.messager.alert("保存失败", msg, "error");
-          }
-        }
-      });
-    }
   })
 </script>
 
 <div data-options="region:'center',title:'系统设置'" style="padding:5px;">
   <div id="content" region="center" split="true" style="padding:5px;">
     <table id="system"></table>
-    <div>
+   <%-- <div>
       <table>
         <tr>
           <td>管理员编号</td>
-          <td></td>
+          <td><input style="border: 0px;outline:none;cursor: pointer;" id="account"></td>
         </tr>
         <tr>
           <td>管理员名称</td>
-          <td></td>
+          <td><input style="border: 0px;outline:none;cursor: pointer;" type="text" ></td>
         </tr>
       </table>
+    </div>--%>
+    <div>
+      <a  value="" class="easyui-linkbutton" onclick="ShowChangePwdDlg()">修改密码</a>
     </div>
     <div>
-      <a  value="提交" class="easyui-linkbutton" onclick="ShowChangePwdDlg()">修改密码</a>
+      <a  value="" class="easyui-linkbutton" onclick="confirmexit()">退出系统</a>
     </div>
 
 
   </div>
 </div>
 
-<%--
-<!--创建修改密码窗口-->
-<div id="div_pwd"&lt;%&ndash; title="修改密码" style="width: 400px;height: 250px;" data-options="collapsible:false,minimizable:false,maximizable:false,closed:true,modal:true"&ndash;%&gt;>
-  <table>
-    <tr>
-      <td>原有密码:</td>
-      <td>
-        <input type="password" />
-      </td>
-    </tr>
-    <tr>
-      <td>新密码:</td>
-      <td>
-        <input type="password" />
-      </td>
-    </tr>
-    <tr>
-      <td>确认密码:</td>
-      <td>
-        <input type="password" />
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <a id="btnCon" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'">确认修改</a> &nbsp;&nbsp;&nbsp;&nbsp;
-        <a id="btnCan" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
-      </td>
-    </tr>
-  </table>
-</div>
---%>
-
 <div id="changepwd">
   <table>
     <tr>
       <td>旧密码：</td>
-      <td><input id="pwd" name="password"/></td>
+      <td><input id="oldpwd" name="oldpwd" type="password"/></td>
     </tr>
     <tr>
       <td>新密码：</td>
-      <td><input id="password" name="password" validType="length[4,32]" class="easyui-validatebox" required="true" type="password" value=""/></td>
+      <td><input id="newpwd" name="newpwd" validType="length[4,32]" class="easyui-validatebox" required="true" type="password" value=""/></td>
     </tr>
     <tr>
       <td>确认密码：</td>
-      <td><input type="password" name="repassword" id="repassword" required="true" class="easyui-validatebox"  validType="equalTo['#password']" invalidMessage="两次输入密码不匹配"/></td>
+      <td><input type="password" name="pwd" id="pwd" required="true" class="easyui-validatebox"  validType="equalTo['#newpwd']" invalidMessage="两次输入密码不匹配"/></td>
     </tr>
   </table>
 </div>
 
 <jsp:include page="common/foot.jsp"></jsp:include>
 <script>
+
+  <%request.setCharacterEncoding("utf-8");%>
   //显示修改密码窗口
   function ShowChangePwdDlg(){
-    alert("修改密码");
     $("#changepwd").css("display", "block");
-    alert("修改密码2");
     $("#changepwd").dialog({
       width: 400,
       height: 300,
@@ -148,8 +86,7 @@
         text: '确认',
         iconCls: 'icon-ok',
         handler: function () {
-          //让表单提交
-          $("#addDiv form").submit();
+          confirmpwd();
           $("#div_pwd").dialog("close");
         }
       }, {
@@ -164,6 +101,31 @@
   }
 
   function confirmpwd(){
+    var data = {
+      password: $("#oldpwd").val()
+    }
+    alert($("#oldpwd").val())
+    $.post("confirmpwd", {password: $("#oldpwd").val()}, function (data) {
+      if(data == "ok"){
+        var data2 = {
+          password: $("#pwd").val()
+        }
+        $.post("updatepwd", {password: $("#pwd").val()}, function (d){
+          if(d == 1)
+            alert("修改密码成功！");
+          else
+            alert("修改密码失败！");
+        })
+      }else
+          alert("原密码输入错误！");
+    });
+  }
 
+  function confirmexit(){
+    $.messager.confirm("确认消息", "您确定要退出系统吗？", function (r) {
+      if (r) {
+        self.location='http://localhost:8080/page_login1';
+      }
+    })
   }
 </script>

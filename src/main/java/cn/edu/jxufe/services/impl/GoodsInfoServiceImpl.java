@@ -55,5 +55,19 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public int deleteGoods(int goodid) {
         return tbGoodsDAO.deleteByPrimaryKey(goodid);
     }
+
+    @Override
+    public PageInfo<TbGoods> findBySelect(int page, int rows,TbGoods goods) {
+        PageHelper.startPage(page, rows);
+        List<TbGoods> data = tbGoodsDAO.findBySelect(goods);
+        PageInfo<TbGoods> pagevo = new PageInfo<TbGoods>(data);
+        return pagevo;
+    }
+
+    @Override
+    public List<TbGoods> findBySelect2(TbGoods goods) {
+        return tbGoodsDAO.findBySelect(goods);
+    }
+
 }
 

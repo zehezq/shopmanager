@@ -39,10 +39,9 @@
         {field:'adno',title:'广告编号',width:100,align:'center',checkbox:"true"},
         {field:'index',title:'排位',width:100,align:'center'},
         {field:'title',title:'广告标题',width:100,align:'center'},
-        {field:'picurl',title:'广告图片',width:100,align:'center',formatter:
-                function(v,r,i){
-                 return "<img src="+v+"height=20 />";
-                }},
+        {field:'picurl',title:'广告图片',width:100,align:'center',formatter: function(value,row,index){
+          return "<img src="+value+" height=20px />";
+        }},
         {field:'url',title:'广告链接',width:100,align:'center',formatter:
                 function(v,r,i){
                   return v/*"<a href="+v"></a>"*/;

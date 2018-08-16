@@ -23,6 +23,17 @@
         text:'删除',
         handler: function(){doDelete();}
 
+      },'-',{
+        text: '类别编号<input id="item1" style="line-height:14px;border:1px solid #ccc"/>'
+      },{
+        text: '类别名字<input id="item2" style="line-height:14px;border:1px solid #ccc"/>'
+      },{
+        id: 'btnAddPeopleSetId',
+        iconCls:'icon-search',
+        text: '搜索',
+        handler: function(){
+          doSelect();
+        }
       }],
       columns:[[
         {field:'code',title:'类别编号',width:100,align:'center',checkbox:"true"},
@@ -62,6 +73,89 @@
 
   })
 
+  //查询
+  function doSelect(){
+    var data={code:$("#item1").val(),caption:$("#item2").val()/*,status:$("#input:checked").val()*/};
+    $.post("categorypartdata",data,function(){
+      /*var rows = [];
+      for(var i = 0; i < data.length; i++){
+          rows.push({
+          //code:data[i].code,
+            id:data[i].id,
+          caption:data[i].caption,
+            status:data[i].status,
+            createtime:data[i].createtime,
+            updatetime:data[i].updatetime
+        });
+        $("#category").datagrid('loadData',rows);
+      }
+    })*/
+
+      $("#category").datagrid({
+        url:'categorypartdata',
+        pagination:'true',
+        title:'商品类别列表',
+        toolbar: [{
+          iconCls: 'icon-add',
+          text:'增加',
+          handler: function(){showAddFrm();}
+        },'-',{
+          iconCls: 'icon-remove',
+          text:'删除',
+          handler: function(){doDelete();}
+
+        },'-',{
+          text: '类别编号<input id="item1" style="line-height:14px;border:1px solid #ccc"/>'
+        },{
+          text: '类别名字<input id="item2" style="line-height:14px;border:1px solid #ccc"/>'
+        },{
+          id: 'btnAddPeopleSetId',
+          iconCls:'icon-search',
+          text: '搜索',
+          handler: function(){
+            doSelect();
+          }
+        }],
+        columns:[[
+          {field:'code',title:'类别编号',width:100,align:'center',checkbox:"true"},
+          {field:'id',title:'序号',width:100,align:'center'},
+          {field:'caption',title:'类别名称',width:100,align:'center'},
+          {field:'status',title:'状态',width:100,align:'center',formatter:
+                  function(v,r,i){
+                    if(v==1)
+                      return "启用";
+                    else
+                      return "禁用";
+                  }},
+          {field:'createtime',title:'创建时间',width:100,align:'center',formatter:
+                  function(v,r,i){
+                    var d = new Date(v);
+                    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+ d.getDate()+"日"+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
+                  }},
+          {field:'updatetime',title:'修改时间',width:100,align:'center',formatter:
+                  function(v,r,i){
+                    var d = new Date(v);
+                    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+ d.getDate()+"日"+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
+                  }},
+          {
+            field: 'edit', title: '编辑详情', width: 100, align: 'center', formatter:
+                  function (v, r, i) {
+                    return "<a href='javascript:showWindow("+ r.code+")'>编辑详情</a>";
+                  }
+          }
+        ]]
+      });
+      var p = $('#category').datagrid('getPager');
+      $(p).pagination({
+        beforePageText: '第',//页数文本框前显示的汉字
+        afterPageText: '页    共 {pages} 页',
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+      });
+    })
+  }
+
+
+  //编辑
   function showWindow(code){
     $("#editCategory").window({
       width:600,
@@ -139,11 +233,11 @@
           $.post("deletecate", {code:id}, function (data) {
             if (data == "ok") {
               //刷新表格，去掉选中状态的 那些行。
-              alert("删除成功");
+              $.messager.alert("删除成功！");;
               $('#category').datagrid("reload");
               $('#category').datagrid("clearSelections");
             } else {
-              $.messager.alert("删除失败~~", data);
+              $.messager.alert("删除失败！");
             }
           });
         }

@@ -114,4 +114,22 @@
     #{caption,jdbcType=VARCHAR}
     )
   </insert>
+  <select id="findByCodeOrCaption" resultMap="BaseResultMap">
+    select * from tb_category
+    <where>
+      <if test="code!=null">
+        or code = #{code,jdbcType=INTEGER}
+      </if>
+      <if test="caption!=null">
+        or caption = #{caption,jdbcType=VARCHAR}
+      </if>
+      <if test="status!=null">
+        or status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="findAllByid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT caption from tb_category WHERE code = #{code,jdbcType=INTEGER}
+  </select>
 </mapper>

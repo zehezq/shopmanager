@@ -15,4 +15,8 @@ public interface TbCategoryDAO extends MyBatisBaseDao<TbCategory, Integer> {
     int insertSelective(TbCategory category);
 
     TbCategory selectByPrimaryKey(int id);
+
+    List<TbCategory> findByCodeOrCaption(TbCategory category);
+
+    String findAllByid(int code);
 }

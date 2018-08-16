@@ -76,6 +76,23 @@ public class MemberController {
         }
     }
 
+    @RequestMapping("uploaduserpic")
+    @ResponseBody
+    public Object uploadUserImage(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
+        //获取服务器的upload文件夹绝对路径
+        String path=req.getSession().getServletContext().getRealPath("upload/");
+        String fileName=UUID.randomUUID().toString()+f.getOriginalFilename();
+        try {
+            FileOutputStream fou = new FileOutputStream(path +fileName);
+            fou.write(f.getBytes());
+            fou.close();
+            return "upload/"+fileName;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping("saveupdatedata")
     @ResponseBody
     public Object saveupdatedata(TbUser tbUser){
@@ -111,7 +128,6 @@ public class MemberController {
             return "success";
         }else
             return "fail";
-
     }
 
 

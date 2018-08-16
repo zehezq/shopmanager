@@ -19,12 +19,27 @@
       getImg.addEventListener('change',readFile,false);
     }
 
+    /*$('#code').combobox({
+      url:'categoryall',
+      valueField:'code',
+      textField:'caption'
+    });*/
+    var a = $('#code').combobox('getValue');
+    initTable("goodsdata",null);
+    //
+    $("#selectmem").panel({width:"100%",height:80,title:"搜索选项"});
+  $("#searchbtn").linkbutton();
 
 
+
+  })
+
+  function initTable(path,paramter){
     $('#goods').datagrid({
       //表格的数据来源
-      url:'goodsdata',
+      url:path,
       pagination:'true',
+      queryParams:paramter,
       title:'商品列表',
       toolbar: [{
         iconCls: 'icon-add',
@@ -39,9 +54,16 @@
       //singleSelect:true,
       columns:[[
         {field:'goodid',title:'商品编号',width:100,align:'center',checkbox:"true"},
-        {field:'code',title:'类别编号',width:100,align:'center'},
+        {field:'code',title:'商品类别',width:100,align:'center',formatter: function(value,row,index){
+          var data;
+          $.post("categoryallcaption", {code:value}, function (d) {
+
+          });
+        }},
         {field:'caption',title:'商品名称',width:100,align:'center'},
-        {field:'picurl',title:'商品图片',width:100,align:'center'},
+        {field:'picurl',title:'商品图片',width:100,align:'center',formatter: function(value,row,index){
+          return "<img src="+value+" height=20px />";
+        }},
         {field:'price',title:'售价',width:70,align:'center'},
         {field:'oldprice',title:'旧价',width:70,align:'center'},
         {field:'stock',title:'库存',width:70,align:'center'},
@@ -78,8 +100,9 @@
       afterPageText: '页    共 {pages} 页',
       displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
-  })
+  }
 
+  //编辑
   function showWindow(id){
     $("#editGoods").window({
       width:600,
@@ -134,7 +157,7 @@
   function addGoods(){
     if ($("#fs").val() == "") {
       var data = {
-        code: $("#code").val(),
+        code: $("#code").combobox("getValue"),
         caption: $("#caption").val(),
         price: $("#price").val(),
         oldprice: $("#oldprice").val(),
@@ -151,7 +174,7 @@
         success: function (url) {
           //alert("服务器响应的数据是"+data);
           var data = {
-            code: $("#code").val(),
+            code: $("#code").combobox("getValue"),
             caption: $("#caption").val(),
             price: $("#price").val(),
             oldprice: $("#oldprice").val(),
@@ -177,8 +200,6 @@
       $.messager.alert("提示消息", "请选中要删的数据!");
       return;
     }
-
-    //真删除数据
     //提醒用户是否是真的删除数据
     $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
       if (r) {
@@ -214,8 +235,24 @@
     }
   }
 
+  function doSearch(){
+    var data = {caption:$("#mingchen").val(),code:$("#leibie").combobox("getValue"),status:$("#zhuangtai").val()};
+    initTable("findgoodsbyselect2",data);
+
+  }
+
 </script>
 <div id="content" region="center" split="true" style="padding:5px;">
+  <div id="selectmem" style="padding:3px">
+    <span>商品名称:</span>
+    <input id="mingchen" name="mingchen" style="line-height:26px;border:1px solid #ccc">
+    <span>商品类别:</span>
+    <input id="leibie" name="leibie" class="easyui-combobox" name="code"
+           data-options="valueField:'code',textField:'caption',url:'categoryall'" style="line-height:26px;border:1px solid #ccc">
+    <span>商品状态:</span>
+    <input id="zhuangtai" name="zhuangtai" style="line-height:26px;border:1px solid #ccc">
+    <a id="searchbtn" href="#" plain="true" onclick="doSearch()">Search</a>
+  </div>
   <table id="goods"></table>
 
   <div id="editGoods">
@@ -231,7 +268,10 @@
     </tr>
     <tr>
       <td>商品类别：</td>
-      <td><input id="code" name="code" /></td>
+      <td>
+        <input id="code" class="easyui-combobox" name="code"
+               data-options="valueField:'code',textField:'caption',url:'categoryall'" value="">
+      </td>
     </tr>
     <tr>
       <td>商品售价：</td>
@@ -286,3 +326,4 @@
 
 
 <jsp:include page="common/foot.jsp"></jsp:include>
+
