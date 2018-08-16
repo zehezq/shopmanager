@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -41,7 +42,7 @@ public class GoodsInfoController {
 
     @RequestMapping("goodsdata")
     @ResponseBody
-    public Object advertisementdata(@RequestParam(name = "page",defaultValue = "1")int page,@RequestParam(name = "rows",defaultValue = "10") int rows){
+    public Object advertisementdata(@RequestParam(name = "page",defaultValue = "1") int page,@RequestParam(name = "rows",defaultValue = "10") int rows){
         try{
             PageInfo<TbGoods> data = goodsInfoService.findAll(page, rows);
             HashMap map = new HashMap();
@@ -102,6 +103,29 @@ public class GoodsInfoController {
             return "ok";
         else
             return "fail";
+    }
+
+    @RequestMapping("findgoodsbyselect")
+    @ResponseBody
+    public Object findgoodsbyselect(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows,TbGoods goods) {
+        try {
+            PageInfo<TbGoods> data = goodsInfoService.findBySelect(page, rows, goods);
+            HashMap map = new HashMap();
+            map.put("total", data.getTotal());
+            map.put("rows", data.getList());
+            return map;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "{errmsg:" + ex.getMessage() + "}";
+        }
+    }
+
+    @RequestMapping("findgoodsbyselect2")
+    @ResponseBody
+    public Object findgoodsbyselect2(TbGoods goods) {
+        goods.setCaption("%"+goods.getCaption()+"%");
+        List<TbGoods> data = goodsInfoService.findBySelect2(goods);
+        return data;
     }
 
 

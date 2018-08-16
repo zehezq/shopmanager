@@ -60,4 +60,7 @@
     <include refid="Base_Column_List"></include>
     from tb_admin
   </select>
+  <select id="selectPwd" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * from tb_admin where account = #{account,jdbcType=VARCHAR}
+  </select>
 </mapper>

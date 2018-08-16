@@ -21,5 +21,9 @@ public interface GoodsInfoService {
     int insertGoods(TbGoods goods);
 
     int deleteGoods(int goodid);
+
+    public PageInfo<TbGoods> findBySelect(int page, int rows,TbGoods goods);
+
+    public List<TbGoods> findBySelect2(TbGoods goods);
 }
 

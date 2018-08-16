@@ -199,4 +199,19 @@
   <select id="findAllGoods" resultMap="BaseResultMap">
     SELECT * from tb_goods order by code
   </select>
+
+  <select id="findBySelect" resultMap="BaseResultMap">
+    select * from tb_goods
+    <where>
+      <if test="caption!=null">
+        AND caption like #{caption}
+      </if>
+      <if test="code!=null">
+        AND code = #{code,jdbcType=INTEGER}
+      </if>
+      <if test="status!=null">
+        AND status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 </mapper>

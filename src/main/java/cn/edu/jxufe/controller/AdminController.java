@@ -25,6 +25,8 @@ public class AdminController {
     @Autowired
     private TbAdminServer tbAdminServer;
 
+    private String acc;
+
     @RequestMapping("loginbyid")
     public Object loginbyid(String account,String password,HttpServletResponse response){
         System.out.println("login");
@@ -38,6 +40,8 @@ public class AdminController {
                 Cookie cookie = new Cookie("password",password);
                 response.addCookie(nameCookie);
                 response.addCookie(cookie);
+                acc = account;
+                System.out.println(acc);
                 System.out.println("登录成功！");
                 return "member";
             } else {
@@ -49,6 +53,34 @@ public class AdminController {
             return "login1";
         }
 
+    }
+
+    @RequestMapping("confirmpwd")
+    @ResponseBody
+    public Object confirmpwd(TbAdmin admin){
+        String pwd = admin.getPassword();
+        System.out.println(pwd);
+        TbAdmin ad = tbAdminServer.selectPassword(acc);
+        String password = ad.getPassword();
+        System.out.println(password);
+        if(password.equals(pwd)){
+            return "ok";
+        }else
+            return "fail";
+    }
+
+    @RequestMapping("updatepwd")
+    @ResponseBody
+    public Object updatepwd(TbAdmin ad){
+        TbAdmin admin = new TbAdmin();
+        admin.setAccount(acc);
+        admin.setPassword(ad.getPassword());
+        System.out.println(acc);
+        int m = tbAdminServer.updatePwd(admin);
+        if(m != 0){
+            return 1;
+        }else
+            return 0;
     }
 }
 /*
