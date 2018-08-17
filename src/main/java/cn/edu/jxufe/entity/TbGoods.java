@@ -2,12 +2,23 @@ package cn.edu.jxufe.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * tb_goods
  * @author 
  */
 public class TbGoods implements Serializable {
+    private List<TbCategory> categoryList;
+
+    public List<TbCategory> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<TbCategory> categoryList) {
+        this.categoryList = categoryList;
+    }
+
     /**
      * 商品编号
      */
@@ -77,6 +88,7 @@ public class TbGoods implements Serializable {
      * 修改时间
      */
     private Date updatetime;
+
 
     private static final long serialVersionUID = 1L;
 

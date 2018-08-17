@@ -104,7 +104,7 @@
     where code = #{code,jdbcType=INTEGER}
   </update>
   <select id="findAllCategory" resultMap="BaseResultMap">
-    SELECT * from tb_category
+    SELECT * from tb_category order by id
   </select>
   <insert id="insertCate" parameterType="cn.edu.jxufe.entity.TbCategory">
     insert into tb_category ( id, `status`,
@@ -114,17 +114,15 @@
     #{caption,jdbcType=VARCHAR}
     )
   </insert>
-  <select id="findByCodeOrCaption" resultMap="BaseResultMap">
+
+  <select id="findBySelect" resultMap="BaseResultMap">
     select * from tb_category
     <where>
-      <if test="code!=null">
-        or code = #{code,jdbcType=INTEGER}
-      </if>
       <if test="caption!=null">
-        or caption = #{caption,jdbcType=VARCHAR}
+        AND caption like #{caption}
       </if>
       <if test="status!=null">
-        or status = #{status,jdbcType=INTEGER}
+        AND `status` = #{status,jdbcType=INTEGER}
       </if>
     </where>
   </select>

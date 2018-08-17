@@ -55,4 +55,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public int deleteAds(int adno) {
         return tbAdvertisementDAO.deleteByPrimaryKey(adno);
     }
+
+    @Override
+    public PageInfo<TbAdvertisement> findAll(int page, int rows, TbAdvertisement advertisement) {
+        PageHelper.startPage(page, rows);
+        List<TbAdvertisement> data = tbAdvertisementDAO.findBySelect(advertisement);
+        PageInfo<TbAdvertisement> pagevo = new PageInfo<TbAdvertisement>(data);
+        return pagevo;
+    }
 }

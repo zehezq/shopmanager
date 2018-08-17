@@ -122,4 +122,21 @@ public class AdvertisementController {
             return "fail";
     }
 
+    @RequestMapping("findadvselect")
+    @ResponseBody
+    public Object findadvselect(@RequestParam(name = "page",defaultValue = "1")int page,@RequestParam(name = "rows",defaultValue = "10") int rows,TbAdvertisement advertisement){
+        System.out.println(advertisement.getTitle() + " " + advertisement.getStatus());
+        try{
+            advertisement.setTitle("%"+advertisement.getTitle()+"%");
+            PageInfo<TbAdvertisement> data = advertisementService.findAll(page, rows, advertisement);
+            HashMap map = new HashMap();
+            map.put("total",data.getTotal());
+            map.put("rows",data.getList());
+            return map;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return "{errmsg:"+ex.getMessage()+"}";
+        }
+    }
+
 }

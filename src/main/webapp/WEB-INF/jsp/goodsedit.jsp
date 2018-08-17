@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>饰品销售管理台</title>
+  <title>电商管理台</title>
   <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
   <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
   <script type="text/javascript" src="easyui/js/jquery-1.4.4.min.js"></script>
@@ -96,7 +96,7 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
       <c:otherwise>
         <td align="right" width="20"><input type="radio" name="status" checked  value="1" />
           在售 |
-          <input  type="radio" name="status"  value="0" />
+          <input checked type="radio" name="status"  value="0" />
           下架</td>
       </c:otherwise>
     </c:choose>
@@ -130,11 +130,9 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
   }
 
   function edit() {
-    alert("点击了提交按钮1");
     if ($("#fs").val() != "") {
       $("#uploadgoodspic").ajaxSubmit({
         success: function (url) {
-          //alert("服务器响应的数据是"+data);
           var data = {
             goodid:$("#goodid").val(),
             code: $("#code").val(),
@@ -150,7 +148,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
           $.post("updategoods", data, function (d) {
             alert(d);
           });
-          alert("点击了提交按钮3");
         }
       });
     } else {
@@ -168,7 +165,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
       $.post("updategoods", data, function (d) {
         alert(d);
       });
-      alert("点击了提交按钮2");
     }
   }
 </script>

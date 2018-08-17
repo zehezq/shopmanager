@@ -60,7 +60,7 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
       <c:otherwise>
         <td align="right" width="20"><input type="radio" name="status" checked  value="1" />
           启用 |
-          <input  type="radio" name="status"  value="0" />
+          <input checked type="radio" name="status"  value="0" />
           禁用</td>
       </c:otherwise>
     </c:choose>
@@ -82,7 +82,6 @@ body,table,tr,td{font-family:微软雅黑;font-size:12px; border:0px solid red}
     $.post("updatecategory",data,function(d){
       alert("修改成功！");
     });
-    alert("点击了提交")
   }
 </script>
 </body>

@@ -13,4 +13,5 @@ public interface TbAdvertisementDAO extends MyBatisBaseDao<TbAdvertisement, Inte
     List<TbAdvertisement> findAllAds();
     TbAdvertisement selectByPrimaryKey(int id);
 
+    List<TbAdvertisement> findBySelect(TbAdvertisement advertisement);
 }

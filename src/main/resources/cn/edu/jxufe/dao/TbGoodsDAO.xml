@@ -197,7 +197,7 @@
     where goodID = #{goodid,jdbcType=INTEGER}
   </update>
   <select id="findAllGoods" resultMap="BaseResultMap">
-    SELECT * from tb_goods order by code
+    SELECT * from tb_goods
   </select>
 
   <select id="findBySelect" resultMap="BaseResultMap">
@@ -214,4 +214,35 @@
       </if>
     </where>
   </select>
+
+  <select id = "findByCodeGoodid"  resultMap="CategoryGoodsMap">
+    Select * From tb_goods join tb_category on tb_goods.code=tb_category.code
+  </select>
+
+  <resultMap id="CategoryGoodsMap" type="cn.edu.jxufe.entity.TbGoods">
+    <id column="goodID" jdbcType="INTEGER" property="goodid" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="caption" jdbcType="VARCHAR" property="caption" />
+    <result column="picurl" jdbcType="VARCHAR" property="picurl" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="oldprice" jdbcType="REAL" property="oldprice" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="praisenum" jdbcType="INTEGER" property="praisenum" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+
+    <collection property="categoryList" ofType="cn.edu.jxufe.entity.TbCategory">
+      <id column="code" jdbcType="INTEGER" property="code" />
+      <result column="id" jdbcType="INTEGER" property="id" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+      <result column="updatetime" jdbcType="VARCHAR" property="updatetime" />
+      <result column="caption" jdbcType="VARCHAR" property="caption" />
+    </collection>
+
+  </resultMap>
 </mapper>

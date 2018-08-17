@@ -19,12 +19,6 @@
       getImg.addEventListener('change',readFile,false);
     }
 
-    /*$('#code').combobox({
-      url:'categoryall',
-      valueField:'code',
-      textField:'caption'
-    });*/
-    var a = $('#code').combobox('getValue');
     initTable("goodsdata",null);
     //
     $("#selectmem").panel({width:"100%",height:80,title:"搜索选项"});
@@ -54,12 +48,7 @@
       //singleSelect:true,
       columns:[[
         {field:'goodid',title:'商品编号',width:100,align:'center',checkbox:"true"},
-        {field:'code',title:'商品类别',width:100,align:'center',formatter: function(value,row,index){
-          var data;
-          $.post("categoryallcaption", {code:value}, function (d) {
-
-          });
-        }},
+        {field:'code',title:'商品类别',width:100,align:'center'},
         {field:'caption',title:'商品名称',width:100,align:'center'},
         {field:'picurl',title:'商品图片',width:100,align:'center',formatter: function(value,row,index){
           return "<img src="+value+" height=20px />";
@@ -109,7 +98,6 @@
       height:500,
       title:"编辑商品",
       modal:true,
-      fit:"true",
       collapsible:false,
       minimizable:false,
       maximizable:false,
@@ -209,7 +197,6 @@
           $.post("deletegoods", {goodid:id}, function (data) {
             if (data == "ok") {
               //刷新表格，去掉选中状态的 那些行。
-              alert("删除成功");
               $('#goods').datagrid("reload");
               $('#goods').datagrid("clearSelections");
             } else {
@@ -217,6 +204,7 @@
             }
           });
         }
+        alert("删除成功");
       }
     });
   }
@@ -236,26 +224,30 @@
   }
 
   function doSearch(){
-    var data = {caption:$("#mingchen").val(),code:$("#leibie").combobox("getValue"),status:$("#zhuangtai").val()};
-    initTable("findgoodsbyselect2",data);
+    var data = {caption:$("#mingchen").val(),code:$("#leibie").combobox("getValue"),status:$("#zhuangtai").combobox("getValue")};
+    initTable("findgoodsbyselect",data);
 
   }
 
 </script>
 <div id="content" region="center" split="true" style="padding:5px;">
-  <div id="selectmem" style="padding:3px">
+  <div id="selectmem" style="padding:10px">
     <span>商品名称:</span>
     <input id="mingchen" name="mingchen" style="line-height:26px;border:1px solid #ccc">
     <span>商品类别:</span>
-    <input id="leibie" name="leibie" class="easyui-combobox" name="code"
+    <input id="leibie" name="leibie" class="easyui-combobox"
            data-options="valueField:'code',textField:'caption',url:'categoryall'" style="line-height:26px;border:1px solid #ccc">
     <span>商品状态:</span>
-    <input id="zhuangtai" name="zhuangtai" style="line-height:26px;border:1px solid #ccc">
+    <select id="zhuangtai" name="zhuangtai" class="easyui-combobox" style="line-height:26px;border:1px solid #ccc">
+      <option value="">请选择</option>
+      <option value="1">在售</option>
+      <option value="0">下架</option>
+    </select>
     <a id="searchbtn" href="#" plain="true" onclick="doSearch()">Search</a>
   </div>
   <table id="goods"></table>
 
-  <div id="editGoods">
+  <div id="editGoods"  style="overflow: hidden">
     <iframe id="contentbody" src="" width="600" height="500" scrolling="no" frameborder="0"></iframe>
   </div>
 </div>

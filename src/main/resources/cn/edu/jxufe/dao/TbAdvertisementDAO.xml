@@ -115,6 +115,18 @@
     where adno = #{adno,jdbcType=INTEGER}
   </update>
   <select id="findAllAds" resultMap="BaseResultMap">
-    SELECT * from tb_advertisement
+    SELECT * from tb_advertisement order by `index`
+  </select>
+
+  <select id="findBySelect" resultMap="BaseResultMap">
+    select * from tb_advertisement
+    <where>
+      <if test="title!=null">
+        AND title like #{title}
+      </if>
+      <if test="status!=null">
+        AND `status` = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
   </select>
 </mapper>

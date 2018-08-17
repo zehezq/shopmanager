@@ -26,6 +26,7 @@
       <li>
         <span>销售管理平台</span>
         <ul>
+          <li><span><a href="admin">管理员</a></span></li>
           <li><span><a href="tomember">会员管理</a></span></li>
           <li><span><a href="toarticle">文章管理</a></span></li>
           <li><span><a href="tocomment">评论管理</a></span></li>

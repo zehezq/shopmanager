@@ -55,17 +55,21 @@ public class CategoryController {
     @RequestMapping("addcategory")
     @ResponseBody
     public Object addCategory(TbCategory category) {
-        categoryService.insertCategory(category);
-        System.out.println("添加商品类别");
-        return "add";
+        int m = categoryService.insertCategory(category);
+        if(m != 0){
+            return "添加成功";
+        }else
+            return "添加失败";
     }
 
     @RequestMapping("updatecategory")
     @ResponseBody
     public Object updatecategory(TbCategory category, BindingResult result) {
-        categoryService.updateCategory(category);
-        System.out.println("修改商品类别");
-        return "update";
+        int m = categoryService.updateCategory(category);
+        if(m != 0){
+            return "修改成功";
+        }else
+            return "修改失败";
     }
 
     @RequestMapping("deletecateogry")
@@ -106,6 +110,7 @@ public class CategoryController {
     @ResponseBody
     public Object categorypartdata(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows,TbCategory category) {
         try {
+            category.setCaption("%"+category.getCaption()+"%");
             PageInfo<TbCategory> data = categoryService.findByCodeOrCaption(page, rows,category);
             HashMap map = new HashMap();
             map.put("total", data.getTotal());

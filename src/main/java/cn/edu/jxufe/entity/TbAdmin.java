@@ -11,6 +11,16 @@ public class TbAdmin implements Serializable {
 
     private String password;
 
+    private Integer style;
+
+    public Integer getStyle() {
+        return style;
+    }
+
+    public void setStyle(Integer style) {
+        this.style = style;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public String getAccount() {

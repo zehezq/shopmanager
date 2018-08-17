@@ -19,9 +19,16 @@
     }else{
       getImg.addEventListener('change',readFile,false);
     }
+    initTable("advertisementdata")
+    $("#selectmem").panel({width:"100%",height:80,title:"搜索选项"});
+    $("#searchbtn").linkbutton();
+  })
+
+  function initTable(path,paramter){
     $('#adv').datagrid({
       //表格的数据来源
-      url:'advertisementdata',
+      url:path,
+      queryParams:paramter,
       pagination:'true',
       title:'广告列表',
       toolbar: [{
@@ -49,10 +56,10 @@
         {field:'status',title:'广告状态',width:100,align:'center',formatter:
                 function(v,r,i){
                   if(v==1)
-                      return "启用";
+                    return "启用";
                   else
-                      return "禁用";
-        }},
+                    return "禁用";
+                }},
         {field:'createtime',title:'创建时间',width:150,align:'center',formatter:
                 function(v,r,i){
                   var d = new Date(v);
@@ -62,7 +69,7 @@
         {
           field: 'edit', title: '编辑详情', width: 100, align: 'center', formatter:
                 function (v, r, i) {
-                    return "<a href='javascript:showWindow("+ r.adno+")'>编辑详情</a>";
+                  return "<a href='javascript:showWindow("+ r.adno+")'>编辑详情</a>";
                 }
         }
       ]]
@@ -73,7 +80,7 @@
       afterPageText: '页    共 {pages} 页',
       displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
-  })
+  }
 
   function showWindow(adno){
     $("#editAdv").window({
@@ -202,11 +209,28 @@
     }
   }
 
+  function doSearch(){
+    var data = {title:$("#mingchen3").val(),status:$("#zhuangtai3").combobox("getValue")};
+    initTable("findadvselect",data);
+
+  }
+
 </script>
 <div id="content" region="center" split="true" style="padding:5px;">
+  <div id="selectmem" style="padding:10px">
+    <span>广告名称:</span>
+    <input id="mingchen3" name="mingchen3" style="line-height:26px;border:1px solid #ccc">
+    <span>广告状态:</span>
+    <select id="zhuangtai3" name="zhuangtai3" class="easyui-combobox" style="line-height:26px;border:1px solid #ccc">
+      <option value="">请选择</option>
+      <option value="1">启用</option>
+      <option value="0">禁用</option>
+    </select>
+    <a id="searchbtn" href="#" plain="true" onclick="doSearch()">Search</a>
+  </div>
   <table id="adv"></table>
 
-  <div id="editAdv">
+  <div id="editAdv" style="overflow: hidden">
     <iframe id="contentbody" src="" width="680" height="420" scrolling="no" frameborder="0"></iframe>
   </div>
 </div>

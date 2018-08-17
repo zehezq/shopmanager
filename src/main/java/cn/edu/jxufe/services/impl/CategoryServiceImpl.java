@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageInfo<TbCategory> findByCodeOrCaption(int page, int rows,TbCategory category) {
         PageHelper.startPage(page, rows);
-        List<TbCategory> data = tbCategoryDAO.findByCodeOrCaption(category);
+        List<TbCategory> data = tbCategoryDAO.findBySelect(category);
         //封装了整个分页任务的需求，包括分页所需要的总页数，总行数，当前行
         PageInfo<TbCategory> pagevo = new PageInfo<TbCategory>(data);
         return pagevo;

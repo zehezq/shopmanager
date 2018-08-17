@@ -2,6 +2,7 @@ package cn.edu.jxufe.controller;
 
 import cn.edu.jxufe.entity.TbGoods;
 import cn.edu.jxufe.services.GoodsInfoService;
+import com.aliyun.oss.OSSClient;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -62,7 +65,7 @@ public class GoodsInfoController {
         return "goodsedit";
     }
 
-    @RequestMapping("uploadgoodspic")
+    /*@RequestMapping("uploadgoodspic")
     @ResponseBody
     public Object uploadgoodspic(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
         //获取服务器的upload文件夹绝对路径
@@ -77,22 +80,46 @@ public class GoodsInfoController {
             ex.printStackTrace();
             return null;
         }
+    }*/
+
+    @RequestMapping("uploadgoodspic")
+    @ResponseBody
+    public Object uploadgoodspic(@RequestParam("fs") MultipartFile f ,HttpServletRequest req){
+        System.out.println("上传的文件名是"+f.getOriginalFilename());
+        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+        String accessKeyId = "LTAId0YVD63NHpVR";
+        String accessKeySecret = "EVqEUGIqDqxcdomjYMohS2SlCFeG36";
+        String buckName = "cnshop";
+        OSSClient ossClient = new OSSClient(endpoint,accessKeyId,accessKeySecret);
+        try {
+            InputStream inputStream = f.getInputStream();
+            ossClient.putObject(buckName,f.getOriginalFilename(),inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            ossClient.shutdown();
+        }
+        return endpoint.replace("http://","http://"+buckName+".")+"/"+f.getOriginalFilename();
     }
 
     @RequestMapping("updategoods")
     @ResponseBody
     public Object updategoods(TbGoods goods,BindingResult result){
-        goodsInfoService.updateGoods(goods);
-        System.out.println("修改商品");
-        return "修改成功";
+        int m = goodsInfoService.updateGoods(goods);
+        if(m != 0){
+            return "修改成功";
+        }else
+            return "修改失败";
     }
 
     @RequestMapping("insertgoods")
     @ResponseBody
     public Object insertgoods(TbGoods goods){
-        goodsInfoService.insertGoods(goods);
-        System.out.println("添加商品");
-        return "insert";
+        int m = goodsInfoService.insertGoods(goods);
+        if(m != 0){
+            return "添加成功";
+        }else
+            return "添加失败";
     }
 
     @RequestMapping("deletegoods")
@@ -109,6 +136,7 @@ public class GoodsInfoController {
     @ResponseBody
     public Object findgoodsbyselect(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "rows", defaultValue = "10") int rows,TbGoods goods) {
         try {
+            goods.setCaption("%"+goods.getCaption()+"%");
             PageInfo<TbGoods> data = goodsInfoService.findBySelect(page, rows, goods);
             HashMap map = new HashMap();
             map.put("total", data.getTotal());
@@ -120,13 +148,13 @@ public class GoodsInfoController {
         }
     }
 
-    @RequestMapping("findgoodsbyselect2")
+    /*@RequestMapping("findgoodsbyselect2")
     @ResponseBody
     public Object findgoodsbyselect2(TbGoods goods) {
         goods.setCaption("%"+goods.getCaption()+"%");
         List<TbGoods> data = goodsInfoService.findBySelect2(goods);
         return data;
-    }
+    }*/
 
 
 }

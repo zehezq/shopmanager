@@ -9,10 +9,19 @@
 <jsp:include page="common/head.jsp"></jsp:include>
 <script>
   $(function(){
+    initTable("categorydata",null);
+    //
+    $("#selectmem").panel({width:"100%",height:80,title:"搜索选项"});
+    $("#searchbtn").linkbutton();
+
+  })
+
+  function initTable(path,paramter){
     $('#category').datagrid({
       //表格的数据来源
-      url:'categorydata',
+      url:path,
       pagination:'true',
+      queryParams:paramter,
       title:'商品类别列表',
       toolbar: [{
         iconCls: 'icon-add',
@@ -23,17 +32,6 @@
         text:'删除',
         handler: function(){doDelete();}
 
-      },'-',{
-        text: '类别编号<input id="item1" style="line-height:14px;border:1px solid #ccc"/>'
-      },{
-        text: '类别名字<input id="item2" style="line-height:14px;border:1px solid #ccc"/>'
-      },{
-        id: 'btnAddPeopleSetId',
-        iconCls:'icon-search',
-        text: '搜索',
-        handler: function(){
-          doSelect();
-        }
       }],
       columns:[[
         {field:'code',title:'类别编号',width:100,align:'center',checkbox:"true"},
@@ -70,90 +68,7 @@
       afterPageText: '页    共 {pages} 页',
       displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
-
-  })
-
-  //查询
-  function doSelect(){
-    var data={code:$("#item1").val(),caption:$("#item2").val()/*,status:$("#input:checked").val()*/};
-    $.post("categorypartdata",data,function(){
-      /*var rows = [];
-      for(var i = 0; i < data.length; i++){
-          rows.push({
-          //code:data[i].code,
-            id:data[i].id,
-          caption:data[i].caption,
-            status:data[i].status,
-            createtime:data[i].createtime,
-            updatetime:data[i].updatetime
-        });
-        $("#category").datagrid('loadData',rows);
-      }
-    })*/
-
-      $("#category").datagrid({
-        url:'categorypartdata',
-        pagination:'true',
-        title:'商品类别列表',
-        toolbar: [{
-          iconCls: 'icon-add',
-          text:'增加',
-          handler: function(){showAddFrm();}
-        },'-',{
-          iconCls: 'icon-remove',
-          text:'删除',
-          handler: function(){doDelete();}
-
-        },'-',{
-          text: '类别编号<input id="item1" style="line-height:14px;border:1px solid #ccc"/>'
-        },{
-          text: '类别名字<input id="item2" style="line-height:14px;border:1px solid #ccc"/>'
-        },{
-          id: 'btnAddPeopleSetId',
-          iconCls:'icon-search',
-          text: '搜索',
-          handler: function(){
-            doSelect();
-          }
-        }],
-        columns:[[
-          {field:'code',title:'类别编号',width:100,align:'center',checkbox:"true"},
-          {field:'id',title:'序号',width:100,align:'center'},
-          {field:'caption',title:'类别名称',width:100,align:'center'},
-          {field:'status',title:'状态',width:100,align:'center',formatter:
-                  function(v,r,i){
-                    if(v==1)
-                      return "启用";
-                    else
-                      return "禁用";
-                  }},
-          {field:'createtime',title:'创建时间',width:100,align:'center',formatter:
-                  function(v,r,i){
-                    var d = new Date(v);
-                    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+ d.getDate()+"日"+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
-                  }},
-          {field:'updatetime',title:'修改时间',width:100,align:'center',formatter:
-                  function(v,r,i){
-                    var d = new Date(v);
-                    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+ d.getDate()+"日"+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
-                  }},
-          {
-            field: 'edit', title: '编辑详情', width: 100, align: 'center', formatter:
-                  function (v, r, i) {
-                    return "<a href='javascript:showWindow("+ r.code+")'>编辑详情</a>";
-                  }
-          }
-        ]]
-      });
-      var p = $('#category').datagrid('getPager');
-      $(p).pagination({
-        beforePageText: '第',//页数文本框前显示的汉字
-        afterPageText: '页    共 {pages} 页',
-        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
-      });
-    })
   }
-
 
   //编辑
   function showWindow(code){
@@ -266,15 +181,31 @@
     });
   }
 
+  function doSearch(){
+    var data = {caption:$("#mingchen").combobox("getText"),status:$("#zhuangtai").combobox("getValue")};
+    initTable("categorypartdata",data);
 
+  }
 
 </script>
 
 <div id="content" region="center" split="true" style="padding:5px;">
+  <div id="selectmem" style="padding:10px">
+    <span>类别名称:</span>
+    <input id="mingchen" name="mingchen" class="easyui-combobox"
+           data-options="valueField:'code',textField:'caption',url:'categoryall'" style="line-height:26px;border:1px solid #ccc">
+    <span>商品状态:</span>
+    <select id="zhuangtai" name="zhuangtai" class="easyui-combobox" style="line-height:26px;border:1px solid #ccc">
+      <option value="">请选择</option>
+      <option value="1">启用</option>
+      <option value="0">禁用</option>
+    </select>
+    <a id="searchbtn" href="#" plain="true" onclick="doSearch()">Search</a>
+  </div>
   <table id="category"></table>
 
 
-<div id="editCategory">
+<div id="editCategory"  style="overflow: hidden">
   <iframe id="contentbody" src="" width="600" height="400" scrolling="no" frameborder="0"></iframe>
 </div>
 </div>

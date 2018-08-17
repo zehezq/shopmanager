@@ -27,7 +27,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public PageInfo<TbGoods> findAll(int page, int rows) {
         PageHelper.startPage(page, rows);
-        List<TbGoods> data = findAll();
+        List<TbGoods> data = tbGoodsDAO.findByCodeGoodid();
         //封装了整个分页任务的需求，包括分页所需要的总页数，总行数，当前行
         PageInfo<TbGoods> pagevo = new PageInfo<TbGoods>(data);
         System.out.println("总行数==>"+pagevo.getTotal());
@@ -62,11 +62,6 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         List<TbGoods> data = tbGoodsDAO.findBySelect(goods);
         PageInfo<TbGoods> pagevo = new PageInfo<TbGoods>(data);
         return pagevo;
-    }
-
-    @Override
-    public List<TbGoods> findBySelect2(TbGoods goods) {
-        return tbGoodsDAO.findBySelect(goods);
     }
 
 }

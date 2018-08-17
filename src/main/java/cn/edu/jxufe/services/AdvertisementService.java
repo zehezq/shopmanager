@@ -20,4 +20,6 @@ public interface AdvertisementService {
     int insert(TbAdvertisement advertisement);
 
     int deleteAds(int adno);
+
+    PageInfo<TbAdvertisement> findAll(int page, int rows,TbAdvertisement advertisement);
 }
