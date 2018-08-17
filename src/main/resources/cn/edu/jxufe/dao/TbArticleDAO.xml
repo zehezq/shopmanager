@@ -5,22 +5,17 @@
     <id column="articleID" jdbcType="INTEGER" property="articleid" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="picurl" jdbcType="VARCHAR" property="picurl" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="readcount" jdbcType="INTEGER" property="readcount" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.edu.jxufe.entity.TbArticle">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
-  </resultMap>
   <sql id="Base_Column_List">
-    articleID, title, picurl, readcount, createtime, updatetime
+    articleID, title, picurl, readcount, createtime, updatetime, content
   </sql>
-  <sql id="Blob_Column_List">
-    content
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    <include refid="Blob_Column_List" />
+    <include refid="Base_Column_List" />
     from tb_article
     where articleID = #{articleid,jdbcType=INTEGER}
   </select>
@@ -109,7 +104,7 @@
     </set>
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.jxufe.entity.TbArticle">
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbArticle">
     update tb_article
     set title = #{title,jdbcType=VARCHAR},
       picurl = #{picurl,jdbcType=VARCHAR},
@@ -119,16 +114,19 @@
       content = #{content,jdbcType=LONGVARCHAR}
     where articleID = #{articleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.jxufe.entity.TbArticle">
-    update tb_article
-    set title = #{title,jdbcType=VARCHAR},
-      picurl = #{picurl,jdbcType=VARCHAR},
-      readcount = #{readcount,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP}
-    where articleID = #{articleid,jdbcType=INTEGER}
-  </update>
   <select id="findAllArticle" resultMap="BaseResultMap">
   SELECT * from tb_article
+  </select>
+
+  <select id="selectByIdOrTitle" resultMap="BaseResultMap">
+    SELECT * from tb_article
+    <where>
+      <if test="articleid!=null">
+        AND articleID = #{articleid,jdbcType=INTEGER}
+      </if>
+      <if test="title!=null">
+        AND title like concat('%',#{title},'%')
+      </if>
+    </where>
   </select>
 </mapper>

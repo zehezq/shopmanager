@@ -14,6 +14,9 @@ public interface TbUserServer {
     //分页
     public PageInfo<TbUser> findAllUser(int page,int rows);
 
+    //条件查询
+    PageInfo<TbUser> selectByNameAndPhone(int page,int rows,TbUser tbUser);
+
     public TbUser selectByUserId(int id);
 
     //删除通过id

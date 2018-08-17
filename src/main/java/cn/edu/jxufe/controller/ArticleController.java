@@ -2,6 +2,7 @@ package cn.edu.jxufe.controller;
 
 import cn.edu.jxufe.entity.TbArticle;
 import cn.edu.jxufe.services.TbArticleServer;
+import com.aliyun.oss.OSSClient;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +26,7 @@ import java.util.UUID;
 public class ArticleController {
     @Autowired
     private TbArticleServer tbArticleServer;
-    @RequestMapping("toarticle")
+    @RequestMapping("page_article")
     public Object toMember(){
         return "article";
     }
@@ -54,6 +56,26 @@ public class ArticleController {
         return "editarticle";
     }
 
+    /*@RequestMapping("uploadarticle")
+    @ResponseBody
+    public Object uploadAdImage(@RequestParam("fs") MultipartFile file ,HttpServletRequest request){
+        System.out.println("上传的文件名是"+file.getOriginalFilename());
+        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+        String accessKeyId = "LTAId0YVD63NHpVR";
+        String accessKeySecret = "EVqEUGIqDqxcdomjYMohS2SlCFeG36";
+        String buckName = "cnshop";
+        OSSClient ossClient = new OSSClient(endpoint,accessKeyId,accessKeySecret);
+        try {
+            InputStream inputStream = file.getInputStream();
+            ossClient.putObject(buckName,file.getOriginalFilename(),inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            ossClient.shutdown();
+        }
+        return endpoint.replace("http://","http://"+buckName+".")+"/"+file.getOriginalFilename();
+    }*/
+
     @RequestMapping("updatearticle")
     @ResponseBody
     public Object updatearticle(TbArticle tbArticle){
@@ -77,6 +99,23 @@ public class ArticleController {
             return "success";
         }
         return "fail";
+    }
+
+    @RequestMapping("selectbyidortitle")
+    @ResponseBody
+    public Object selectbyidortitle(@RequestParam(name="page",defaultValue = "1") int page,@RequestParam(name="rows",defaultValue = "10") int rows,TbArticle tbArticle){
+        System.out.println("传递过来的page"+page);
+        System.out.println("rows"+rows);
+        try{
+            PageInfo<TbArticle> data=tbArticleServer.selectByIdOrTitle(page,rows,tbArticle);
+            Map map=new HashMap();
+            map.put("total",data.getTotal());
+            map.put("rows",data.getList());
+            return map;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return "{errmsg:"+ex.getMessage()+"}";
+        }
     }
 }
 /*

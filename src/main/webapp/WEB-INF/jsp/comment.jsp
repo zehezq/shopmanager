@@ -3,6 +3,12 @@
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
+        initialdatagrid("commentdata",null)
+        $("#selectcom").panel({width:"100%",height:65,title:"搜索选项"});
+        $("searchbutton").linkbutton;
+    })
+
+    function initialdatagrid(path,parameter){
         $("#com").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
@@ -15,9 +21,10 @@
                     return "<a href='javascript:showWindow("+row.id+")'>编辑详情</a>";
                 }}
             ]],
-            url:"commentdata",
+            url:path,
             title:"评论列表",
             singleSelect:true,
+            queryParams:parameter,
             pagination:true,
             toolbar:[{
                 iconCls: 'icon-add',
@@ -39,7 +46,7 @@
             afterPageText: '页    共 {pages} 页',
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
         });
-    })
+    }
 
     function showWindow(id){
         $("#editcomment").window({
@@ -96,7 +103,6 @@
         })
     }
 
-
     //删除数据
     function deletecoms() {
         //把选中的数据查询出来。
@@ -138,12 +144,19 @@
          $('#mem').datagrid('loadData',newData);
     }
 
+    function dosearch(){
+        var data={userid:$("#uid").val(),goodid:$("#gid").val()}
+        initialdatagrid("selectbyuidorgid",data);
+    }
+
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
-    <div id="selectmem" style="padding:3px">
+    <div id="selectart" style="padding:3px">
         <span>用户编号:</span>
-        <input id="seluser" style="line-height:26px;border:1px solid #ccc">
-        <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
+        <input id="uid" style="line-height:26px;border:1px solid #ccc">
+        <span>商品编号:</span>
+        <input id="gid" style="line-height:26px;border:1px solid #ccc">
+        <a id="searchbutton" href="#" class="easyui-linkbutton" plain="true" onclick="dosearch()">Search</a>
     </div>
     <table id="com"></table>
     <div id="editcomment" style="overflow:hidden;">

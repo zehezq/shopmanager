@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class AdminController {
         System.out.println("帐号" + account);
         System.out.println("密码" + password);
         tbAdminServer.insertTbadmin(tbAdmin);
-        return "login1";
+        return "login.html";
     }
 
     /*@RequestMapping("loginbyid")
@@ -64,8 +65,8 @@ public class AdminController {
 
     }*/
     @ResponseBody
-    @RequestMapping("login")
-    public Object loginaa(TbAdmin tbAdmin) {
+    @RequestMapping("loginadmin")
+    public Object loginaa(TbAdmin tbAdmin,HttpSession session) {
         String account=tbAdmin.getAccount();
         String password=tbAdmin.getPassword();
         System.out.println("用户名字:" + account);
@@ -78,14 +79,15 @@ public class AdminController {
         if(!account.equals("")){
             if(password.equals(confirmpass)){
                 System.out.println("正确登录");
+                session.setAttribute("loginuser",tbAdmin);
                 return "member";
             }else {
                 System.out.println("密码错误，重新登录");
-                return "login1";
+                return "密码错误，重新登录";
             }
         }else {
             System.out.println("输入不规范");
-            return "login1";
+            return "输入不规范，重新登录";
         }
     }
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
 <head>
@@ -38,9 +38,9 @@
             </tr>
             <tr>
                 <td colspan="3" style="text-align:center">
-    <%--
-                        <input type="submit" value="登录" class="login_button" onclick="$('#form1').submit()"/>
-    --%>
+                    <%--
+                    <input type="submit" value="登录" class="login_button" onclick="$('#form1').submit()"/>
+                    --%>
                     <input type="button" value="登录" class="login_button" onclick="loginaccount()"/>
                     <input type="button" value="注册" class="login_button" onclick="showmain()" />
                 </td>
@@ -62,18 +62,18 @@
 
     function loginaccount(){
         var data={account:$("#name").val(),password:$("#pass").val()}
-        alert(data);
+        alert("登录中...");
         $.post("loginadmin",data,function(d){
             if(d=="member"){
                 self.location="http://localhost:8080/page_member"
             }
-            alert(d)
+            //alert(d)
         })
     }
 
-function showmain(){
-    $('#win').window('open');
-}
+    function showmain(){
+        $('#win').window('open');
+    }
 
     function buttonok(){
         var data={account:$("#account").val(),password:$("#password").val()}
@@ -84,9 +84,9 @@ function showmain(){
         $('#win').window('close');
     }
 
-function buttoncancel(){
-    $('#win').window('close');
-}
+    function buttoncancel(){
+        $('#win').window('close');
+    }
 </script>
 </body>
 </html>

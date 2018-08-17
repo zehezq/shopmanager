@@ -14,6 +14,9 @@ public interface TbCommentServer {
     //分页
     public PageInfo<TbComment> findAllComment(int page,int rows);
 
+    //条件查询
+    PageInfo<TbComment> selectByUidOrGid(int page,int rows,TbComment tbComment);
+
     public TbComment selectByPrimaryKey(int id);
 
     //删除通过id

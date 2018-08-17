@@ -65,6 +65,23 @@
             </td>
         </tr>
         <tr>
+            <td align="right">用户状态:</td>
+            <c:choose>
+                <c:when test="${tbUser.status==1}">
+                    <td align="right"><input type="radio" name="status"  value="1" />
+                        启用 |
+                        <input checked type="radio" name="status"  value="0" />
+                        禁用</td>
+                </c:when>
+                <c:otherwise>
+                    <td align="right" width="20"><input type="radio" name="status" checked  value="1" />
+                        启用 |
+                        <input  type="radio" name="status"  value="0" />
+                        禁用</td>
+                </c:otherwise>
+            </c:choose>
+        </tr>
+        <tr>
             <td align="right">创建时间</td>
             <td align="right">
                 <input type="text" id="createtime" name="" value="${tbUser.createtime}" /></td>
@@ -99,14 +116,14 @@
     }
     function saveedit(){
         if($("#fs").val()==""){
-            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val()}
+            var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),status: $("input:checked").val(),createtime:$("#createtime").val()}
             $.post("saveupdatedata",data,function(d){
                 alert(d)
             })
         }else{
             $("#uploadimage").ajaxSubmit({
                 success:function(url){
-                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),createtime:$("#createtime").val(),userpicture:url}
+                    var data={userid:$("#userid").val(),username:$("#username").val(),phone:$("#phone").val(),status: $("input:checked").val(),createtime:$("#createtime").val(),userpicture:url}
                     $.post("saveupdatedata",data,function(d){
                         alert(d)
                     })

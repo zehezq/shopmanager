@@ -25,7 +25,7 @@ public class CommentController {
     @Autowired
     private TbCommentServer tbCommentServer;
 
-    @RequestMapping("tocomment")
+    @RequestMapping("page_comment")
     public Object toMember(){
         return "comment";
     }
@@ -81,6 +81,23 @@ public class CommentController {
             return "success";
         }else{
             return "fail";
+        }
+    }
+
+    @RequestMapping("selectbyuidorgid")
+    @ResponseBody
+    public Object selectbyuidorgid(@RequestParam(name="page",defaultValue = "1") int page,@RequestParam(name="rows",defaultValue = "10") int rows,TbComment tbComment){
+        System.out.println("传递过来的page"+page);
+        System.out.println("rows"+rows);
+        try{
+            PageInfo<TbComment> data=tbCommentServer.selectByUidOrGid(page, rows, tbComment);
+            Map map=new HashMap();
+            map.put("total",data.getTotal());
+            map.put("rows",data.getList());
+            return map;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return "{errmsg:"+ex.getMessage()+"}";
         }
     }
 }

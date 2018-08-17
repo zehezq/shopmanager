@@ -37,6 +37,19 @@ public class TbOrderServerImpl implements TbOrderServer {
         return pageInfo;
     }
 
+    //条件查询
+    @Override
+    public PageInfo<TbOrder> selectByUidOrStatus(int page, int rows,TbOrder tbOrder) {
+        PageHelper.startPage(page,rows);
+        List<TbOrder> data=tbOrderDAO.selectByUidOrStatus(tbOrder);
+        //封装了整个分页业务的需求，包括分页所需要的总页数，总行数，当前行
+        PageInfo<TbOrder> pageInfo =new PageInfo<TbOrder>(data);
+        System.out.println("总行数："+pageInfo.getTotal());
+        System.out.println("总页数："+pageInfo.getPages());
+        System.out.println("数据内容："+pageInfo.getList());
+        return pageInfo;
+    }
+
     @Override
     public TbOrder selectByPrimaryKey(int id) {
         return tbOrderDAO.selectByPrimaryKey(id);

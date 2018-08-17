@@ -11,4 +11,8 @@ import java.util.List;
 @Repository
 public interface TbOrderDAO extends MyBatisBaseDao<TbOrder, Integer> {
     List<TbOrder> findAllOrder();
+
+    //条件查询
+    List<TbOrder> selectByUidOrStatus(TbOrder tbOrder);
+
 }

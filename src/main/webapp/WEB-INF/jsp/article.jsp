@@ -3,6 +3,12 @@
 <script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
+        initialdatagrid("articledata",null)
+        $("#selectart").panel({width:"100%",height:65,title:"搜索选项"});
+        $("searchbutton").linkbutton;
+    })
+
+    function initialdatagrid(path,parameter){
         $("#art").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
@@ -20,9 +26,10 @@
                     return "<a href='javascript:showWindow("+row.articleid+")'>编辑详情</a>";
                 }}
             ]],
-            url:"articledata",
+            url:path,
             title:"文章列表",
             pagination:true,
+            queryParams:parameter,
             toolbar:[{
                 iconCls: 'icon-add',
                 text:"增加",
@@ -33,15 +40,6 @@
                 text:"删除",
                 handler: function()
                 {deleteArt();}
-            },'-',{
-                text: '文章编号<input id="itemid" style="line-height:14px;border:1px solid #ccc"/>'
-            },{
-                id: 'btnAddPeopleSetId',
-                iconCls:'icon-search',
-                text: '搜索',
-                handler: function(){
-                    inputToobar();
-                }
             }]
         });
         var p = $('#art').datagrid('getPager');
@@ -52,8 +50,7 @@
             afterPageText: '页    共 {pages} 页',
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
         });
-    })
-
+    }
     function showWindow(id){
         $("#editarticle").window({
             width:600,
@@ -108,7 +105,6 @@
         })
     }
 
-
     //删除数据
     function deleteArt() {
         //把选中的数据查询出来。
@@ -139,8 +135,19 @@
         });
     }
 
+    function dosearch(){
+        var data={articleid:$("#artid").val(),title:$("#arttit").val()}
+        initialdatagrid("selectbyidortitle",data);
+    }
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
+    <div id="selectart" style="padding:3px">
+        <span>文章编号:</span>
+        <input id="artid" style="line-height:26px;border:1px solid #ccc">
+        <span>文章标题:</span>
+        <input id="arttit" style="line-height:26px;border:1px solid #ccc">
+        <a id="searchbutton" href="#" class="easyui-linkbutton" plain="true" onclick="dosearch()">Search</a>
+    </div>
     <table id="art"></table>
     <div id="editarticle" style="overflow:hidden;">
         <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0" ></iframe>

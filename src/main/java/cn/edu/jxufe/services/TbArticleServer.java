@@ -14,6 +14,9 @@ public interface TbArticleServer {
     //分页
     public PageInfo<TbArticle> findAllArticle(int page,int rows);
 
+    //条件查询
+    PageInfo<TbArticle> selectByIdOrTitle(int page,int rows,TbArticle tbArticle);
+
     public TbArticle selectByPrimaryKey(int id);
 
     //删除通过id

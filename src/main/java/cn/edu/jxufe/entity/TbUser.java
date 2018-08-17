@@ -35,6 +35,11 @@ public class TbUser implements Serializable {
 
     private Date createtime;
 
+    /**
+     * 类别状态（0不显示，1显示）
+     */
+    private Integer userstatus;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getUserid() {
@@ -85,6 +90,14 @@ public class TbUser implements Serializable {
         this.createtime = createtime;
     }
 
+    public Integer getStatus() {
+        return userstatus;
+    }
+
+    public void setStatus(Integer userstatus) {
+        this.userstatus = userstatus;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -102,7 +115,8 @@ public class TbUser implements Serializable {
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getUserpicture() == null ? other.getUserpicture() == null : this.getUserpicture().equals(other.getUserpicture()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()));
+            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -115,6 +129,7 @@ public class TbUser implements Serializable {
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getUserpicture() == null) ? 0 : getUserpicture().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -130,6 +145,7 @@ public class TbUser implements Serializable {
         sb.append(", phone=").append(phone);
         sb.append(", userpicture=").append(userpicture);
         sb.append(", createtime=").append(createtime);
+        sb.append(", userstatus=").append(userstatus);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -35,6 +35,19 @@ public class TbCommentServerImpl implements TbCommentServer{
         return pageInfo;
     }
 
+    //条件查询
+    @Override
+    public PageInfo<TbComment> selectByUidOrGid(int page, int rows, TbComment tbComment) {
+        PageHelper.startPage(page,rows);
+        List<TbComment> data=tbCommentDAO.selectByUidOrGid(tbComment);
+        //封装了整个分页业务的需求，包括分页所需要的总页数，总行数，当前行
+        PageInfo<TbComment> pageInfo =new PageInfo<TbComment>(data);
+        System.out.println("总行数："+pageInfo.getTotal());
+        System.out.println("总页数："+pageInfo.getPages());
+        System.out.println("数据内容："+pageInfo.getList());
+        return pageInfo;
+    }
+
     @Override
     public TbComment selectByPrimaryKey(int id) {
         return tbCommentDAO.selectByPrimaryKey(id);
