@@ -45,7 +45,6 @@
            ]],
            url:path,
            title:"会员列表",
-           singleSelect:true,
            queryParams:parameter,
            pagination:true,//显示分页工具栏
            toolbar:[{
