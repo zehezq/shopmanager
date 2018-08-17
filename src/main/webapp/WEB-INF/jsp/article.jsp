@@ -1,8 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="common/head.jsp"></jsp:include>
-<%--<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>--%>
+<script type="text/javascript" src="easyui/js/datagrid-dnd.js"></script>
 <script>
     $(function(){
+        initialdatagrid("articledata",null)
+        $("#selectart").panel({width:"100%",height:65,title:"搜索选项"});
+        $("searchbutton").linkbutton;
+    })
+
+    function initialdatagrid(path,parameter){
         $("#art").datagrid({
             columns:[[
                 {field:' ',title:' ',width:30,align:'center',checkbox:true},
@@ -20,28 +26,20 @@
                     return "<a href='javascript:showWindow("+row.articleid+")'>编辑详情</a>";
                 }}
             ]],
-            url:"articledata",
+            url:path,
             title:"文章列表",
             pagination:true,
+            queryParams:parameter,
             toolbar:[{
                 iconCls: 'icon-add',
                 text:"增加",
                 handler: function()
                 {addWindow();}
             },'-',{
-                iconCls: 'icon-cancel',
+                iconCls: 'icon-remove',
                 text:"删除",
                 handler: function()
                 {deleteArt();}
-            },'-',{
-                text: '文章编号<input id="itemid" style="line-height:14px;border:1px solid #ccc"/>'
-            },{
-                id: 'btnAddPeopleSetId',
-                iconCls:'icon-search',
-                text: '搜索',
-                handler: function(){
-                    inputToobar();
-                }
             }]
         });
         var p = $('#art').datagrid('getPager');
@@ -52,8 +50,7 @@
             afterPageText: '页    共 {pages} 页',
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
         });
-    })
-
+    }
     function showWindow(id){
         $("#editarticle").window({
             width:600,
@@ -108,25 +105,23 @@
         })
     }
 
-
     //删除数据
     function deleteArt() {
-        //把你选中的 数据查询出来。
+        //把选中的数据查询出来。
         var selectRows = $('#art').datagrid("getSelections");
         if (selectRows.length < 1) {
             $.messager.alert("提示消息", "请选中要删的数据!");
             return;
         }
-
-        //真删除数据
         //提醒用户是否是真的删除数据
         $.messager.confirm("确认消息", "您确定要删除信息吗？", function (r) {
             if (r) {
                 var id;
                 for (var i = 0; i < selectRows.length; i++) {
                     id = selectRows[i].articleid;
-                    $.post("deletearticle", {articleid:id}, function (data) {
-                        if (data = "success") {
+                    alert(id);
+                    $.post("deletearticle", {id:id}, function (data) {
+                        if (data == "success") {
                             //刷新表格，去掉选中状态的 那些行。
                             alert("删除成功");
                             $('#art').datagrid("reload");
@@ -139,8 +134,20 @@
             }
         });
     }
+
+    function dosearch(){
+        var data={articleid:$("#artid").val(),title:$("#arttit").val()}
+        initialdatagrid("selectbyidortitle",data);
+    }
 </script>
 <div id="content" region="center" split="true" title="" style="padding:3px;">
+    <div id="selectart" style="padding:3px">
+        <span>文章编号:</span>
+        <input id="artid" style="line-height:26px;border:1px solid #ccc">
+        <span>文章标题:</span>
+        <input id="arttit" style="line-height:26px;border:1px solid #ccc">
+        <a id="searchbutton" href="#" class="easyui-linkbutton" plain="true" onclick="dosearch()">Search</a>
+    </div>
     <table id="art"></table>
     <div id="editarticle" style="overflow:hidden;">
         <iframe id="contentbody" src="" width="600px" height="400px" frameborder="0" ></iframe>

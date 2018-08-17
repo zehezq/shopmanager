@@ -1,6 +1,7 @@
 package cn.edu.jxufe.dao;
 
 import cn.edu.jxufe.entity.TbUser;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,10 +15,6 @@ public interface TbUserDAO extends MyBatisBaseDao<TbUser, Integer> {
 
     TbUser selectByphone(String phone);
 
-    //查询通过id
-    //TbUser selectByPrimaryKey(int id);
-
-    //删除通过id
-    //int deleteByPrimaryKey(int id);
+    List<TbUser> selectByNameAndPhone(TbUser tbUser);
 
 }

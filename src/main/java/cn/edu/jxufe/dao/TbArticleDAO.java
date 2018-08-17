@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface TbArticleDAO extends MyBatisBaseDao<TbArticle, Integer> {
     List<TbArticle> findAllArticle();
+
+    List<TbArticle> selectByIdOrTitle(TbArticle tbArticle);
+
 }

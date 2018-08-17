@@ -35,7 +35,7 @@
 <body>
 <fieldset class="title">
     <legend>评论管理</legend>
-    <table method="post" width="544"  align="center" cellpadding="3" cellspacing="3">
+    <table width="544"  align="center" cellpadding="3" cellspacing="3">
         <tr>
             <td width="87" align="right">评论编号:</td>
             <td width="421" align="right"><input id="id" type="text" value="${tbComment.id}" /></td>

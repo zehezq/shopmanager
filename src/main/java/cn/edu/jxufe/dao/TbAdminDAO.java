@@ -13,4 +13,9 @@ import java.util.Map;
 @Repository
 public interface TbAdminDAO extends MyBatisBaseDao<TbAdmin, String> {
     List<TbAdmin> selectBypassword(@Param("map") Map<String, String> map);
+
+    TbAdmin selectByap(TbAdmin tbAdmin);
+
+    List<TbAdmin> findAllAdmin();
+
 }

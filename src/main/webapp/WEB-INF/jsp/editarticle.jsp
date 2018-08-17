@@ -66,13 +66,14 @@
         </tr>
         <tr>
             <td height="50">&nbsp;</td>
-            <td align="right" valign="bottom"><a  value="提交" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
+            <td align="right" valign="bottom"><a value="提交" class="easyui-linkbutton" onclick="saveedit()">编辑</a></td>
         </tr>
     </table>
 </fieldset>
 <script>
     function saveedit(){
         var data={articleid:$("#articleid").val(),title:$("#title").val(),content:$("#content").val(),picurl:$("#picurl").val(),readcount:$("#readcount").val(),createtime:$("#createtime").val(),updatetime:$("#updatetime").val()}
+        alert(data);
         $.post("updatearticle",data,function(d){
             alert(d)
         })

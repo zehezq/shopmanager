@@ -2,11 +2,9 @@ package cn.edu.jxufe.controller;
 
 import cn.edu.jxufe.entity.TbAdmin;
 import cn.edu.jxufe.services.TbAdminServer;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +25,18 @@ public class AdminController {
     @Autowired
     private TbAdminServer tbAdminServer;
 
-    private String acc;
+    @ResponseBody
+    @RequestMapping("register")
+    public Object register(String account, String password) {
+        /*List<TbAdmin> tbAdmin=tbAdminServer.selectBypassword(null);*/
+        TbAdmin tbAdmin = new TbAdmin();
+        tbAdmin.setAccount(account);
+        tbAdmin.setPassword(password);
+        System.out.println("帐号" + account);
+        System.out.println("密码" + password);
+        tbAdminServer.insertTbadmin(tbAdmin);
+        return "login.html";
+    }
 
     @RequestMapping("admin")
     public String toAdvertisement(){
@@ -132,6 +141,30 @@ public class AdminController {
             return "添加成功";
         }else
             return "添加失败";
+    @RequestMapping("loginadmin")
+    public Object loginaa(TbAdmin tbAdmin,HttpSession session) {
+        String account=tbAdmin.getAccount();
+        String password=tbAdmin.getPassword();
+        System.out.println("用户名字:" + account);
+        System.out.println("密码:" + password);
+        List<TbAdmin> data = tbAdminServer.findAllAdmin();
+        TbAdmin tbAdmin1=tbAdminServer.selectByAccount(account);
+        System.out.println("account"+tbAdmin1.getAccount());
+        System.out.println("account"+tbAdmin1.getPassword());
+        String confirmpass=tbAdmin1.getPassword();
+        if(!account.equals("")){
+            if(password.equals(confirmpass)){
+                System.out.println("正确登录");
+                session.setAttribute("loginuser",tbAdmin);
+                return "member";
+            }else {
+                System.out.println("密码错误，重新登录");
+                return "密码错误，重新登录";
+            }
+        }else {
+            System.out.println("输入不规范");
+            return "输入不规范，重新登录";
+        }
     }
 }
 /*

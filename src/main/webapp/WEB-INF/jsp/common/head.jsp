@@ -26,15 +26,15 @@
       <li>
         <span>销售管理平台</span>
         <ul>
+          <li><span><a href="page_member">会员管理</a></span></li>
+          <li><span><a href="page_article">文章管理</a></span></li>
+          <li><span><a href="page_comment">评论管理</a></span></li>
+          <li><span><a href="page_order">订单管理</a></span></li>
+          <li><span><a href="page_goods">商品管理</a></span></li>
+          <li><span><a href="page_advertisement">广告管理</a></span></li>
+          <li><span><a href="page_category">类别管理</a></span></li>
+          <li><span><a href="page_system">系统设置</a></span></li>
           <li><span><a href="admin">管理员</a></span></li>
-          <li><span><a href="tomember">会员管理</a></span></li>
-          <li><span><a href="toarticle">文章管理</a></span></li>
-          <li><span><a href="tocomment">评论管理</a></span></li>
-          <li><span><a href="toorder">订单管理</a></span></li>
-          <li><span><a href="goods">商品管理</a></span></li>
-          <li><span><a href="advertisement">广告管理</a></span></li>
-          <li><span><a href="category">类别管理</a></span></li>
-          <li><span><a href="system">系统设置</a></span></li>
         </ul>
       </li>
     </ul>

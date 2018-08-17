@@ -16,6 +16,9 @@ public interface TbOrderServer {
     //分页
     public PageInfo<TbOrder> findAllOrder(int page,int rows);
 
+    //条件查询
+    PageInfo<TbOrder> selectByUidOrStatus(int page,int rows,TbOrder tbOrder);
+
     public TbOrder selectByPrimaryKey(int id);
 
     //删除通过id

@@ -14,10 +14,13 @@ public interface TbArticleServer {
     //分页
     public PageInfo<TbArticle> findAllArticle(int page,int rows);
 
+    //条件查询
+    PageInfo<TbArticle> selectByIdOrTitle(int page,int rows,TbArticle tbArticle);
+
     public TbArticle selectByPrimaryKey(int id);
 
     //删除通过id
-    public int deleteByTbArticleId(Integer id);
+    public int deleteByTbArticleId(int id);
 
     //增加
     public int insertTbArticle(TbArticle tbArticle);

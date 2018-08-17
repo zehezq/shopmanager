@@ -97,4 +97,16 @@
   <select id="findAllComment" resultMap="BaseResultMap">
     SELECT * from tb_comment
   </select>
+
+  <select id="selectByUidOrGid" resultMap="BaseResultMap">
+    SELECT * from tb_comment
+    <where>
+      <if test="userid!=null">
+        OR userID = #{userid,jdbcType=INTEGER}
+      </if>
+      <if test="goodid!=null">
+        OR goodID = #{goodid,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 </mapper>

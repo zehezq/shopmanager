@@ -34,13 +34,26 @@ public class TbArticleServerImpl implements TbArticleServer{
         return pageInfo;
     }
 
+    //条件查询
+    @Override
+    public PageInfo<TbArticle> selectByIdOrTitle(int page, int rows, TbArticle tbArticle) {
+        PageHelper.startPage(page,rows);
+        List<TbArticle> data=tbArticleDAO.selectByIdOrTitle(tbArticle);
+        //封装了整个分页业务的需求，包括分页所需要的总页数，总行数，当前行
+        PageInfo<TbArticle> pageInfo =new PageInfo<TbArticle>(data);
+        System.out.println("总行数："+pageInfo.getTotal());
+        System.out.println("总页数："+pageInfo.getPages());
+        System.out.println("数据内容："+pageInfo.getList());
+        return pageInfo;
+    }
+
     @Override
     public TbArticle selectByPrimaryKey(int id) {
         return tbArticleDAO.selectByPrimaryKey(id);
     }
 
     @Override
-    public int deleteByTbArticleId(Integer id) {
+    public int deleteByTbArticleId(int id) {
         return tbArticleDAO.deleteByPrimaryKey(id);
     }
 

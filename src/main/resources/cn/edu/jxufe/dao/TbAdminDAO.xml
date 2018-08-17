@@ -65,8 +65,13 @@
     <include refid="Base_Column_List"></include>
     from tb_admin
   </select>
-  <select id="selectPwd" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT * from tb_admin where account = #{account,jdbcType=VARCHAR}
+  <select id="selectByap" parameterType="cn.edu.jxufe.entity.TbAdmin" resultType="cn.edu.jxufe.entity.TbAdmin">
+    select
+    <include refid="Base_Column_List"></include>
+    from tb_admin
+  </select>
+  <select id="findAllAdmin" resultMap="BaseResultMap">
+    select * from tb_admin
   </select>
 
   <select id="findAll" resultMap="BaseResultMap">
