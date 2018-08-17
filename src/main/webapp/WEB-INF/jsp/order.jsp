@@ -33,7 +33,6 @@
             ]],
             url:path,
             title:"订单列表",
-            singleSelect:true,
             queryParams:parameter,
             pagination:true,
             toolbar:[{

@@ -23,7 +23,6 @@
             ]],
             url:path,
             title:"评论列表",
-            singleSelect:true,
             queryParams:parameter,
             pagination:true,
             toolbar:[{
